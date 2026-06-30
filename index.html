@@ -300,24 +300,46 @@ function UDEGuia({p,teamA,teamB}){
   </div>;
 }
 function UDEPlacar({p,teamA,teamB}){
-  const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[odd,setOdd]=useState("");const[casa,setCasa]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");
-  const o=parseFloat((odd||"0").replace(",","."));const prob=o<=1.6?"Provável":o<=1.9?"Possível":o<=2.1?"Médio risco":o<=2.5?"Arriscado":"Bastante arriscado";
-  const probC=o<=1.6?"#27a844":o<=1.9?"#2980b9":o<=2.1?"#f5a623":o<=2.5?"#e67e22":"#dc3545";const pe=`${p}-pe`;
-  const html=`<style>\n.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}\n.${pe}-body{padding:16px;background:#f3f4f6}\n.${pe}-score{font-size:22px;font-weight:700;color:#2B2B2B;margin-bottom:4px}\n.${pe}-odd{font-size:13px;color:#666;margin-bottom:6px}\n.${pe}-prob{display:inline-block;font-size:12px;font-weight:700;padding:4px 12px;border-radius:20px;color:#fff;background:${probC};margin-bottom:14px}\n.${pe}-txt{font-size:14px;color:#333;line-height:1.65}\n.${pe}-txt+.${pe}-txt{margin-top:10px}\n@media(max-width:480px){.${pe}-score{font-size:18px}.${pe}-body{padding:12px}}\n</style>\n<div class="${pe}">\n  <div class="${pe}-hdr">Palpite de placar exato UmDois Esportes: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${pe}-body">\n    <div class="${pe}-score">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n    <div class="${pe}-odd">Odd ${odd} na ${casa}</div>\n    <div class="${pe}-prob">${prob}</div>\n    <p class="${pe}-txt">${p1}</p>\n    ${p2?`<p class="${pe}-txt">${p2}</p>`:""}\n  </div>\n</div>`;
+  const[tips,setTips]=useState([{name:"",odd:""},{name:"",odd:""},{name:"",odd:""},{name:"",odd:""}]);
+  const uT=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};
+  const calc=(raw)=>{const o=parseFloat((raw||"0").replace(",","."));if(!o||o<=0)return{prob:"—",color:"#888",pct:0};const pct=Math.round((1/o)*100);const prob=o<=1.6?"Provável":o<=1.9?"Possível":o<=2.1?"Risco médio":o<=2.5?"Arriscado":o<=5?"Bastante arriscado":"Muito arriscado";const color=o<=1.6?"#27a844":o<=1.9?"#2980b9":o<=2.1?"#f5a623":o<=2.5?"#e67e22":"#dc3545";return{prob,color,pct}};
+  const dr=`${p}-dr`;
+  const html=`<style>
+.${dr}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${dr}-hdr{background:#FED937;padding:12px 16px;font-size:14px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}
+.${dr}-body{padding:16px 18px;background:#fff}
+.${dr}-row{font-size:14px;color:#333;line-height:1.7;padding:10px 0;border-bottom:1px solid #f0f0f0}
+.${dr}-row:last-child{border-bottom:none}
+.${dr}-bullet{color:#FED937;font-size:16px;margin-right:6px}
+.${dr}-odd{font-weight:700}
+.${dr}-prob{font-weight:700}
+@media(max-width:480px){.${dr}-row{font-size:13px;padding:8px 0}.${dr}-hdr{font-size:13px}}
+</style>
+<div class="${dr}">
+  <div class="${dr}-hdr">📊 Resumo das dicas e probabilidades</div>
+  <div class="${dr}-body">
+${tips.filter(t=>t.name&&t.odd).map(t=>{const c=calc(t.odd);return`    <div class="${dr}-row"><span class="${dr}-bullet">▸</span> ${t.name} — odd <span class="${dr}-odd">${t.odd}</span> (${c.pct}% de chance) | <span class="${dr}-prob">Probabilidade: ${c.prob}</span></div>`}).join("\n")}
+  </div>
+</div>`;
   return<div>
-    <p className="panel-desc">Palpite com probabilidade automática pela odd.</p>
-    <div className="row row-4"><Field label="Gols A" value={sA} onChange={setSA} placeholder="2"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/><Field label="Odd" value={odd} onChange={setOdd} placeholder="7,80"/><Field label="Casa" value={casa} onChange={setCasa} placeholder="Vbet"/></div>
-    {odd&&<div style={{marginBottom:12}}><span className="lbl">Probabilidade: </span><span style={{color:probC,fontWeight:700}}>{prob}</span></div>}
-    <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2 (opcional)" value={p2} onChange={setP2} rows={2}/>
+    <p className="panel-desc">Resumo de dicas com probabilidade automática. Odd → % de chance e nível de risco.</p>
+    {tips.map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 90px auto"}}>
+      <input className="inp" value={t.name} onChange={e=>uT(i,"name",e.target.value)} placeholder="Ex: Mais de 2,5 gols"/>
+      <input className="inp" value={t.odd} onChange={e=>uT(i,"odd",e.target.value)} placeholder="Odd"/>
+      {tips.length>1&&<button className="btn-x" onClick={()=>setTips(tips.filter((_,j)=>j!==i))}>✕</button>}
+    </div>)}
+    <div style={{display:"flex",gap:8,marginTop:4,marginBottom:14}}>
+      <button className="btn btn-ghost" onClick={()=>setTips([...tips,{name:"",odd:""}])}>+ Dica</button>
+    </div>
+    {tips.some(t=>t.odd)&&<div style={{marginBottom:10}}><label className="lbl">Limiares ativos</label><div style={{fontSize:12,color:"#888",lineHeight:1.6}}>≤1,60 Provável · 1,61–1,90 Possível · 1,91–2,10 Risco médio · 2,11–2,50 Arriscado · 2,51–5,00 Bastante arriscado · &gt;5 Muito arriscado</div></div>}
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #FED937"}}>
-      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700}}>Palpite de placar exato UmDois Esportes: {teamA||"[A]"} {sA} x {sB} {teamB||"[B]"}</div>
-      <div style={{padding:16,background:"#f3f4f6"}}>
-        <div style={{fontSize:22,fontWeight:700,marginBottom:4}}>{teamA||"[A]"} {sA} x {sB} {teamB||"[B]"}</div>
-        <div style={{fontSize:13,color:"#666",marginBottom:6}}>Odd {odd} na {casa}</div>
-        {odd&&<span style={{display:"inline-block",fontSize:12,fontWeight:700,padding:"4px 12px",borderRadius:20,color:"#fff",background:probC,marginBottom:14}}>{prob}</span>}
-        <p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>
-        {p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}
+      <div style={{background:"#FED937",padding:"12px 16px",fontSize:14,fontWeight:700}}>📊 Resumo das dicas e probabilidades</div>
+      <div style={{padding:"16px 18px",background:"#fff"}}>
+        {tips.filter(t=>t.name&&t.odd).map((t,i)=>{const c=calc(t.odd);return<div key={i} style={{fontSize:14,color:"#333",lineHeight:1.7,padding:"10px 0",borderBottom:i<tips.filter(x=>x.name&&x.odd).length-1?"1px solid #f0f0f0":"none"}}>
+          <span style={{color:"#FED937",fontSize:16,marginRight:6}}>▸</span>
+          {t.name} — odd <strong>{t.odd}</strong> ({c.pct}% de chance) | <strong style={{color:c.color}}>Probabilidade: {c.prob}</strong>
+        </div>})}
       </div>
     </div>
     <CodeBlock code={html}/>
@@ -399,7 +421,7 @@ function PlacarDicas({p}){
 const SITE_CFG={
   lance:{name:"Lance!",color:"#09C400",widgets:["Palpites Rápidos","Destaque Individual","Palpite Placar"]},
   trivela:{name:"Trivela",color:"#be0022",widgets:["Retrospecto Recente","Palpite Placar"]},
-  umdois:{name:"UmDois",color:"#FED937",widgets:["Resumo Palpites","Raio-X","Você sabia?","Curiosidade","Guia Desempenho","Palpite Placar"]},
+  umdois:{name:"UmDois",color:"#FED937",widgets:["Resumo Palpites","Raio-X","Você sabia?","Curiosidade","Guia Desempenho","Dicas + Probabilidades"]},
   placar:{name:"Placar",color:"#DCFD4E",widgets:["Previsões Rápidas","Raio-X","Curiosidade","Você sabia?","Últimos 5 Jogos","Principais Dicas"]},
 };
 function App(){
@@ -409,7 +431,7 @@ function App(){
     switch(site){
       case"lance":if(w==="Palpites Rápidos")return<LancePalpites p={p}/>;if(w==="Destaque Individual")return<LancePlayer p={p} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<LancePlacar p={p}/>;break;
       case"trivela":if(w==="Retrospecto Recente")return<TrivelaForm p={p} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<TrivPlacar p={p} teamA={teamA} teamB={teamB}/>;break;
-      case"umdois":if(w==="Resumo Palpites")return<UDEResumo p={p}/>;if(w==="Raio-X")return<UDERaioX p={p} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={p} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={p} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Guia Desempenho")return<UDEGuia p={p} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<UDEPlacar p={p} teamA={teamA} teamB={teamB}/>;break;
+      case"umdois":if(w==="Resumo Palpites")return<UDEResumo p={p}/>;if(w==="Raio-X")return<UDERaioX p={p} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={p} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={p} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Guia Desempenho")return<UDEGuia p={p} teamA={teamA} teamB={teamB}/>;if(w==="Dicas + Probabilidades")return<UDEPlacar p={p} teamA={teamA} teamB={teamB}/>;break;
       case"placar":if(w==="Previsões Rápidas")return<PlacarResumo p={p}/>;if(w==="Raio-X")return<PlacarRaioX p={p} teamA={teamA} teamB={teamB}/>;if(w==="Curiosidade")return<PlacarInsight p={p} emoji="📈" title="Curiosidade" id="c"/>;if(w==="Você sabia?")return<PlacarInsight p={p} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Últimos 5 Jogos")return<PlacarForm p={p} teamA={teamA} teamB={teamB}/>;if(w==="Principais Dicas")return<PlacarDicas p={p}/>;break;
     }return null;};
   return<div>

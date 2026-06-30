@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NSN — Gerador de Widgets HTML</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f5f7;--card:#fff;--border:#e0e3e8;
+  --accent:#00ba25;--accent-dk:#009a1e;
+  --ink:#1a1a1a;--muted:#6b7280;
+  --code-bg:#1e1e2e;--code-txt:#cdd6f4;
+  --radius:10px;
+}
+html{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:14px;color:var(--ink);background:var(--bg)}
+body{min-height:100vh}
+
+/* header */
+.hdr{background:#fff;border-bottom:1px solid var(--border);padding:16px 20px 0;position:sticky;top:0;z-index:50}
+.hdr-top{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.hdr-brand{font-size:18px;font-weight:800;color:var(--accent);letter-spacing:-.5px}
+.hdr-title{font-size:14px;font-weight:600;color:var(--ink)}
+
+/* tabs */
+.tabs{display:flex;gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab-btn{padding:10px 16px;border:none;background:transparent;cursor:pointer;font-size:12.5px;font-weight:500;color:var(--muted);white-space:nowrap;border-bottom:3px solid transparent;border-radius:8px 8px 0 0;transition:all .15s}
+.tab-btn:hover{color:var(--ink);background:#f9fafb}
+.tab-btn.active{font-weight:700;color:var(--accent);background:rgba(0,186,37,.06);border-bottom-color:var(--accent)}
+
+/* main */
+.main{max-width:820px;margin:0 auto;padding:24px 16px 60px}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px 20px}
+.panel-desc{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5}
+
+/* form bits */
+.lbl{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;letter-spacing:.5px;text-transform:uppercase}
+.inp{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-family:inherit;background:#fafbfc;outline:none;transition:border .15s}
+.inp:focus{border-color:var(--accent)}
+textarea.inp{resize:vertical}
+.field{margin-bottom:14px}
+.row{display:grid;gap:10px}
+.row-2{grid-template-columns:1fr 1fr}
+.row-3{grid-template-columns:1fr 1fr 1fr}
+.row-val{grid-template-columns:100px 1fr auto}
+
+/* buttons */
+.btn{padding:10px 22px;border-radius:8px;border:none;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent-dk)}
+.btn-primary.copied{background:#067a00}
+.btn-ghost{background:transparent;border:1px dashed var(--border);color:var(--accent);font-weight:600}
+.btn-ghost:hover{border-color:var(--accent)}
+.btn-x{background:#fee;color:#c00;padding:9px 11px;border-radius:6px;border:none;cursor:pointer;font-size:13px}
+
+/* pills */
+.pills{display:flex;gap:4px;flex-wrap:wrap}
+.pill{padding:7px 14px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:500;background:transparent;color:var(--muted);transition:all .12s}
+.pill:hover{background:#f0f0f0}
+.pill.on{background:var(--accent);color:#fff;font-weight:700}
+
+/* site selector cards */
+.sites{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:18px}
+.site-card{padding:12px 10px;border-radius:10px;border:2px solid var(--border);cursor:pointer;text-align:center;transition:all .15s;background:#fff}
+.site-card:hover{border-color:#aaa}
+.site-card.on{border-color:var(--accent);background:rgba(0,186,37,.04)}
+.site-name{font-size:13px;font-weight:700;margin-top:4px}
+.site-dot{width:18px;height:18px;border-radius:50%;margin:0 auto 4px;border:2px solid rgba(0,0,0,.08)}
+
+/* code block */
+.code-wrap{margin-top:16px}
+.code-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.code-pre{background:var(--code-bg);color:var(--code-txt);padding:14px;border-radius:var(--radius);font-size:11.5px;line-height:1.55;overflow:auto;max-height:320px;white-space:pre-wrap;word-break:break-all;font-family:'SF Mono',Monaco,Consolas,'Liberation Mono',monospace}
+
+/* preview label */
+.preview-lbl{margin:16px 0 8px}
+
+/* responsive grid items */
+.grid-item{display:grid;gap:8px;margin-bottom:8px}
+
+@media(max-width:600px){
+  .main{padding:16px 10px 40px}
+  .panel{padding:18px 14px}
+  .row-2,.row-3{grid-template-columns:1fr}
+  .row-val{grid-template-columns:80px 1fr auto}
+  .sites{grid-template-columns:1fr 1fr}
+  .tab-btn{padding:8px 12px;font-size:11.5px}
+}
+</style>
+</head>
+<body>
+
+<div id="root"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.5/babel.min.js"></script>
+
+<script type="text/babel">
+const { useState, useCallback } = React;
+
+/* ═══════════════════════════════════════════
+   SITE CONFIGURATIONS
+   ═══════════════════════════════════════════ */
+const SITES = {
+  lance: {
+    name: "Lance!",
+    color: "#00ba25",
+    colorDark: "#067a00",
+    textOnColor: "#fff",
+    palpiteLabel: "Palpite do Lance!",
+    emoji: "🎯",
+    font: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif",
+  },
+  trivela: {
+    name: "Trivela",
+    color: "#1a1a2e",
+    colorDark: "#0f0f1a",
+    textOnColor: "#fff",
+    palpiteLabel: "Palpite da Trivela",
+    emoji: "🎯",
+    font: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif",
+  },
+  umdois: {
+    name: "UmDois Esportes",
+    color: "#e63946",
+    colorDark: "#b82d38",
+    textOnColor: "#fff",
+    palpiteLabel: "Palpite do UmDois",
+    emoji: "🎯",
+    font: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif",
+  },
+  placar: {
+    name: "Placar",
+    color: "#ff4500",
+    colorDark: "#cc3700",
+    textOnColor: "#fff",
+    palpiteLabel: "Palpite da Placar",
+    emoji: "🎯",
+    font: "-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif",
+  },
+};
+
+/* ═══════════════════════════════════════════
+   REUSABLE COMPONENTS
+   ═══════════════════════════════════════════ */
+function SiteSelector({ site, onChange }) {
+  return (
+    <div>
+      <label className="lbl">Site (branding aplicado ao widget)</label>
+      <div className="sites">
+        {Object.entries(SITES).map(([key, cfg]) => (
+          <div
+            key={key}
+            className={`site-card${site === key ? " on" : ""}`}
+            onClick={() => onChange(key)}
+            style={site === key ? { borderColor: cfg.color } : {}}
+          >
+            <div className="site-dot" style={{ background: cfg.color }} />
+            <div className="site-name">{cfg.name}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Field({ label, value, onChange, placeholder, rows }) {
+  return (
+    <div className="field">
+      <label className="lbl">{label}</label>
+      {rows ? (
+        <textarea className="inp" rows={rows} value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} />
+      ) : (
+        <input className="inp" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder} />
+      )}
+    </div>
+  );
+}
+
+function CopyBtn({ text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+  return <button className={`btn btn-primary${copied ? " copied" : ""}`} onClick={copy}>{copied ? "✓ Copiado!" : "Copiar HTML"}</button>;
+}
+
+function CodeBlock({ code }) {
+  return (
+    <div className="code-wrap">
+      <div className="code-head">
+        <span className="lbl" style={{ margin: 0 }}>HTML gerado</span>
+        <CopyBtn text={code} />
+      </div>
+      <pre className="code-pre">{code}</pre>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   1. PALPITES RÁPIDOS
+   ═══════════════════════════════════════════ */
+function PalpitesRapidos() {
+  const [site, setSite] = useState("lance");
+  const [prefix, setPrefix] = useState("lqs");
+  const [tips, setTips] = useState([
+    { key: "Melhor palpite:", val: "" },
+    { key: "Dica com boas chances:", val: "" },
+    { key: "Aposta de valor:", val: "" },
+    { key: "Palpite de placar exato:", val: "" },
+  ]);
+
+  const updateTip = (i, f, v) => { const n = [...tips]; n[i] = { ...n[i], [f]: v }; setTips(n); };
+  const addTip = () => setTips([...tips, { key: "", val: "" }]);
+  const removeTip = (i) => setTips(tips.filter((_, j) => j !== i));
+
+  const cfg = SITES[site];
+  const p = prefix;
+
+  const html = `<style>
+.${p}{background:#e6ffe6!important;border-left:4px solid ${cfg.color};padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;font-family:${cfg.font};box-sizing:border-box;display:block!important;visibility:visible!important}
+.${p}-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:${cfg.colorDark}!important;margin:0 0 10px;padding:0}
+.${p}-list{margin:0;padding:0;font-size:14px;line-height:1.9;color:#222}
+.${p}-item{display:flex;flex-wrap:wrap;gap:0 6px;margin-bottom:2px}
+.${p}-item:last-child{margin-bottom:0}
+.${p}-key{font-weight:700;flex-shrink:0}
+.${p}-val{margin:0}
+@media(max-width:480px){
+.${p}{padding:14px 16px}
+.${p}-list{font-size:13px;line-height:1.8}
+.${p}-title{font-size:11px}
+}
+</style>
+<aside class="${p}" aria-label="Palpites Rápidos" id="quick-summary" lang="pt-BR">
+<p class="${p}-title">Palpites Rápidos</p>
+<dl class="${p}-list">
+${tips.filter(t => t.key && t.val).map(t => `<div class="${p}-item"><dt class="${p}-key">${t.key}</dt><dd class="${p}-val">${t.val}</dd></div>`).join("\n")}
+</dl>
+</aside>`;
+
+  return (
+    <div>
+      <p className="panel-desc">Bloco <code>&lt;aside&gt;</code> com estrutura <code>&lt;dl&gt;</code> para palpites rápidos. Prefixo CSS por jogo evita colisão.</p>
+      <SiteSelector site={site} onChange={setSite} />
+      <Field label="Prefixo CSS do jogo (ex: mexecu, palcru)" value={prefix} onChange={setPrefix} />
+
+      <label className="lbl">Palpites</label>
+      {tips.map((t, i) => (
+        <div key={i} className="grid-item row-val">
+          <input className="inp" value={t.key} onChange={e => updateTip(i, "key", e.target.value)} placeholder="Rótulo:" />
+          <input className="inp" value={t.val} onChange={e => updateTip(i, "val", e.target.value)} placeholder="Palpite – Odd X,XX na Casa" />
+          {tips.length > 1 && <button className="btn-x" onClick={() => removeTip(i)}>✕</button>}
+        </div>
+      ))}
+      <button className="btn btn-ghost" onClick={addTip} style={{ marginBottom: 18, marginTop: 4 }}>+ Adicionar palpite</button>
+
+      <label className="lbl preview-lbl">Preview</label>
+      <div style={{ background:"#e6ffe6", borderLeft:`4px solid ${cfg.color}`, padding:"16px 20px", borderRadius:"0 6px 6px 0", marginBottom:16 }}>
+        <p style={{ fontSize:12, fontWeight:700, textTransform:"uppercase", letterSpacing:1.5, color:cfg.colorDark, margin:"0 0 10px" }}>Palpites Rápidos</p>
+        {tips.filter(t => t.key && t.val).map((t, i) => (
+          <div key={i} style={{ display:"flex", flexWrap:"wrap", gap:"0 6px", fontSize:14, lineHeight:1.9, marginBottom:2 }}>
+            <strong>{t.key}</strong><span>{t.val}</span>
+          </div>
+        ))}
+      </div>
+      <CodeBlock code={html} />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   2. DESTAQUE INDIVIDUAL
+   ═══════════════════════════════════════════ */
+function PlayerSpotlight() {
+  const [site, setSite] = useState("lance");
+  const [prefix, setPrefix] = useState("mexecu");
+  const [side, setSide] = useState("home");
+  const [eyebrow, setEyebrow] = useState("Jogador destaque · México");
+  const [name, setName] = useState("");
+  const [meta, setMeta] = useState("");
+  const [homeBg, setHomeBg] = useState("#006847");
+  const [awayBg, setAwayBg] = useState("#FFD100");
+  const [stats, setStats] = useState([
+    { val: "", lbl: "" }, { val: "", lbl: "" },
+    { val: "", lbl: "" }, { val: "", lbl: "" },
+  ]);
+
+  const updateStat = (i, f, v) => { const n = [...stats]; n[i] = { ...n[i], [f]: v }; setStats(n); };
+  const cfg = SITES[site];
+  const sp = `${prefix}-sp`;
+  const isAway = side === "away";
+  const bg = isAway ? awayBg : homeBg;
+  const txt = isAway ? "#1a1a1a" : "#fff";
+  const eyeC = isAway ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.6)";
+  const metaC = isAway ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.65)";
+  const statBg = isAway ? "rgba(0,0,0,0.08)" : "rgba(0,0,0,0.15)";
+  const lblC = isAway ? "rgba(0,0,0,0.65)" : "rgba(255,255,255,0.7)";
+
+  const sideClass = isAway ? `${prefix}-away` : `${prefix}-home`;
+
+  const html = `<style>
+.${sp}{font-family:${cfg.font};border-radius:10px;padding:18px 16px 14px;max-width:680px;margin:0 auto 16px;display:block!important;visibility:visible!important}
+.${sp}.${prefix}-home{background:${homeBg}!important}
+.${sp}.${prefix}-away{background:${awayBg}!important}
+.${sp}-eye{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px}
+.${sp}-name{font-size:22px;font-weight:700;color:#fff;line-height:1.15;margin-bottom:4px}
+.${sp}-meta{font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:14px}
+.${sp}-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.${sp}-stat{border-radius:7px;padding:10px 10px 8px;text-align:center;background:rgba(0,0,0,0.15)}
+.${sp}-val{font-size:22px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:4px}
+.${sp}-lbl{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.3}
+.${sp}.${prefix}-away .${sp}-eye{color:rgba(0,0,0,0.45)!important}
+.${sp}.${prefix}-away .${sp}-name{color:#1a1a1a!important}
+.${sp}.${prefix}-away .${sp}-meta{color:rgba(0,0,0,0.55)!important}
+.${sp}.${prefix}-away .${sp}-stat{background:rgba(0,0,0,0.08)}
+.${sp}.${prefix}-away .${sp}-val{color:#1a1a1a!important}
+.${sp}.${prefix}-away .${sp}-lbl{color:rgba(0,0,0,0.65)!important}
+@media(max-width:480px){
+.${sp}-name{font-size:18px}
+.${sp}-val{font-size:18px}
+.${sp}{padding:14px 12px 12px}
+}
+</style>
+<div class="${sp} ${sideClass}">
+  <div class="${sp}-eye">${eyebrow}</div>
+  <div class="${sp}-name">${name}</div>
+  <div class="${sp}-meta">${meta}</div>
+  <div class="${sp}-grid">
+${stats.filter(s => s.val).map(s => `    <div class="${sp}-stat"><div class="${sp}-val">${s.val}</div><div class="${sp}-lbl">${s.lbl}</div></div>`).join("\n")}
+  </div>
+</div>`;
+
+  return (
+    <div>
+      <p className="panel-desc">Card de destaque individual — home (fundo escuro) ou away (fundo claro). Cores dos times configuráveis.</p>
+      <SiteSelector site={site} onChange={setSite} />
+      <div className="row row-2">
+        <Field label="Prefixo CSS do jogo" value={prefix} onChange={setPrefix} />
+        <div className="field">
+          <label className="lbl">Lado</label>
+          <div className="pills">
+            <button className={`pill${side==="home"?" on":""}`} onClick={() => setSide("home")}>Home</button>
+            <button className={`pill${side==="away"?" on":""}`} onClick={() => setSide("away")}>Away</button>
+          </div>
+        </div>
+      </div>
+      <div className="row row-2">
+        <Field label="Cor fundo home (hex)" value={homeBg} onChange={setHomeBg} />
+        <Field label="Cor fundo away (hex)" value={awayBg} onChange={setAwayBg} />
+      </div>
+      <Field label="Eyebrow" value={eyebrow} onChange={setEyebrow} placeholder="Jogador destaque · Time" />
+      <Field label="Nome do jogador" value={name} onChange={setName} />
+      <Field label="Meta (posição · clube)" value={meta} onChange={setMeta} placeholder="Volante · Fenerbahçe" />
+
+      <label className="lbl">Estatísticas (4 cards)</label>
+      {stats.map((s, i) => (
+        <div key={i} className="grid-item" style={{ gridTemplateColumns:"100px 1fr", display:"grid", gap:8, marginBottom:8 }}>
+          <input className="inp" value={s.val} onChange={e => updateStat(i, "val", e.target.value)} placeholder="Valor" />
+          <input className="inp" value={s.lbl} onChange={e => updateStat(i, "lbl", e.target.value)} placeholder="Descrição da stat" />
+        </div>
+      ))}
+
+      <label className="lbl preview-lbl">Preview</label>
+      <div style={{ background:bg, borderRadius:10, padding:"18px 16px 14px", maxWidth:680, margin:"0 auto 16px" }}>
+        <div style={{ fontSize:10, fontWeight:700, letterSpacing:1.6, textTransform:"uppercase", color:eyeC, marginBottom:6 }}>{eyebrow}</div>
+        <div style={{ fontSize:22, fontWeight:700, color:txt, lineHeight:1.15, marginBottom:4 }}>{name || "Nome do jogador"}</div>
+        <div style={{ fontSize:12, color:metaC, marginBottom:14 }}>{meta || "Posição · Clube"}</div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:8 }}>
+          {stats.filter(s => s.val).map((s, i) => (
+            <div key={i} style={{ borderRadius:7, padding:"10px 10px 8px", textAlign:"center", background:statBg }}>
+              <div style={{ fontSize:22, fontWeight:700, color:txt, lineHeight:1.1, marginBottom:4 }}>{s.val}</div>
+              <div style={{ fontSize:11, color:lblC, lineHeight:1.3 }}>{s.lbl}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <CodeBlock code={html} />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   3. PROGNÓSTICO DE PLACAR
+   ═══════════════════════════════════════════ */
+function ScorePrediction() {
+  const [site, setSite] = useState("lance");
+  const [prefix, setPrefix] = useState("mexecu");
+  const [score, setScore] = useState("");
+  const [context, setContext] = useState("");
+  const [bullets, setBullets] = useState(["", "", "", ""]);
+
+  const updateBullet = (i, v) => { const n = [...bullets]; n[i] = v; setBullets(n); };
+  const addBullet = () => setBullets([...bullets, ""]);
+  const removeBullet = (i) => setBullets(bullets.filter((_, j) => j !== i));
+
+  const cfg = SITES[site];
+  const pw = `${prefix}-pw`;
+
+  const html = `<style>
+.${pw}{font-family:${cfg.font};background:${cfg.color}!important;border-radius:12px;padding:20px 22px 18px;max-width:680px;margin:0 auto;display:block!important;visibility:visible!important}
+.${pw}-eye{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:8px}
+.${pw}-score{font-size:28px;font-weight:700;color:#fff;margin-bottom:16px;line-height:1.2}
+.${pw}-card{background:#fff;border-radius:8px;padding:16px 18px 14px}
+.${pw}-ctx{font-size:13px;color:#333;line-height:1.6;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #f0f0f0}
+.${pw}-list{list-style:none;padding:0;margin:0 0 14px}
+.${pw}-list li{font-size:13px;color:#333;line-height:1.6;padding:6px 0 6px 18px;border-bottom:1px solid #f0f0f0;position:relative}
+.${pw}-list li:last-child{border-bottom:none}
+.${pw}-list li::before{content:"\\2022";position:absolute;left:4px;color:${cfg.color};font-size:16px;line-height:1.4}
+.${pw}-list li strong{color:${cfg.color}}
+@media(max-width:480px){
+.${pw}{padding:16px 16px 14px}
+.${pw}-score{font-size:22px}
+.${pw}-ctx,.${pw}-list li{font-size:12px}
+}
+</style>
+<div class="${pw}">
+  <div class="${pw}-eye">${cfg.emoji} ${cfg.palpiteLabel}</div>
+  <div class="${pw}-score">${score}</div>
+  <div class="${pw}-card">
+    <div class="${pw}-ctx">${context}</div>
+    <ul class="${pw}-list">
+${bullets.filter(b => b).map(b => `      <li>${b}</li>`).join("\n")}
+    </ul>
+  </div>
+</div>`;
+
+  return (
+    <div>
+      <p className="panel-desc">Bloco colorido de prognóstico com card branco interno. A cor do bloco e dos destaques adapta ao site selecionado.</p>
+      <SiteSelector site={site} onChange={setSite} />
+      <Field label="Prefixo CSS do jogo" value={prefix} onChange={setPrefix} />
+      <Field label="Placar + Odd" value={score} onChange={setScore} placeholder="Time A 2 x 0 Time B – Odd X,XX na Casa" />
+      <Field label="Contexto (parágrafo branco)" value={context} onChange={setContext} rows={3} placeholder="Justificativa do palpite..." />
+
+      <label className="lbl">Bullets de apoio (use &lt;strong&gt; para destaque colorido)</label>
+      {bullets.map((b, i) => (
+        <div key={i} style={{ display:"grid", gridTemplateColumns:"1fr auto", gap:8, marginBottom:8 }}>
+          <input className="inp" value={b} onChange={e => updateBullet(i, e.target.value)} placeholder={`Bullet ${i+1}`} />
+          {bullets.length > 1 && <button className="btn-x" onClick={() => removeBullet(i)}>✕</button>}
+        </div>
+      ))}
+      <button className="btn btn-ghost" onClick={addBullet} style={{ marginBottom:18, marginTop:4 }}>+ Adicionar bullet</button>
+
+      <label className="lbl preview-lbl">Preview</label>
+      <div style={{ background:cfg.color, borderRadius:12, padding:"20px 22px 18px", maxWidth:680, margin:"0 auto 16px" }}>
+        <div style={{ fontSize:11, fontWeight:700, letterSpacing:1.8, textTransform:"uppercase", color:"rgba(255,255,255,0.75)", marginBottom:8 }}>{cfg.emoji} {cfg.palpiteLabel}</div>
+        <div style={{ fontSize:28, fontWeight:700, color:"#fff", marginBottom:16, lineHeight:1.2 }}>{score || "Time A 2 x 0 Time B"}</div>
+        <div style={{ background:"#fff", borderRadius:8, padding:"16px 18px 14px" }}>
+          <div style={{ fontSize:13, color:"#333", lineHeight:1.6, paddingBottom:12, marginBottom:12, borderBottom:"1px solid #f0f0f0" }}>{context || "Contexto..."}</div>
+          <ul style={{ listStyle:"none", padding:0, margin:0 }}>
+            {bullets.filter(b => b).map((b, i) => (
+              <li key={i} style={{ fontSize:13, color:"#333", lineHeight:1.6, padding:"6px 0 6px 18px", borderBottom: i < bullets.filter(x=>x).length-1 ? "1px solid #f0f0f0" : "none", position:"relative" }}>
+                <span style={{ position:"absolute", left:4, color:cfg.color, fontSize:16, lineHeight:1.4 }}>•</span>
+                <span dangerouslySetInnerHTML={{ __html: b }} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <CodeBlock code={html} />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   4. IFRAME + DISCLAIMER
+   ═══════════════════════════════════════════ */
+function IframeBlock() {
+  const [site, setSite] = useState("lance");
+  const [url, setUrl] = useState("");
+  const [time, setTime] = useState("");
+  const [date, setDate] = useState("");
+  const [variant, setVariant] = useState("odds");
+  const [linkUrl, setLinkUrl] = useState("https://www.lance.com.br/sites-de-apostas/melhores-sites-de-apostas-para-a-copa-do-mundo.html");
+  const [linkText, setLinkText] = useState("melhores casas de aposta da Copa do Mundo");
+
+  const cfg = SITES[site];
+
+  const disclaimer = variant === "odds"
+    ? `<p><strong>+18. Aposte com responsabilidade. Odds coletadas às ${time} (${date}) nas <a href="${linkUrl}" target="_blank" rel="noreferrer noopener">${linkText}</a>.</strong></p>`
+    : `<p><strong>+18. Aposte com responsabilidade. Odds coletadas às ${time}. (${date}) O ${cfg.name} recomenda apenas <a href="${linkUrl}" target="_blank" rel="noreferrer noopener">${linkText}</a>.</strong></p>`;
+
+  const html = `<iframe src="${url}"></iframe>
+
+${disclaimer}`;
+
+  return (
+    <div>
+      <p className="panel-desc">Iframe de odds + parágrafo de disclaimer. Pronto para colar direto no bloco HTML do Gutenberg.</p>
+      <SiteSelector site={site} onChange={setSite} />
+      <Field label="URL do iframe" value={url} onChange={setUrl} placeholder="https://lance.swiftly-candle.ovh/..." />
+      <div className="row row-2">
+        <Field label="Horário coleta" value={time} onChange={setTime} placeholder="22h00" />
+        <Field label="Data (DD/MM)" value={date} onChange={setDate} placeholder="30/06" />
+      </div>
+      <div className="field">
+        <label className="lbl">Variante</label>
+        <div className="pills">
+          <button className={`pill${variant==="odds"?" on":""}`} onClick={() => setVariant("odds")}>Melhores casas</button>
+          <button className={`pill${variant==="legal"?" on":""}`} onClick={() => setVariant("legal")}>Casas legalizadas</button>
+        </div>
+      </div>
+      <Field label="URL do link" value={linkUrl} onChange={setLinkUrl} />
+      <Field label="Texto âncora" value={linkText} onChange={setLinkText} />
+      <CodeBlock code={html} />
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   MAIN APP
+   ═══════════════════════════════════════════ */
+const TABS = [
+  { id: "palpites", label: "Palpites Rápidos", icon: "⚡" },
+  { id: "player", label: "Destaque Individual", icon: "⭐" },
+  { id: "score", label: "Prognóstico Placar", icon: "🎯" },
+  { id: "iframe", label: "Iframe + Disclaimer", icon: "📦" },
+];
+
+function App() {
+  const [tab, setTab] = useState("palpites");
+
+  return (
+    <div>
+      <div className="hdr">
+        <div className="hdr-top">
+          <span className="hdr-brand">NSN</span>
+          <span className="hdr-title">Gerador de Widgets HTML</span>
+        </div>
+        <div className="tabs">
+          {TABS.map(t => (
+            <button key={t.id} className={`tab-btn${tab===t.id?" active":""}`} onClick={() => setTab(t.id)}>
+              {t.icon} {t.label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="main">
+        <div className="panel">
+          {tab === "palpites" && <PalpitesRapidos />}
+          {tab === "player" && <PlayerSpotlight />}
+          {tab === "score" && <ScorePrediction />}
+          {tab === "iframe" && <IframeBlock />}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

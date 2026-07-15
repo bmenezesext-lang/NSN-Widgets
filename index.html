@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>NSN — Gerador de Widgets HTML</title>
+<title>NSN — Gerador de Widgets HTML v3</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#f4f5f7;--card:#fff;--border:#e0e3e8;--ink:#1a1a1a;--muted:#6b7280;--code-bg:#1e1e2e;--code-txt:#cdd6f4;--radius:10px}
@@ -12,35 +12,35 @@ body{min-height:100vh}
 .hdr{background:#fff;border-bottom:1px solid var(--border);padding:14px 20px 0;position:sticky;top:0;z-index:50}
 .hdr-top{display:flex;align-items:baseline;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .hdr-brand{font-size:18px;font-weight:800;letter-spacing:-.5px}
-.hdr-title{font-size:14px;font-weight:600;color:var(--ink)}
+.hdr-title{font-size:14px;font-weight:600}
 .site-tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}.site-tabs::-webkit-scrollbar{display:none}
-.site-tab{padding:10px 20px;border:none;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;border-radius:8px 8px 0 0;transition:all .15s;background:transparent;color:var(--muted)}.site-tab:hover{background:#f0f0f0}.site-tab.on{border-bottom-color:currentColor}
+.site-tab{padding:10px 18px;border:none;cursor:pointer;font-size:12.5px;font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;border-radius:8px 8px 0 0;transition:all .15s;background:transparent;color:var(--muted)}.site-tab:hover{background:#f0f0f0}.site-tab.on{border-bottom-color:currentColor}
 .main{max-width:860px;margin:0 auto;padding:20px 14px 60px}
-.team-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:end}
-.team-bar .prefix-display{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;padding:10px 12px;background:#f4f5f7;border-radius:8px;text-align:center;border:1px dashed var(--border)}
-.widget-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:16px}
-.w-tab{padding:8px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:12px;font-weight:500;background:#fff;color:var(--muted);transition:all .12s}.w-tab:hover{border-color:#aaa}.w-tab.on{font-weight:700;color:#fff;border-color:transparent}
-.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px 18px}
-.panel-desc{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.team-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:end}
+.prefix-display{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;padding:9px 12px;background:#f4f5f7;border-radius:8px;text-align:center;border:1px dashed var(--border)}
+.widget-tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:14px}
+.w-tab{padding:7px 13px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:12px;font-weight:500;background:#fff;color:var(--muted);transition:all .12s}.w-tab:hover{border-color:#aaa}.w-tab.on{font-weight:700;color:#fff;border-color:transparent}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px 16px}
+.panel-desc{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5}
 .lbl{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:4px;letter-spacing:.4px;text-transform:uppercase}
-.inp{width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-family:inherit;background:#fafbfc;outline:none;transition:border .15s}.inp:focus{border-color:#888}
+.inp{width:100%;padding:8px 11px;border-radius:8px;border:1px solid var(--border);font-size:13px;font-family:inherit;background:#fafbfc;outline:none;transition:border .15s}.inp:focus{border-color:#888}
 textarea.inp{resize:vertical}
-.field{margin-bottom:12px}
+.field{margin-bottom:11px}
 .row{display:grid;gap:10px}.row-2{grid-template-columns:1fr 1fr}.row-3{grid-template-columns:1fr 1fr 1fr}.row-4{grid-template-columns:1fr 1fr 1fr 1fr}
-.btn{padding:9px 20px;border-radius:8px;border:none;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s}
+.btn{padding:8px 18px;border-radius:8px;border:none;font-weight:700;font-size:13px;cursor:pointer;transition:all .15s}
 .btn-copy{background:#222;color:#fff}.btn-copy:hover{background:#000}.btn-copy.ok{background:#067a00}
 .btn-ghost{background:transparent;border:1px dashed var(--border);color:var(--ink);font-weight:600;font-size:12px}.btn-ghost:hover{border-color:#888}
-.btn-x{background:#fee;color:#c00;padding:8px 10px;border-radius:6px;border:none;cursor:pointer;font-size:12px}
-.colors{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.color-dot{width:32px;height:32px;border-radius:8px;cursor:pointer;border:3px solid transparent;transition:all .12s}.color-dot:hover{transform:scale(1.1)}.color-dot.on{border-color:var(--ink);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
-.code-wrap{margin-top:16px}.code-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.code-pre{background:var(--code-bg);color:var(--code-txt);padding:14px;border-radius:var(--radius);font-size:11px;line-height:1.5;overflow:auto;max-height:300px;white-space:pre-wrap;word-break:break-all;font-family:'SF Mono',Monaco,Consolas,monospace}
-.preview-lbl{margin:14px 0 8px}
-.preview-box{border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:4px;background:#fafbfc}
-.grid-row{display:grid;gap:8px;margin-bottom:8px}
-.sep{border:none;border-top:1px solid var(--border);margin:18px 0}
+.btn-x{background:#fee;color:#c00;padding:7px 9px;border-radius:6px;border:none;cursor:pointer;font-size:12px}
+.colors{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.color-dot{width:30px;height:30px;border-radius:8px;cursor:pointer;border:3px solid transparent;transition:all .12s}.color-dot:hover{transform:scale(1.1)}.color-dot.on{border-color:var(--ink);box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink)}
+.code-wrap{margin-top:14px}.code-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.code-pre{background:var(--code-bg);color:var(--code-txt);padding:12px;border-radius:var(--radius);font-size:11px;line-height:1.5;overflow:auto;max-height:280px;white-space:pre-wrap;word-break:break-all;font-family:'SF Mono',Monaco,Consolas,monospace}
+.preview-lbl{margin:12px 0 6px}
+.preview-box{border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:4px;background:#fafbfc;overflow:hidden}
+.grid-row{display:grid;gap:8px;margin-bottom:7px}
+.sep{border:none;border-top:1px solid var(--border);margin:14px 0}
 .pill{padding:6px 12px;border-radius:7px;border:1px solid var(--border);cursor:pointer;font-size:12px;font-weight:500;background:#fff;color:var(--muted);transition:all .12s}.pill:hover{border-color:#888}.pill.on{color:#fff;border-color:transparent;font-weight:700}
-@media(max-width:600px){.main{padding:14px 8px 40px}.panel{padding:16px 12px}.team-bar{grid-template-columns:1fr}.row-2,.row-3,.row-4{grid-template-columns:1fr}.site-tab{padding:8px 14px;font-size:12px}}
+@media(max-width:600px){.main{padding:12px 8px 40px}.panel{padding:14px 10px}.team-bar{grid-template-columns:1fr}.row-2,.row-3,.row-4{grid-template-columns:1fr}.site-tab{padding:8px 12px;font-size:11.5px}}
 </style>
 </head>
 <body>
@@ -49,398 +49,480 @@ textarea.inp{resize:vertical}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.5/babel.min.js"></script>
 <script type="text/babel">
-const {useState}=React;
+const{useState}=React;
 const strip=s=>s.normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z]/gi,"").toLowerCase();
-const makePrefix=(a,b)=>(strip(a).slice(0,3)+strip(b).slice(0,3))||"prefix";
+const mkPfx=(a,b)=>(strip(a).slice(0,3)+strip(b).slice(0,3))||"prefix";
 const FNT="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif";
-const TC=[{n:"Vermelho",h:"#c0392b"},{n:"Azul",h:"#2980b9"},{n:"Azul Esc",h:"#1a1a4e"},{n:"Verde",h:"#006847"},{n:"Amarelo",h:"#FFD100"},{n:"Laranja",h:"#e67e22"},{n:"Branco",h:"#f0f0f0"},{n:"Preto",h:"#1a1a1a"},{n:"Grená",h:"#800020"},{n:"Celeste",h:"#6CABDD"}];
+const TC=[{n:"Vermelho",h:"#c0392b"},{n:"Azul",h:"#2980b9"},{n:"Azul Esc",h:"#1a1a4e"},{n:"Verde",h:"#006847"},{n:"Amarelo",h:"#FFD100"},{n:"Laranja",h:"#e67e22"},{n:"Rosa",h:"#F8C8DC"},{n:"Preto",h:"#1a1a1a"},{n:"Grená",h:"#800020"},{n:"Celeste",h:"#6CABDD"}];
 const isDk=h=>{const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return(r*299+g*587+b*114)/1000<140};
+const oddPct=raw=>{const o=parseFloat((raw||"0").replace(",","."));return o>0?Math.round((1/o)*100):0};
 
 function Field({label,value,onChange,placeholder,rows,style}){return<div className="field" style={style}><label className="lbl">{label}</label>{rows?<textarea className="inp" rows={rows} value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder}/>:<input className="inp" value={value} onChange={e=>onChange(e.target.value)} placeholder={placeholder}/>}</div>}
 function CopyBtn({text}){const[ok,set]=useState(false);return<button className={`btn btn-copy${ok?" ok":""}`} onClick={()=>{navigator.clipboard.writeText(text);set(true);setTimeout(()=>set(false),2000)}}>{ok?"✓ Copiado":"Copiar HTML"}</button>}
 function CodeBlock({code}){return<div className="code-wrap"><div className="code-head"><span className="lbl" style={{margin:0}}>HTML gerado</span><CopyBtn text={code}/></div><pre className="code-pre">{code}</pre></div>}
-function TeamBar({a,b,onA,onB,prefix}){return<div className="team-bar"><Field label="Time A (casa)" value={a} onChange={onA} placeholder="México"/><Field label="Time B (fora)" value={b} onChange={onB} placeholder="Equador"/><div><label className="lbl">Prefixo gerado</label><div className="prefix-display">{prefix}</div></div></div>}
-function ColorPick({label,value,onChange}){return<div className="field"><label className="lbl">{label}</label><div className="colors">{TC.map(c=><div key={c.h} className={`color-dot${value===c.h?" on":""}`} style={{background:c.h}} title={c.n} onClick={()=>onChange(c.h)}/>)}<input className="inp" value={value} onChange={e=>onChange(e.target.value)} style={{width:90}} placeholder="#hex"/></div></div>}
+function TeamBar({a,b,onA,onB,pfx,pA,pB}){return<div className="team-bar"><Field label="Time A (casa)" value={a} onChange={onA} placeholder={pA||"Corinthians"}/><Field label="Time B (fora)" value={b} onChange={onB} placeholder={pB||"Palmeiras"}/><div><label className="lbl">Prefixo</label><div className="prefix-display">{pfx}</div></div></div>}
+function ColorPick({label,value,onChange}){return<div className="field"><label className="lbl">{label}</label><div className="colors">{TC.map(c=><div key={c.h} className={`color-dot${value===c.h?" on":""}`} style={{background:c.h}} title={c.n} onClick={()=>onChange(c.h)}/>)}<input className="inp" value={value} onChange={e=>onChange(e.target.value)} style={{width:80,marginLeft:4}} placeholder="#hex"/></div></div>}
 
-/* ═══ LANCE ═══ */
-function LancePalpites({p}){
-  const[tips,setTips]=useState([{key:"Melhor palpite:",val:""},{key:"Dica com boas chances:",val:""},{key:"Aposta de valor:",val:""},{key:"Palpite de placar exato:",val:""}]);
-  const u=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};
-  const html=`<style>\n.${p}{background:#e6ffe6!important;border-left:4px solid #09C400;padding:16px 20px;margin:0 0 24px;border-radius:0 6px 6px 0;font-family:${FNT};box-sizing:border-box;display:block!important;visibility:visible!important}\n.${p}-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#067a00!important;margin:0 0 10px;padding:0}\n.${p}-list{margin:0;padding:0;font-size:14px;line-height:1.9;color:#222}\n.${p}-item{display:flex;flex-wrap:wrap;gap:0 6px;margin-bottom:2px}\n.${p}-item:last-child{margin-bottom:0}\n.${p}-key{font-weight:700;flex-shrink:0}\n.${p}-val{margin:0}\n@media(max-width:480px){.${p}{padding:14px 16px}.${p}-list{font-size:13px;line-height:1.8}.${p}-title{font-size:11px}}\n</style>\n<aside class="${p}" aria-label="Palpites Rápidos" id="quick-summary" lang="pt-BR">\n<p class="${p}-title">Palpites Rápidos</p>\n<dl class="${p}-list">\n${tips.filter(t=>t.val).map(t=>`<div class="${p}-item"><dt class="${p}-key">${t.key}</dt><dd class="${p}-val">${t.val}</dd></div>`).join("\n")}\n</dl>\n</aside>`;
+/* ═══════════════════════════════════════════════════════
+   1. PALPITES (multi-site: Lance / Trivela / UmDois)
+   ═══════════════════════════════════════════════════════ */
+const PALP_SITES={lance:{name:"Lance!",color:"#09C400",txtH:"#fff",icon:"⚽"},trivela:{name:"Trivela",color:"#be0022",txtH:"#fff",icon:"⚽"},umdois:{name:"UmDois",color:"#FED937",txtH:"#000",icon:"⚽"}};
+
+function Palpites({teamA,teamB,pfx}){
+  const[site,setSite]=useState("lance");
+  const[count,setCount]=useState(3);
+  const[tips,setTips]=useState([{name:"",odds:""},{name:"",odds:""},{name:"",odds:""}]);
+  const uT=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};
+  const adjustCount=c=>{setCount(c);const n=[...tips];while(n.length<c)n.push({name:"",odds:""});setTips(n.slice(0,c))};
+  const s=PALP_SITES[site];const tp=`${pfx}-tip`;
+  const filled=tips.slice(0,count).filter(t=>t.name&&t.odds);
+  const barBg=site==="umdois"?"#e0e0e0":"#e0e0e0";
+  const html=`<style>
+.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid ${s.color};display:block!important;visibility:visible!important}
+.${tp}-hdr{background:${s.color};padding:12px 16px;font-size:14px;font-weight:700;color:${s.txtH};text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:8px}
+.${tp}-sub{display:flex;justify-content:space-between;padding:8px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#888;border-bottom:1px solid #eee}
+.${tp}-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0}
+.${tp}-row:last-child{border-bottom:none}
+.${tp}-name{flex:1;font-size:14px;font-weight:500;color:#333}
+.${tp}-pct{font-size:14px;font-weight:700;color:#333;min-width:40px;text-align:right}
+.${tp}-bar{width:80px;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;flex-shrink:0}
+.${tp}-fill{height:100%;background:${s.color};border-radius:4px;transition:width .3s}
+@media(max-width:480px){.${tp}-row{gap:8px;padding:10px 14px}.${tp}-name{font-size:13px}.${tp}-bar{width:60px}.${tp}-hdr{font-size:12px}}
+</style>
+<div class="${tp}">
+  <div class="${tp}-hdr">${s.icon} Palpites para ${teamA||"Time A"} x ${teamB||"Time B"}</div>
+  <div class="${tp}-sub"><span>Palpite</span><span>Probabilidade estimada</span></div>
+${filled.map(t=>{const pct=oddPct(t.odds);return`  <div class="${tp}-row"><div class="${tp}-name">${t.name}</div><div class="${tp}-pct">${pct}%</div><div class="${tp}-bar"><div class="${tp}-fill" style="width:${pct}%"></div></div></div>`}).join("\n")}
+</div>`;
   return<div>
-    <p className="panel-desc">Bloco verde com palpites rápidos. Estrutura dl/dt/dd.</p>
-    {tips.map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"180px 1fr auto"}}><input className="inp" value={t.key} onChange={e=>u(i,"key",e.target.value)} placeholder="Rótulo:"/><input className="inp" value={t.val} onChange={e=>u(i,"val",e.target.value)} placeholder="Palpite – Odd X,XX na Casa"/>{tips.length>1&&<button className="btn-x" onClick={()=>setTips(tips.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setTips([...tips,{key:"",val:""}])} style={{marginTop:4,marginBottom:14}}>+ Adicionar</button>
+    <p className="panel-desc">Card de palpites para futebol. Selecione o site, preencha nome + odd média de cada palpite.</p>
+    <div className="field"><label className="lbl">Site</label><div style={{display:"flex",gap:4}}>{Object.entries(PALP_SITES).map(([k,v])=><button key={k} className={`pill${site===k?" on":""}`} style={site===k?{background:v.color,color:v.txtH}:{}} onClick={()=>setSite(k)}>{v.name}</button>)}</div></div>
+    <div className="field"><label className="lbl">Nº de palpites</label><div style={{display:"flex",gap:4}}>{[1,2,3].map(n=><button key={n} className={`pill${count===n?" on":""}`} style={count===n?{background:s.color,color:s.txtH}:{}} onClick={()=>adjustCount(n)}>{n}</button>)}</div></div>
+    {tips.slice(0,count).map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 100px"}}>
+      <input className="inp" value={t.name} onChange={e=>uT(i,"name",e.target.value)} placeholder={["Vitória do Corinthians","Menos de 2,5 gols","Ambos marcam"][i]||`Palpite ${i+1}`}/>
+      <input className="inp" value={t.odds} onChange={e=>uT(i,"odds",e.target.value)} placeholder="Odd média"/>
+    </div>)}
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0}}><div style={{background:"#e6ffe6",borderLeft:"4px solid #09C400",padding:"16px 20px",borderRadius:"0 6px 6px 0"}}>
-      <p style={{fontSize:12,fontWeight:700,textTransform:"uppercase",letterSpacing:1.5,color:"#067a00",margin:"0 0 10px"}}>Palpites Rápidos</p>
-      {tips.filter(t=>t.val).map((t,i)=><div key={i} style={{display:"flex",flexWrap:"wrap",gap:"0 6px",fontSize:14,lineHeight:1.9}}><strong>{t.key}</strong><span>{t.val}</span></div>)}
-    </div></div>
+    <div className="preview-box" style={{padding:0}}>
+      <div style={{background:s.color,padding:"12px 16px",fontSize:14,fontWeight:700,color:s.txtH,textTransform:"uppercase",letterSpacing:.8,display:"flex",alignItems:"center",gap:8}}>{s.icon} Palpites para {teamA||"Time A"} x {teamB||"Time B"}</div>
+      <div style={{display:"flex",justifyContent:"space-between",padding:"8px 16px",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:.6,color:"#888",borderBottom:"1px solid #eee"}}><span>Palpite</span><span>Probabilidade estimada</span></div>
+      {filled.map((t,i)=>{const pct=oddPct(t.odds);return<div key={i} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",borderBottom:i<filled.length-1?"1px solid #f0f0f0":"none"}}>
+        <div style={{flex:1,fontSize:14,fontWeight:500,color:"#333"}}>{t.name}</div>
+        <div style={{fontSize:14,fontWeight:700,color:"#333",minWidth:40,textAlign:"right"}}>{pct}%</div>
+        <div style={{width:80,height:8,background:"#e0e0e0",borderRadius:4,overflow:"hidden",flexShrink:0}}><div style={{height:"100%",width:`${pct}%`,background:s.color,borderRadius:4}}/></div>
+      </div>})}
+    </div>
     <CodeBlock code={html}/>
   </div>;
 }
 
-/* Lance Destaque Individual — bloco único com os dois jogadores */
+/* ═══════════════════════════════════════════════════════
+   2. LANCE! — Destaque Individual + Palpite Placar
+   ═══════════════════════════════════════════════════════ */
 function LancePlayer({p,teamA,teamB}){
   const[homeBg,setHomeBg]=useState("#006847");const[awayBg,setAwayBg]=useState("#FFD100");
-  const[nameA,setNameA]=useState("");const[metaA,setMetaA]=useState("");
-  const[nameB,setNameB]=useState("");const[metaB,setMetaB]=useState("");
-  const[statsA,setStatsA]=useState([{val:"",lbl:""},{val:"",lbl:""},{val:"",lbl:""},{val:"",lbl:""}]);
-  const[statsB,setStatsB]=useState([{val:"",lbl:""},{val:"",lbl:""},{val:"",lbl:""},{val:"",lbl:""}]);
-  const uA=(i,f,v)=>{const n=[...statsA];n[i]={...n[i],[f]:v};setStatsA(n)};
-  const uB=(i,f,v)=>{const n=[...statsB];n[i]={...n[i],[f]:v};setStatsB(n)};
+  const[nA,setNA]=useState("");const[infoA,setInfoA]=useState("");
+  const[nB,setNB]=useState("");const[infoB,setInfoB]=useState("");
+  const[sA,setSA]=useState([{v:"",l:""},{v:"",l:""},{v:"",l:""},{v:"",l:""}]);
+  const[sB,setSB]=useState([{v:"",l:""},{v:"",l:""},{v:"",l:""},{v:"",l:""}]);
+  const uA=(i,f,val)=>{const n=[...sA];n[i]={...n[i],[f]:val};setSA(n)};
+  const uB=(i,f,val)=>{const n=[...sB];n[i]={...n[i],[f]:val};setSB(n)};
   const sp=`${p}-sp`;
-  const renderCard=(bg,label,name,meta,stats)=>{
-    const dk=isDk(bg);const txt=dk?"#fff":"#1a1a1a";const mC=dk?"rgba(255,255,255,0.65)":"rgba(0,0,0,0.55)";
-    const eC=dk?"rgba(255,255,255,0.6)":"rgba(0,0,0,0.45)";const sBg=dk?"rgba(0,0,0,0.15)":"rgba(0,0,0,0.08)";const lC=dk?"rgba(255,255,255,0.7)":"rgba(0,0,0,0.65)";
-    return<div style={{background:bg,borderRadius:10,padding:"18px 16px 14px",maxWidth:680,margin:"0 auto 8px"}}>
-      <div style={{fontSize:10,fontWeight:700,letterSpacing:1.6,textTransform:"uppercase",color:eC,marginBottom:6}}>{label}</div>
-      <div style={{fontSize:22,fontWeight:700,color:txt,lineHeight:1.15,marginBottom:4}}>{name||"Nome"}</div>
-      <div style={{fontSize:12,color:mC,marginBottom:14}}>{meta||"Posição · Clube"}</div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
-        {stats.filter(s=>s.val).map((s,i)=><div key={i} style={{borderRadius:7,padding:"10px 10px 8px",textAlign:"center",background:sBg}}>
-          <div style={{fontSize:22,fontWeight:700,color:txt,lineHeight:1.1,marginBottom:4}}>{s.val}</div>
-          <div style={{fontSize:11,color:lC,lineHeight:1.3}}>{s.lbl}</div>
+  const cardPrev=(bg,label,name,info,stats)=>{const dk=isDk(bg);const tx=dk?"#fff":"#1a1a1a";const mt=dk?"rgba(255,255,255,0.6)":"rgba(0,0,0,0.45)";const mc=dk?"rgba(255,255,255,0.65)":"rgba(0,0,0,0.55)";const sb=dk?"rgba(0,0,0,0.15)":"rgba(0,0,0,0.08)";const lc=dk?"rgba(255,255,255,0.7)":"rgba(0,0,0,0.65)";
+    return<div style={{background:bg,borderRadius:10,padding:"16px 14px 12px",maxWidth:680,margin:"0 auto 8px"}}>
+      <div style={{fontSize:10,fontWeight:700,letterSpacing:1.6,textTransform:"uppercase",color:mt,marginBottom:5}}>{label}</div>
+      <div style={{fontSize:20,fontWeight:700,color:tx,lineHeight:1.15,marginBottom:3}}>{name||"Nome"}</div>
+      <div style={{fontSize:12,color:mc,marginBottom:12}}>{info||"Idade · Posição · Clube"}</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:7}}>
+        {stats.filter(s=>s.v).map((s,i)=><div key={i} style={{borderRadius:7,padding:"9px 8px 7px",textAlign:"center",background:sb}}>
+          <div style={{fontSize:20,fontWeight:700,color:tx,lineHeight:1.1,marginBottom:3}}>{s.v}</div>
+          <div style={{fontSize:10,color:lc,lineHeight:1.3}}>{s.l}</div>
         </div>)}
       </div>
-    </div>;
-  };
-  const cardHTML=(cls,bg,altBg,label,name,meta,stats)=>{
-    const dk=isDk(bg);
-    return`<div class="${sp} ${sp}-${cls}">
-  <div class="${sp}-eye">Jogador destaque · ${label}</div>
-  <div class="${sp}-name">${name}</div>
-  <div class="${sp}-meta">${meta}</div>
-  <div class="${sp}-grid">
-${stats.filter(s=>s.val).map(s=>`    <div class="${sp}-stat"><div class="${sp}-val">${s.val}</div><div class="${sp}-lbl">${s.lbl}</div></div>`).join("\n")}
-  </div>
-</div>`;};
+    </div>};
+  const cardHTML=(cls,label,name,info,stats)=>`<div class="${sp} ${sp}-${cls}">\n  <div class="${sp}-eye">Jogador destaque · ${label}</div>\n  <div class="${sp}-name">${name}</div>\n  <div class="${sp}-meta">${info}</div>\n  <div class="${sp}-grid">\n${stats.filter(s=>s.v).map(s=>`    <div class="${sp}-stat"><div class="${sp}-val">${s.v}</div><div class="${sp}-lbl">${s.l}</div></div>`).join("\n")}\n  </div>\n</div>`;
   const html=`<style>
-.${sp}{font-family:${FNT};border-radius:10px;padding:18px 16px 14px;max-width:680px;margin:0 auto 12px;display:block!important;visibility:visible!important}
+.${sp}{font-family:${FNT};border-radius:10px;padding:16px 14px 12px;max-width:680px;margin:0 auto 12px;display:block!important;visibility:visible!important}
 .${sp}-home{background:${homeBg}!important}
 .${sp}-away{background:${awayBg}!important}
-.${sp}-eye{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px}
-.${sp}-name{font-size:22px;font-weight:700;color:#fff;line-height:1.15;margin-bottom:4px}
-.${sp}-meta{font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:14px}
-.${sp}-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.${sp}-stat{border-radius:7px;padding:10px 10px 8px;text-align:center;background:rgba(0,0,0,0.15)}
-.${sp}-val{font-size:22px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:4px}
-.${sp}-lbl{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.3}
+.${sp}-eye{font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:5px}
+.${sp}-name{font-size:20px;font-weight:700;color:#fff;line-height:1.15;margin-bottom:3px}
+.${sp}-meta{font-size:12px;color:rgba(255,255,255,0.65);margin-bottom:12px}
+.${sp}-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.${sp}-stat{border-radius:7px;padding:9px 8px 7px;text-align:center;background:rgba(0,0,0,0.15)}
+.${sp}-val{font-size:20px;font-weight:700;color:#fff;line-height:1.1;margin-bottom:3px}
+.${sp}-lbl{font-size:10px;color:rgba(255,255,255,0.7);line-height:1.3}
 .${sp}-away .${sp}-eye{color:rgba(0,0,0,0.45)!important}
 .${sp}-away .${sp}-name{color:#1a1a1a!important}
 .${sp}-away .${sp}-meta{color:rgba(0,0,0,0.55)!important}
 .${sp}-away .${sp}-stat{background:rgba(0,0,0,0.08)}
 .${sp}-away .${sp}-val{color:#1a1a1a!important}
 .${sp}-away .${sp}-lbl{color:rgba(0,0,0,0.65)!important}
-@media(max-width:480px){.${sp}-name{font-size:18px}.${sp}-val{font-size:18px}.${sp}{padding:14px 12px 12px}}
+@media(max-width:480px){.${sp}-name{font-size:17px}.${sp}-val{font-size:17px}.${sp}{padding:12px 10px 10px}}
 </style>
-${cardHTML("home",homeBg,awayBg,teamA||"[TIME A]",nameA,metaA,statsA)}
-${cardHTML("away",awayBg,homeBg,teamB||"[TIME B]",nameB,metaB,statsB)}`;
+${cardHTML("home",teamA||"[TIME A]",nA,infoA,sA)}
+${cardHTML("away",teamB||"[TIME B]",nB,infoB,sB)}`;
   return<div>
-    <p className="panel-desc">Bloco único com os dois jogadores destaque. Cores dos times clicáveis.</p>
+    <p className="panel-desc">Bloco único com os dois jogadores destaque.</p>
     <ColorPick label={`Cor ${teamA||"Time A"}`} value={homeBg} onChange={setHomeBg}/>
     <ColorPick label={`Cor ${teamB||"Time B"}`} value={awayBg} onChange={setAwayBg}/>
     <hr className="sep"/>
-    <div style={{fontSize:13,fontWeight:700,color:homeBg,marginBottom:8}}>▸ {teamA||"Time A"}</div>
-    <Field label="Nome do jogador" value={nameA} onChange={setNameA}/>
-    <Field label="Posição · Clube" value={metaA} onChange={setMetaA} placeholder="Volante · Fenerbahçe"/>
+    <div style={{fontSize:13,fontWeight:700,color:homeBg,marginBottom:6}}>▸ {teamA||"Time A"}</div>
+    <Field label="Nome" value={nA} onChange={setNA} placeholder="Edson Álvarez"/>
+    <Field label="Idade · Posição · Clube" value={infoA} onChange={setInfoA} placeholder="28 anos · Volante · Fenerbahçe"/>
     <label className="lbl">Stats</label>
-    {statsA.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"90px 1fr"}}><input className="inp" value={s.val} onChange={e=>uA(i,"val",e.target.value)} placeholder="Valor"/><input className="inp" value={s.lbl} onChange={e=>uA(i,"lbl",e.target.value)} placeholder="Descrição"/></div>)}
+    {sA.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"80px 1fr"}}><input className="inp" value={s.v} onChange={e=>uA(i,"v",e.target.value)} placeholder="Valor"/><input className="inp" value={s.l} onChange={e=>uA(i,"l",e.target.value)} placeholder="Descrição"/></div>)}
     <hr className="sep"/>
-    <div style={{fontSize:13,fontWeight:700,color:awayBg,marginBottom:8}}>▸ {teamB||"Time B"}</div>
-    <Field label="Nome do jogador" value={nameB} onChange={setNameB}/>
-    <Field label="Posição · Clube" value={metaB} onChange={setMetaB} placeholder="Atacante · Flamengo"/>
+    <div style={{fontSize:13,fontWeight:700,color:isDk(awayBg)?awayBg:"#666",marginBottom:6}}>▸ {teamB||"Time B"}</div>
+    <Field label="Nome" value={nB} onChange={setNB} placeholder="Gonzalo Plata"/>
+    <Field label="Idade · Posição · Clube" value={infoB} onChange={setInfoB} placeholder="24 anos · Ponta · Flamengo"/>
     <label className="lbl">Stats</label>
-    {statsB.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"90px 1fr"}}><input className="inp" value={s.val} onChange={e=>uB(i,"val",e.target.value)} placeholder="Valor"/><input className="inp" value={s.lbl} onChange={e=>uB(i,"lbl",e.target.value)} placeholder="Descrição"/></div>)}
+    {sB.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"80px 1fr"}}><input className="inp" value={s.v} onChange={e=>uB(i,"v",e.target.value)} placeholder="Valor"/><input className="inp" value={s.l} onChange={e=>uB(i,"l",e.target.value)} placeholder="Descrição"/></div>)}
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:12,background:"#f0f0f0"}}>
-      {renderCard(homeBg,`Jogador destaque · ${teamA||"Time A"}`,nameA,metaA,statsA)}
-      {renderCard(awayBg,`Jogador destaque · ${teamB||"Time B"}`,nameB,metaB,statsB)}
+    <div className="preview-box" style={{padding:10,background:"#eee"}}>
+      {cardPrev(homeBg,`Jogador destaque · ${teamA||"Time A"}`,nA,infoA,sA)}
+      {cardPrev(awayBg,`Jogador destaque · ${teamB||"Time B"}`,nB,infoB,sB)}
     </div>
     <CodeBlock code={html}/>
   </div>;
 }
 
 function LancePlacar({p}){
-  const[score,setScore]=useState("");const[ctx,setCtx]=useState("");const[ctx2,setCtx2]=useState("");
-  const[bullets,setBullets]=useState(["","","",""]);const uB=(i,v)=>{const n=[...bullets];n[i]=v;setBullets(n)};const pw=`${p}-pw`;
-  const html=`<style>\n.${pw}{font-family:${FNT};background:#00ba25!important;border-radius:12px;padding:20px 22px 18px;max-width:680px;margin:0 auto;display:block!important;visibility:visible!important}\n.${pw}-eye{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:8px}\n.${pw}-score{font-size:28px;font-weight:700;color:#fff;margin-bottom:16px;line-height:1.2}\n.${pw}-card{background:#fff;border-radius:8px;padding:16px 18px 14px}\n.${pw}-ctx{font-size:13px;color:#333;line-height:1.6;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid #f0f0f0}\n.${pw}-list{list-style:none;padding:0;margin:0 0 14px}\n.${pw}-list li{font-size:13px;color:#333;line-height:1.6;padding:6px 0 6px 18px;border-bottom:1px solid #f0f0f0;position:relative}\n.${pw}-list li:last-child{border-bottom:none}\n.${pw}-list li::before{content:"\\2022";position:absolute;left:4px;color:#00ba25;font-size:16px;line-height:1.4}\n.${pw}-list li strong{color:#00ba25}\n@media(max-width:480px){.${pw}{padding:16px 16px 14px}.${pw}-score{font-size:22px}.${pw}-ctx,.${pw}-list li{font-size:12px}}\n</style>\n<div class="${pw}">\n  <div class="${pw}-eye">🎯 Palpite do Lance!</div>\n  <div class="${pw}-score">${score}</div>\n  <div class="${pw}-card">\n    <div class="${pw}-ctx">${ctx}${ctx2?`<br><br>${ctx2}`:""}</div>\n    <ul class="${pw}-list">\n${bullets.filter(b=>b).map(b=>`      <li>${b}</li>`).join("\n")}\n    </ul>\n  </div>\n</div>`;
+  const[score,setScore]=useState("");const[c1,setC1]=useState("");const[c2,setC2]=useState("");
+  const[bullets,setBullets]=useState(["","",""]);const uB=(i,v)=>{const n=[...bullets];n[i]=v;setBullets(n)};
+  const pw=`${p}-pw`;
+  const html=`<style>
+.${pw}{font-family:${FNT};background:#00ba25!important;border-radius:12px;padding:18px 20px 16px;max-width:680px;margin:0 auto;display:block!important;visibility:visible!important}
+.${pw}-eye{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:7px}
+.${pw}-score{font-size:26px;font-weight:700;color:#fff;margin-bottom:14px;line-height:1.2}
+.${pw}-card{background:#fff;border-radius:8px;padding:14px 16px 12px}
+.${pw}-ctx{font-size:13px;color:#333;line-height:1.6;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid #f0f0f0}
+.${pw}-ctx+.${pw}-ctx{padding-top:0;border-bottom:1px solid #f0f0f0}
+.${pw}-list{list-style:none;padding:0;margin:0}
+.${pw}-list li{font-size:13px;color:#333;line-height:1.6;padding:5px 0 5px 16px;border-bottom:1px solid #f0f0f0;position:relative}
+.${pw}-list li:last-child{border-bottom:none}
+.${pw}-list li::before{content:"\\2022";position:absolute;left:2px;color:#00ba25;font-size:16px;line-height:1.4}
+.${pw}-list li strong{color:#00ba25}
+@media(max-width:480px){.${pw}{padding:14px 14px 12px}.${pw}-score{font-size:21px}.${pw}-ctx,.${pw}-list li{font-size:12px}}
+</style>
+<div class="${pw}">
+  <div class="${pw}-eye">🎯 Palpite do Lance!</div>
+  <div class="${pw}-score">${score}</div>
+  <div class="${pw}-card">
+    <div class="${pw}-ctx">${c1}</div>
+    <div class="${pw}-ctx">${c2}</div>
+    <ul class="${pw}-list">
+${bullets.filter(b=>b).map(b=>`      <li>${b}</li>`).join("\n")}
+    </ul>
+  </div>
+</div>`;
   return<div>
-    <p className="panel-desc">Bloco verde de prognóstico. Use <code>&lt;strong&gt;</code> nos bullets para destaque verde.</p>
-    <Field label="Placar + Odd" value={score} onChange={setScore} placeholder="Time A 2 x 0 Time B – Odd 7,50 na Casa"/>
-    <Field label="Parágrafo 1" value={ctx} onChange={setCtx} rows={2}/>
-    <Field label="Parágrafo 2 (opcional)" value={ctx2} onChange={setCtx2} rows={2}/>
+    <p className="panel-desc">Bloco verde de prognóstico. Use <code>&lt;strong&gt;</code> nos bullets para destaque.</p>
+    <Field label="Placar" value={score} onChange={setScore} placeholder="Corinthians 2 x 1 Palmeiras – Odd 7,50 na Br4Bet"/>
+    <Field label="Parágrafo 1" value={c1} onChange={setC1} rows={2} placeholder="Contexto do palpite..."/>
+    <Field label="Parágrafo 2" value={c2} onChange={setC2} rows={2} placeholder="Complemento..."/>
     <label className="lbl">Bullets (use &lt;strong&gt; para destaque)</label>
     {bullets.map((b,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr auto"}}><input className="inp" value={b} onChange={e=>uB(i,e.target.value)} placeholder={`Bullet ${i+1}`}/>{bullets.length>1&&<button className="btn-x" onClick={()=>setBullets(bullets.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setBullets([...bullets,""])} style={{marginTop:4,marginBottom:14}}>+ Bullet</button>
+    {bullets.length<6&&<button className="btn btn-ghost" onClick={()=>setBullets([...bullets,""])} style={{marginTop:3,marginBottom:12}}>+ Bullet</button>}
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0}}><div style={{background:"#00ba25",borderRadius:12,padding:"20px 22px 18px",maxWidth:680,margin:"0 auto"}}>
-      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.8,textTransform:"uppercase",color:"rgba(255,255,255,0.75)",marginBottom:8}}>🎯 Palpite do Lance!</div>
-      <div style={{fontSize:28,fontWeight:700,color:"#fff",marginBottom:16,lineHeight:1.2}}>{score||"Time A x Time B"}</div>
-      <div style={{background:"#fff",borderRadius:8,padding:"16px 18px 14px"}}>
-        <div style={{fontSize:13,color:"#333",lineHeight:1.6,paddingBottom:12,marginBottom:12,borderBottom:"1px solid #f0f0f0"}}>{ctx||"Contexto..."}{ctx2&&<><br/><br/>{ctx2}</>}</div>
-        <ul style={{listStyle:"none",padding:0,margin:0}}>{bullets.filter(b=>b).map((b,i)=><li key={i} style={{fontSize:13,color:"#333",lineHeight:1.6,padding:"6px 0 6px 18px",borderBottom:i<bullets.filter(x=>x).length-1?"1px solid #f0f0f0":"none",position:"relative"}}><span style={{position:"absolute",left:4,color:"#00ba25",fontSize:16,lineHeight:1.4}}>•</span><span dangerouslySetInnerHTML={{__html:b}}/></li>)}</ul>
+    <div className="preview-box" style={{padding:0}}><div style={{background:"#00ba25",borderRadius:12,padding:"18px 20px 16px"}}>
+      <div style={{fontSize:11,fontWeight:700,letterSpacing:1.8,textTransform:"uppercase",color:"rgba(255,255,255,0.75)",marginBottom:7}}>🎯 Palpite do Lance!</div>
+      <div style={{fontSize:26,fontWeight:700,color:"#fff",marginBottom:14,lineHeight:1.2}}>{score||"Time A x Time B"}</div>
+      <div style={{background:"#fff",borderRadius:8,padding:"14px 16px 12px"}}>
+        <div style={{fontSize:13,color:"#333",lineHeight:1.6,paddingBottom:10,marginBottom:10,borderBottom:"1px solid #f0f0f0"}}>{c1||"Parágrafo 1..."}</div>
+        <div style={{fontSize:13,color:"#333",lineHeight:1.6,paddingBottom:10,marginBottom:10,borderBottom:"1px solid #f0f0f0"}}>{c2||"Parágrafo 2..."}</div>
+        <ul style={{listStyle:"none",padding:0,margin:0}}>{bullets.filter(b=>b).map((b,i)=><li key={i} style={{fontSize:13,color:"#333",lineHeight:1.6,padding:"5px 0 5px 16px",borderBottom:i<bullets.filter(x=>x).length-1?"1px solid #f0f0f0":"none",position:"relative"}}><span style={{position:"absolute",left:2,color:"#00ba25",fontSize:16,lineHeight:1.4}}>•</span><span dangerouslySetInnerHTML={{__html:b}}/></li>)}</ul>
       </div>
     </div></div>
     <CodeBlock code={html}/>
   </div>;
 }
 
-/* ═══ TRIVELA ═══ */
+/* ═══════════════════════════════════════════════════════
+   3. TRIVELA — Retrospecto + Palpite Placar
+   ═══════════════════════════════════════════════════════ */
 function TrivelaForm({p,teamA,teamB}){
-  const[compName,setCompName]=useState("Copa do Mundo 2026");const mk=()=>["","","","","",""];
-  const[compA,setCompA]=useState(mk());const[compB,setCompB]=useState(mk());const[geralA,setGeralA]=useState(mk());const[geralB,setGeralB]=useState(mk());
+  const[compName,setCompName]=useState("Copa do Mundo 2026");const mk=()=>["","","","",""];
+  const[cA,setCA]=useState(mk());const[cB,setCB]=useState(mk());const[gA,setGA]=useState(mk());const[gB,setGB]=useState(mk());
   const[showH2h,setShowH2h]=useState(false);const[h2h,setH2h]=useState([{r:"",d:"",c:""},{r:"",d:"",c:""},{r:"",d:"",c:""},{r:"",d:"",c:""},{r:"",d:"",c:""}]);
   const uH=(i,f,v)=>{const n=[...h2h];n[i]={...n[i],[f]:v};setH2h(n)};const fp=`${p}-fg`;
-  const pillsHTML=(arr,label)=>{const f=arr.filter(x=>x);if(!f.length)return"";return`  <div class="${fp}-row">\n    <div class="${fp}-label">${label}</div>\n    <div class="${fp}-pills">${f.map(x=>`<span class="${fp}-pill ${fp}-${x.toLowerCase()}">${x}</span>`).join("")}</div>\n  </div>`};
-  const h2hBlock=showH2h?`\n    <div class="${fp}-section">Confrontos diretos</div>\n${h2h.filter(x=>x.r).map(x=>`    <div class="${fp}-h2h-row"><span class="${fp}-h2h-r">${x.r}</span><span class="${fp}-h2h-d">${x.d}</span><span class="${fp}-h2h-c">${x.c}</span></div>`).join("\n")}`:"";
-  const html=`<style>\n.${fp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #be0022;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${fp}-hdr{background:#be0022;color:#fff;padding:12px 16px;font-size:15px;font-weight:700}\n.${fp}-body{padding:16px}\n.${fp}-section{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;margin:14px 0 8px;padding-bottom:6px;border-bottom:1px solid #eee}\n.${fp}-section:first-child{margin-top:0}\n.${fp}-row{display:flex;align-items:center;gap:10px;margin-bottom:10px}\n.${fp}-label{font-size:13px;font-weight:600;color:#1a1a1a;min-width:120px}\n.${fp}-pills{display:flex;gap:4px}\n.${fp}-pill{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-size:12px;font-weight:700;color:#fff}\n.${fp}-v{background:#27a844}.${fp}-e{background:#f5a623}.${fp}-d{background:#dc3545}\n.${fp}-h2h-row{display:flex;gap:10px;font-size:13px;padding:6px 0;border-bottom:1px solid #f0f0f0}\n.${fp}-h2h-row:last-child{border-bottom:none}\n.${fp}-h2h-r{font-weight:700;min-width:180px;color:#1a1a1a}\n.${fp}-h2h-d{color:#888;min-width:80px}\n.${fp}-h2h-c{color:#333}\n@media(max-width:480px){.${fp}-row{flex-direction:column;gap:4px;align-items:flex-start}.${fp}-label{min-width:0}.${fp}-h2h-row{flex-direction:column;gap:2px}}\n</style>\n<div class="${fp}">\n  <div class="${fp}-hdr">${teamA||"[TIME A]"} x ${teamB||"[TIME B]"} — Retrospecto Recente</div>\n  <div class="${fp}-body">\n    <div class="${fp}-section">${compName}</div>\n${pillsHTML(compA,teamA||"[TIME A]")}\n${pillsHTML(compB,teamB||"[TIME B]")}\n    <div class="${fp}-section">Todas as competições</div>\n${pillsHTML(geralA,teamA||"[TIME A]")}\n${pillsHTML(geralB,teamB||"[TIME B]")}${h2hBlock}\n  </div>\n</div>`;
-  const pillColors={V:"#27a844",E:"#f5a623",D:"#dc3545"};
-  const PillInput=({arr,setArr,label})=><div className="field"><label className="lbl">{label} (V/E/D)</label><div style={{display:"flex",gap:4}}>{arr.map((v,i)=><select key={i} className="inp" style={{width:55,padding:"6px 2px"}} value={v} onChange={e=>{const n=[...arr];n[i]=e.target.value;setArr(n)}}><option value="">-</option><option value="V">V</option><option value="E">E</option><option value="D">D</option></select>)}</div></div>;
-  const PillPreview=({arr,label})=><div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}><span style={{fontSize:13,fontWeight:600,minWidth:100}}>{label}</span><div style={{display:"flex",gap:4}}>{arr.filter(x=>x).map((x,i)=><span key={i} style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:28,height:28,borderRadius:6,fontSize:12,fontWeight:700,color:"#fff",background:pillColors[x]}}>{x}</span>)}</div></div>;
+  const plHTML=(arr,label)=>{const f=arr.filter(x=>x);if(!f.length)return"";return`  <div class="${fp}-row">\n    <div class="${fp}-label">${label}</div>\n    <div class="${fp}-pills">${f.map(x=>`<span class="${fp}-pill ${fp}-${x.toLowerCase()}">${x}</span>`).join("")}</div>\n  </div>`};
+  const h2hBlk=showH2h?`\n    <div class="${fp}-section">Confrontos diretos</div>\n${h2h.filter(x=>x.r).map(x=>`    <div class="${fp}-h2h-row"><span class="${fp}-h2h-r">${x.r}</span><span class="${fp}-h2h-d">${x.d}</span><span class="${fp}-h2h-c">${x.c}</span></div>`).join("\n")}`:"";
+  const html=`<style>
+.${fp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;display:block!important;visibility:visible!important}
+.${fp}-section{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;margin:12px 0 8px;padding-bottom:5px;border-bottom:1px solid #eee}
+.${fp}-section:first-child{margin-top:0}
+.${fp}-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.${fp}-label{font-size:13px;font-weight:600;color:#1a1a1a;min-width:110px}
+.${fp}-pills{display:flex;gap:4px}
+.${fp}-pill{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-size:12px;font-weight:700;color:#fff}
+.${fp}-v{background:#27a844}.${fp}-e{background:#f5a623}.${fp}-d{background:#dc3545}
+.${fp}-h2h-row{display:flex;gap:10px;font-size:13px;padding:5px 0;border-bottom:1px solid #f0f0f0}
+.${fp}-h2h-row:last-child{border-bottom:none}
+.${fp}-h2h-r{font-weight:700;min-width:160px;color:#1a1a1a}
+.${fp}-h2h-d{color:#888;min-width:70px}
+.${fp}-h2h-c{color:#333}
+@media(max-width:480px){.${fp}-row{flex-direction:column;gap:3px;align-items:flex-start}.${fp}-label{min-width:0}.${fp}-h2h-row{flex-direction:column;gap:2px}}
+</style>
+<div class="${fp}">
+  <div class="${fp}-section">${compName}</div>
+${plHTML(cA,teamA||"[TIME A]")}
+${plHTML(cB,teamB||"[TIME B]")}
+  <div class="${fp}-section">Todas as competições</div>
+${plHTML(gA,teamA||"[TIME A]")}
+${plHTML(gB,teamB||"[TIME B]")}${h2hBlk}
+</div>`;
+  const pC={V:"#27a844",E:"#f5a623",D:"#dc3545"};
+  const PI=({arr,setArr,label})=><div className="field"><label className="lbl">{label} (V/E/D)</label><div style={{display:"flex",gap:4}}>{arr.map((v,i)=><select key={i} className="inp" style={{width:52,padding:"5px 2px"}} value={v} onChange={e=>{const n=[...arr];n[i]=e.target.value;setArr(n)}}><option value="">-</option><option value="V">V</option><option value="E">E</option><option value="D">D</option></select>)}</div></div>;
+  const PP=({arr,label})=><div style={{display:"flex",alignItems:"center",gap:8,marginBottom:6}}><span style={{fontSize:13,fontWeight:600,minWidth:90}}>{label}</span><div style={{display:"flex",gap:4}}>{arr.filter(x=>x).map((x,i)=><span key={i} style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:28,height:28,borderRadius:6,fontSize:12,fontWeight:700,color:"#fff",background:pC[x]}}>{x}</span>)}</div></div>;
   return<div>
-    <p className="panel-desc">Form guide com pills V/E/D. Competição + geral + H2H opcional.</p>
+    <p className="panel-desc">Form guide com 5 pills V/E/D. Sem header — fica no H2 do artigo.</p>
     <Field label="Competição" value={compName} onChange={setCompName}/>
-    <PillInput arr={compA} setArr={setCompA} label={`${teamA||"Time A"} — ${compName}`}/>
-    <PillInput arr={compB} setArr={setCompB} label={`${teamB||"Time B"} — ${compName}`}/>
-    <hr className="sep"/><PillInput arr={geralA} setArr={setGeralA} label={`${teamA||"Time A"} — Geral`}/>
-    <PillInput arr={geralB} setArr={setGeralB} label={`${teamB||"Time B"} — Geral`}/>
+    <PI arr={cA} setArr={setCA} label={`${teamA||"A"} — ${compName}`}/><PI arr={cB} setArr={setCB} label={`${teamB||"B"} — ${compName}`}/>
+    <hr className="sep"/><PI arr={gA} setArr={setGA} label={`${teamA||"A"} — Geral`}/><PI arr={gB} setArr={setGB} label={`${teamB||"B"} — Geral`}/>
     <hr className="sep"/>
-    <button className={`pill${showH2h?" on":""}`} style={showH2h?{background:"#be0022",color:"#fff"}:{}} onClick={()=>setShowH2h(!showH2h)}>{showH2h?"Remover H2H":"+ Adicionar H2H"}</button>
-    {showH2h&&<div style={{marginTop:10}}>{h2h.map((x,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 80px 1fr"}}><input className="inp" value={x.r} onChange={e=>uH(i,"r",e.target.value)} placeholder="França 3x1 Suécia"/><input className="inp" value={x.d} onChange={e=>uH(i,"d",e.target.value)} placeholder="Data"/><input className="inp" value={x.c} onChange={e=>uH(i,"c",e.target.value)} placeholder="Competição"/></div>)}</div>}
+    <button className={`pill${showH2h?" on":""}`} style={showH2h?{background:"#be0022",color:"#fff"}:{}} onClick={()=>setShowH2h(!showH2h)}>{showH2h?"Remover H2H":"+ H2H"}</button>
+    {showH2h&&<div style={{marginTop:8}}>{h2h.map((x,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 70px 1fr"}}><input className="inp" value={x.r} onChange={e=>uH(i,"r",e.target.value)} placeholder="França 3x1 Suécia"/><input className="inp" value={x.d} onChange={e=>uH(i,"d",e.target.value)} placeholder="Data"/><input className="inp" value={x.c} onChange={e=>uH(i,"c",e.target.value)} placeholder="Competição"/></div>)}</div>}
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box">
-      <div style={{background:"#be0022",color:"#fff",padding:"12px 16px",fontSize:15,fontWeight:700,borderRadius:"10px 10px 0 0",margin:"-16px -16px 14px"}}>{teamA||"[A]"} x {teamB||"[B]"} — Retrospecto Recente</div>
-      <div style={{fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:1,color:"#888",marginBottom:8,paddingBottom:6,borderBottom:"1px solid #eee"}}>{compName}</div>
-      <PillPreview arr={compA} label={teamA||"Time A"}/><PillPreview arr={compB} label={teamB||"Time B"}/>
-      <div style={{fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:1,color:"#888",margin:"12px 0 8px",paddingBottom:6,borderBottom:"1px solid #eee"}}>Todas as competições</div>
-      <PillPreview arr={geralA} label={teamA||"Time A"}/><PillPreview arr={geralB} label={teamB||"Time B"}/>
-      {showH2h&&<><div style={{fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:1,color:"#888",margin:"12px 0 8px",paddingBottom:6,borderBottom:"1px solid #eee"}}>Confrontos diretos</div>
-      {h2h.filter(x=>x.r).map((x,i)=><div key={i} style={{display:"flex",gap:10,fontSize:13,padding:"6px 0",borderBottom:"1px solid #f0f0f0"}}><span style={{fontWeight:700,minWidth:180}}>{x.r}</span><span style={{color:"#888",minWidth:80}}>{x.d}</span><span>{x.c}</span></div>)}</>}
+      <div style={{fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:1,color:"#888",marginBottom:6,paddingBottom:5,borderBottom:"1px solid #eee"}}>{compName}</div>
+      <PP arr={cA} label={teamA||"A"}/><PP arr={cB} label={teamB||"B"}/>
+      <div style={{fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:1,color:"#888",margin:"10px 0 6px",paddingBottom:5,borderBottom:"1px solid #eee"}}>Todas as competições</div>
+      <PP arr={gA} label={teamA||"A"}/><PP arr={gB} label={teamB||"B"}/>
     </div>
     <CodeBlock code={html}/>
   </div>;
 }
 
 function TrivPlacar({p,teamA,teamB}){
-  const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[odd,setOdd]=useState("");const[casa,setCasa]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const tp=`${p}-pred`;
-  const html=`<style>\n.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid #c0392b;display:block!important;visibility:visible!important}\n.${tp}-hdr{background:#c0392b;color:#fff;padding:14px 18px;font-size:14px;font-weight:700}\n.${tp}-body{background:#fff;padding:18px}\n.${tp}-score{font-size:24px;font-weight:700;color:#1a1a1a;margin-bottom:4px}\n.${tp}-odd{font-size:13px;color:#666;margin-bottom:14px}\n.${tp}-txt{font-size:14px;color:#333;line-height:1.65}\n.${tp}-txt+.${tp}-txt{margin-top:10px}\n@media(max-width:480px){.${tp}-score{font-size:20px}.${tp}-body{padding:14px}}\n</style>\n<div class="${tp}">\n  <div class="${tp}-hdr">Previsão da Trivela</div>\n  <div class="${tp}-body">\n    <div class="${tp}-score">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n    <div class="${tp}-odd">Odd ${odd} na ${casa}</div>\n    <p class="${tp}-txt">${p1}</p>\n    ${p2?`<p class="${tp}-txt">${p2}</p>`:""}\n  </div>\n</div>`;
+  const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const tp=`${p}-pred`;
+  const html=`<style>
+.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid #c0392b;display:block!important;visibility:visible!important}
+.${tp}-hdr{background:#c0392b;color:#fff;padding:14px 18px;font-size:18px;font-weight:700;text-align:center}
+.${tp}-body{background:#fff;padding:16px}
+.${tp}-txt{font-size:14px;color:#333;line-height:1.65}
+.${tp}-txt+.${tp}-txt{margin-top:10px}
+@media(max-width:480px){.${tp}-hdr{font-size:16px;padding:12px 14px}.${tp}-body{padding:12px}}
+</style>
+<div class="${tp}">
+  <div class="${tp}-hdr">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>
+  <div class="${tp}-body">
+    <p class="${tp}-txt">${p1}</p>
+    <p class="${tp}-txt">${p2}</p>
+  </div>
+</div>`;
   return<div>
-    <p className="panel-desc">Caixa de previsão da Trivela com header vermelho.</p>
-    <div className="row row-4"><Field label="Gols A" value={sA} onChange={setSA} placeholder="2"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/><Field label="Odd" value={odd} onChange={setOdd} placeholder="7,50"/><Field label="Casa" value={casa} onChange={setCasa} placeholder="Bet365"/></div>
-    <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2 (opcional)" value={p2} onChange={setP2} rows={2}/>
+    <p className="panel-desc">Placar no header vermelho, sem odds/casa. Dois parágrafos de justificativa.</p>
+    <div className="row row-2"><Field label="Gols A" value={sA} onChange={setSA} placeholder="1"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/></div>
+    <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2" value={p2} onChange={setP2} rows={2}/>
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10}}>
-      <div style={{background:"#c0392b",color:"#fff",padding:"14px 18px",fontSize:14,fontWeight:700}}>Previsão da Trivela</div>
-      <div style={{padding:18}}>
-        <div style={{fontSize:24,fontWeight:700,color:"#1a1a1a",marginBottom:4}}>{teamA||"[A]"} {sA} x {sB} {teamB||"[B]"}</div>
-        <div style={{fontSize:13,color:"#666",marginBottom:14}}>Odd {odd} na {casa}</div>
-        <p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>
-        {p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}
-      </div>
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #c0392b"}}>
+      <div style={{background:"#c0392b",color:"#fff",padding:"14px 18px",fontSize:18,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
+      <div style={{padding:16}}><p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>{p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}</div>
     </div>
     <CodeBlock code={html}/>
   </div>;
 }
 
-/* ═══ UMDOIS ═══ */
-function UDEResumo({p}){
-  const[tips,setTips]=useState([{key:"Melhor Palpite:",val:""},{key:"Aposta com boas chances:",val:""},{key:"Aposta alternativa:",val:""},{key:"Palpite de placar exato:",val:""}]);
-  const u=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};const qs=`${p}-qs`;
-  const html=`<style>\n.${qs}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${qs}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}\n.${qs}-body{padding:14px 16px;background:#f3f4f6}\n.${qs}-item{display:flex;flex-wrap:wrap;gap:0 6px;font-size:14px;line-height:1.8;margin-bottom:4px}\n.${qs}-item:last-child{margin-bottom:0}\n.${qs}-k{font-weight:700;color:#2B2B2B}\n.${qs}-v{color:#333;margin:0}\n@media(max-width:480px){.${qs}-item{font-size:13px}.${qs}-hdr{font-size:14px}}\n</style>\n<div class="${qs}">\n  <div class="${qs}-hdr">⚡ Resumo dos Palpites</div>\n  <div class="${qs}-body">\n    <dl style="margin:0;padding:0">\n${tips.filter(t=>t.val).map(t=>`    <div class="${qs}-item"><dt class="${qs}-k">${t.key}</dt><dd class="${qs}-v">${t.val}</dd></div>`).join("\n")}\n    </dl>\n  </div>\n</div>`;
-  return<div>
-    <p className="panel-desc">Card amarelo UmDois.</p>
-    {tips.map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"180px 1fr"}}><input className="inp" value={t.key} onChange={e=>u(i,"key",e.target.value)} placeholder="Rótulo:"/><input className="inp" value={t.val} onChange={e=>u(i,"val",e.target.value)} placeholder="Palpite – odd na Casa"/></div>)}
-    <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #FED937"}}>
-      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700}}>⚡ Resumo dos Palpites</div>
-      <div style={{padding:"14px 16px",background:"#f3f4f6"}}>{tips.filter(t=>t.val).map((t,i)=><div key={i} style={{display:"flex",flexWrap:"wrap",gap:"0 6px",fontSize:14,lineHeight:1.8,marginBottom:4}}><strong>{t.key}</strong><span style={{color:"#333"}}>{t.val}</span></div>)}</div>
-    </div>
-    <CodeBlock code={html}/>
-  </div>;
-}
+/* ═══════════════════════════════════════════════════════
+   4. UMDOIS — Raio-X, Insights, Placar Exato
+   ═══════════════════════════════════════════════════════ */
 function UDERaioX({p,teamA,teamB}){
-  const[rows,setRows]=useState([{label:"Ranking FIFA",a:"",b:""},{label:"Jogador mais experiente",a:"",b:""},{label:"Artilheiro",a:"",b:""},{label:"Total de convocações",a:"",b:""},{label:"Total de gols",a:"",b:""}]);
+  const[rows,setRows]=useState([{label:"Posição",a:"",b:""},{label:"Campanha",a:"",b:""},{label:"Estádio",a:"",b:""},{label:"Artilheiro",a:"",b:""}]);
   const u=(i,f,v)=>{const n=[...rows];n[i]={...n[i],[f]:v};setRows(n)};const rx=`${p}-rx`;
-  const html=`<style>\n.${rx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${rx}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000;text-align:center}\n.${rx}-tbl{width:100%;border-collapse:collapse;background:#f3f4f6}\n.${rx}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid #e0e0e0;color:#333}\n.${rx}-tbl tr:last-child td{border-bottom:none}\n.${rx}-tbl td:first-child{text-align:right;font-weight:700;width:35%}\n.${rx}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px}\n.${rx}-tbl td:last-child{text-align:left;font-weight:700;width:35%}\n@media(max-width:480px){.${rx}-tbl td{padding:8px 10px;font-size:12px}}\n</style>\n<div class="${rx}">\n  <div class="${rx}-hdr">${teamA||"[A]"} x ${teamB||"[B]"} — Raio X</div>\n  <table class="${rx}-tbl">\n${rows.filter(r=>r.a||r.b).map(r=>`    <tr><td>${r.a}</td><td>${r.label}</td><td>${r.b}</td></tr>`).join("\n")}\n  </table>\n</div>`;
+  const html=`<style>
+.${rx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${rx}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000;text-align:center}
+.${rx}-tbl{width:100%;border-collapse:collapse;background:#f3f4f6}
+.${rx}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid #e0e0e0;color:#333}
+.${rx}-tbl tr:last-child td{border-bottom:none}
+.${rx}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
+.${rx}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px}
+.${rx}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
+@media(max-width:480px){.${rx}-tbl td{padding:8px 10px;font-size:12px}}
+</style>
+<div class="${rx}">
+  <div class="${rx}-hdr">${teamA||"[A]"} x ${teamB||"[B]"} — Raio X</div>
+  <table class="${rx}-tbl">
+${rows.filter(r=>r.a||r.b).map(r=>`    <tr><td>${r.a}</td><td>${r.label}</td><td>${r.b}</td></tr>`).join("\n")}
+  </table>
+</div>`;
   return<div>
-    {rows.map((r,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 140px 1fr auto"}}><input className="inp" value={r.a} onChange={e=>u(i,"a",e.target.value)} placeholder={teamA||"A"}/><input className="inp" value={r.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={r.b} onChange={e=>u(i,"b",e.target.value)} placeholder={teamB||"B"}/>{rows.length>1&&<button className="btn-x" onClick={()=>setRows(rows.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setRows([...rows,{label:"",a:"",b:""}])} style={{marginTop:4,marginBottom:14}}>+ Linha</button>
+    {rows.map((r,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 130px 1fr auto"}}><input className="inp" value={r.a} onChange={e=>u(i,"a",e.target.value)} placeholder={teamA||"A"}/><input className="inp" value={r.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={r.b} onChange={e=>u(i,"b",e.target.value)} placeholder={teamB||"B"}/>{rows.length>1&&<button className="btn-x" onClick={()=>setRows(rows.filter((_,j)=>j!==i))}>✕</button>}</div>)}
+    <button className="btn btn-ghost" onClick={()=>setRows([...rows,{label:"",a:"",b:""}])} style={{marginTop:3,marginBottom:12}}>+ Linha</button>
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #FED937"}}>
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
       <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} x {teamB||"[B]"} — Raio X</div>
       <table style={{width:"100%",borderCollapse:"collapse",background:"#f3f4f6"}}><tbody>{rows.filter(r=>r.a||r.b).map((r,i)=><tr key={i}><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700,width:"35%"}}>{r.a}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",borderBottom:"1px solid #e0e0e0"}}>{r.label}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700,width:"35%"}}>{r.b}</td></tr>)}</tbody></table>
     </div>
     <CodeBlock code={html}/>
   </div>;
 }
+
 function UDEInsight({p,emoji,title,id}){const[text,setText]=useState("");const bx=`${p}-in${id}`;
   const html=`<style>\n.${bx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${bx}-hdr{background:#FED937;padding:10px 16px;font-size:14px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}\n.${bx}-body{padding:14px 16px;font-size:14px;color:#333;line-height:1.65;background:transparent}\n@media(max-width:480px){.${bx}-body{font-size:13px;padding:12px 14px}}\n</style>\n<div class="${bx}">\n  <div class="${bx}-hdr">${emoji} ${title}</div>\n  <div class="${bx}-body">${text}</div>\n</div>`;
   return<div><Field label={`${emoji} ${title}`} value={text} onChange={setText} rows={2} placeholder="Frase curta..."/>
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #FED937"}}>
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
       <div style={{background:"#FED937",padding:"10px 16px",fontSize:14,fontWeight:700}}>{emoji} {title}</div>
       <div style={{padding:"14px 16px",fontSize:14,color:"#333",lineHeight:1.65}}>{text||"..."}</div>
     </div>
     <CodeBlock code={html}/></div>;
 }
-function UDEGuia({p,teamA,teamB}){
-  const[rows,setRows]=useState([{label:"Forma Geral",a:"",b:""},{label:"Gols Marcados",a:"",b:""},{label:"Gols Sofridos",a:"",b:""},{label:"Copa do Mundo 2026",a:"",b:""},{label:"Principal Peça",a:"",b:""}]);
-  const u=(i,f,v)=>{const n=[...rows];n[i]={...n[i],[f]:v};setRows(n)};const gd=`${p}-gd`;
-  const html=`<style>\n.${gd}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${gd}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000;text-align:center}\n.${gd}-tbl{width:100%;border-collapse:collapse;background:#f3f4f6}\n.${gd}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid #e0e0e0;color:#333}\n.${gd}-tbl tr:last-child td{border-bottom:none}\n.${gd}-tbl td:first-child{text-align:right;font-weight:600;width:35%}\n.${gd}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px}\n.${gd}-tbl td:last-child{text-align:left;font-weight:600;width:35%}\n@media(max-width:480px){.${gd}-tbl td{padding:8px 10px;font-size:12px}}\n</style>\n<div class="${gd}">\n  <div class="${gd}-hdr">${teamA||"[A]"} x ${teamB||"[B]"} — Últimos 5 Jogos</div>\n  <table class="${gd}-tbl">\n${rows.filter(r=>r.a||r.b).map(r=>`    <tr><td>${r.a}</td><td>${r.label}</td><td>${r.b}</td></tr>`).join("\n")}\n  </table>\n</div>`;
-  return<div>
-    {rows.map((r,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 140px 1fr auto"}}><input className="inp" value={r.a} onChange={e=>u(i,"a",e.target.value)} placeholder={teamA||"A"}/><input className="inp" value={r.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={r.b} onChange={e=>u(i,"b",e.target.value)} placeholder={teamB||"B"}/>{rows.length>1&&<button className="btn-x" onClick={()=>setRows(rows.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setRows([...rows,{label:"",a:"",b:""}])} style={{marginTop:4,marginBottom:14}}>+ Linha</button>
-    <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #FED937"}}>
-      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} x {teamB||"[B]"} — Últimos 5 Jogos</div>
-      <table style={{width:"100%",borderCollapse:"collapse",background:"#f3f4f6"}}><tbody>{rows.filter(r=>r.a||r.b).map((r,i)=><tr key={i}><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:600,width:"35%"}}>{r.a}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",borderBottom:"1px solid #e0e0e0"}}>{r.label}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:600,width:"35%"}}>{r.b}</td></tr>)}</tbody></table>
-    </div>
-    <CodeBlock code={html}/>
-  </div>;
-}
+
 function UDEPlacar({p,teamA,teamB}){
-  const[tips,setTips]=useState([{name:"",odd:""},{name:"",odd:""},{name:"",odd:""},{name:"",odd:""}]);
-  const uT=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};
-  const calc=(raw)=>{const o=parseFloat((raw||"0").replace(",","."));if(!o||o<=0)return{prob:"—",color:"#888",pct:0};const pct=Math.round((1/o)*100);const prob=o<=1.6?"Provável":o<=1.9?"Possível":o<=2.1?"Risco médio":o<=2.5?"Arriscado":o<=5?"Bastante arriscado":"Muito arriscado";const color=o<=1.6?"#27a844":o<=1.9?"#2980b9":o<=2.1?"#f5a623":o<=2.5?"#e67e22":"#dc3545";return{prob,color,pct}};
-  const dr=`${p}-dr`;
+  const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const[p3,setP3]=useState("");
+  const pe=`${p}-pe`;
   const html=`<style>
-.${dr}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
-.${dr}-hdr{background:#FED937;padding:12px 16px;font-size:14px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}
-.${dr}-body{padding:16px 18px;background:#fff}
-.${dr}-row{font-size:14px;color:#333;line-height:1.7;padding:10px 0;border-bottom:1px solid #f0f0f0}
-.${dr}-row:last-child{border-bottom:none}
-.${dr}-bullet{color:#FED937;font-size:16px;margin-right:6px}
-.${dr}-odd{font-weight:700}
-.${dr}-prob{font-weight:700}
-@media(max-width:480px){.${dr}-row{font-size:13px;padding:8px 0}.${dr}-hdr{font-size:13px}}
+.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}
+.${pe}-body{padding:16px;background:#f3f4f6}
+.${pe}-score{font-size:22px;font-weight:700;color:#2B2B2B;margin-bottom:14px}
+.${pe}-txt{font-size:14px;color:#333;line-height:1.65}
+.${pe}-txt+.${pe}-txt{margin-top:10px}
+@media(max-width:480px){.${pe}-score{font-size:18px}.${pe}-body{padding:12px}}
 </style>
-<div class="${dr}">
-  <div class="${dr}-hdr">📊 Resumo das dicas e probabilidades</div>
-  <div class="${dr}-body">
-${tips.filter(t=>t.name&&t.odd).map(t=>{const c=calc(t.odd);return`    <div class="${dr}-row"><span class="${dr}-bullet">▸</span> ${t.name} — odd <span class="${dr}-odd">${t.odd}</span> (${c.pct}% de chance) | <span class="${dr}-prob">Probabilidade: ${c.prob}</span></div>`}).join("\n")}
+<div class="${pe}">
+  <div class="${pe}-hdr">Palpite de placar exato: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>
+  <div class="${pe}-body">
+    <div class="${pe}-score">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>
+    <p class="${pe}-txt">${p1}</p>
+    <p class="${pe}-txt">${p2}</p>
+    ${p3?`<p class="${pe}-txt">${p3}</p>`:""}
   </div>
 </div>`;
   return<div>
-    <p className="panel-desc">Resumo de dicas com probabilidade automática. Odd → % de chance e nível de risco.</p>
-    {tips.map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 90px auto"}}>
-      <input className="inp" value={t.name} onChange={e=>uT(i,"name",e.target.value)} placeholder="Ex: Mais de 2,5 gols"/>
-      <input className="inp" value={t.odd} onChange={e=>uT(i,"odd",e.target.value)} placeholder="Odd"/>
-      {tips.length>1&&<button className="btn-x" onClick={()=>setTips(tips.filter((_,j)=>j!==i))}>✕</button>}
-    </div>)}
-    <div style={{display:"flex",gap:8,marginTop:4,marginBottom:14}}>
-      <button className="btn btn-ghost" onClick={()=>setTips([...tips,{name:"",odd:""}])}>+ Dica</button>
-    </div>
-    {tips.some(t=>t.odd)&&<div style={{marginBottom:10}}><label className="lbl">Limiares ativos</label><div style={{fontSize:12,color:"#888",lineHeight:1.6}}>≤1,60 Provável · 1,61–1,90 Possível · 1,91–2,10 Risco médio · 2,11–2,50 Arriscado · 2,51–5,00 Bastante arriscado · &gt;5 Muito arriscado</div></div>}
+    <div className="row row-2"><Field label="Gols A" value={sA} onChange={setSA} placeholder="2"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/></div>
+    <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2" value={p2} onChange={setP2} rows={2}/><Field label="Parágrafo 3 (opcional)" value={p3} onChange={setP3} rows={2}/>
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #FED937"}}>
-      <div style={{background:"#FED937",padding:"12px 16px",fontSize:14,fontWeight:700}}>📊 Resumo das dicas e probabilidades</div>
-      <div style={{padding:"16px 18px",background:"#fff"}}>
-        {tips.filter(t=>t.name&&t.odd).map((t,i)=>{const c=calc(t.odd);return<div key={i} style={{fontSize:14,color:"#333",lineHeight:1.7,padding:"10px 0",borderBottom:i<tips.filter(x=>x.name&&x.odd).length-1?"1px solid #f0f0f0":"none"}}>
-          <span style={{color:"#FED937",fontSize:16,marginRight:6}}>▸</span>
-          {t.name} — odd <strong>{t.odd}</strong> ({c.pct}% de chance) | <strong style={{color:c.color}}>Probabilidade: {c.prob}</strong>
-        </div>})}
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
+      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700}}>Palpite de placar exato: {teamA||"[A]"} {sA} x {sB} {teamB||"[B]"}</div>
+      <div style={{padding:16,background:"#f3f4f6"}}>
+        <div style={{fontSize:22,fontWeight:700,marginBottom:14}}>{teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
+        <p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>
+        {p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}
+        {p3&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p3}</p>}
       </div>
     </div>
     <CodeBlock code={html}/>
   </div>;
 }
 
-/* ═══ PLACAR ═══ */
-function PlacarResumo({p}){
-  const[tips,setTips]=useState([{key:"Sugestão de aposta:",val:""},{key:"Boa oportunidade:",val:""},{key:"Sugestão alternativa:",val:""},{key:"Aposta de maior risco:",val:""}]);
-  const u=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};const qs=`${p}-pqs`;
-  const html=`<style>\n.${qs}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #DCFD4E;border-radius:10px;overflow:hidden;box-shadow:0 0 25px rgba(220,253,78,0.15);display:block!important;visibility:visible!important}\n.${qs}-hdr{background:#DCFD4E;padding:12px 16px;font-size:15px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}\n.${qs}-body{padding:14px 16px;background:#111827}\n.${qs}-item{display:flex;flex-wrap:wrap;gap:0 6px;font-size:14px;line-height:1.8;margin-bottom:4px}\n.${qs}-item:last-child{margin-bottom:0}\n.${qs}-k{font-weight:700;color:rgba(255,255,255,0.88)}\n.${qs}-v{color:rgba(255,255,255,0.7);margin:0}\n@media(max-width:480px){.${qs}-item{font-size:13px}.${qs}-hdr{font-size:14px}}\n</style>\n<div class="${qs}">\n  <div class="${qs}-hdr">⚡ Previsões Rápidas</div>\n  <div class="${qs}-body">\n    <dl style="margin:0;padding:0">\n${tips.filter(t=>t.val).map(t=>`    <div class="${qs}-item"><dt class="${qs}-k">${t.key}</dt><dd class="${qs}-v">${t.val}</dd></div>`).join("\n")}\n    </dl>\n  </div>\n</div>`;
+/* ═══════════════════════════════════════════════════════
+   5. LAKERS BRASIL — Comparativos NBA
+   ═══════════════════════════════════════════════════════ */
+const LAK={purple:"#552583",gold:"#FDB927"};
+
+function LakersPlayers({pfx}){
+  const[nA,setNA]=useState("");const[nB,setNB]=useState("");
+  const[stats,setStats]=useState([{label:"Pontos",a:"",b:""},{label:"Rebotes",a:"",b:""},{label:"Assistências",a:"",b:""},{label:"FG%",a:"",b:""},{label:"3PT%",a:"",b:""},{label:"FT%",a:"",b:""}]);
+  const u=(i,f,v)=>{const n=[...stats];n[i]={...n[i],[f]:v};setStats(n)};const lp=`${pfx}-lpc`;
+  const html=`<style>
+.${lp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid ${LAK.gold};border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${lp}-hdr{background:${LAK.purple};padding:12px 16px;font-size:15px;font-weight:700;color:${LAK.gold};text-align:center}
+.${lp}-sub{display:grid;grid-template-columns:1fr auto 1fr;background:${LAK.purple};padding:6px 16px 10px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.5px}
+.${lp}-sub span:first-child{text-align:right}.${lp}-sub span:last-child{text-align:left}
+.${lp}-tbl{width:100%;border-collapse:collapse;background:#1a1a2e}
+.${lp}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}
+.${lp}-tbl tr:last-child td{border-bottom:none}
+.${lp}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
+.${lp}-tbl td:nth-child(2){text-align:center;color:${LAK.gold};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.${lp}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
+@media(max-width:480px){.${lp}-tbl td{padding:8px 10px;font-size:12px}.${lp}-hdr{font-size:14px}}
+</style>
+<div class="${lp}">
+  <div class="${lp}-hdr">🏀 ${nA||"[JOGADOR A]"} vs ${nB||"[JOGADOR B]"}</div>
+  <div class="${lp}-sub"><span>${nA||"[A]"}</span><span>Stat</span><span>${nB||"[B]"}</span></div>
+  <table class="${lp}-tbl">
+${stats.filter(s=>s.a||s.b).map(s=>`    <tr><td>${s.a}</td><td>${s.label}</td><td>${s.b}</td></tr>`).join("\n")}
+  </table>
+</div>`;
   return<div>
-    {tips.map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"180px 1fr"}}><input className="inp" value={t.key} onChange={e=>u(i,"key",e.target.value)} placeholder="Rótulo:"/><input className="inp" value={t.val} onChange={e=>u(i,"val",e.target.value)} placeholder="Palpite – odd na Casa"/></div>)}
+    <p className="panel-desc">Comparativo entre jogadores NBA com tema Lakers.</p>
+    <div className="row row-2"><Field label="Jogador A" value={nA} onChange={setNA} placeholder="LeBron James"/><Field label="Jogador B" value={nB} onChange={setNB} placeholder="Stephen Curry"/></div>
+    <label className="lbl">Stats</label>
+    {stats.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 110px 1fr auto"}}><input className="inp" value={s.a} onChange={e=>u(i,"a",e.target.value)} placeholder="Valor A"/><input className="inp" value={s.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={s.b} onChange={e=>u(i,"b",e.target.value)} placeholder="Valor B"/>{stats.length>1&&<button className="btn-x" onClick={()=>setStats(stats.filter((_,j)=>j!==i))}>✕</button>}</div>)}
+    <button className="btn btn-ghost" onClick={()=>setStats([...stats,{label:"",a:"",b:""}])} style={{marginTop:3,marginBottom:12}}>+ Stat</button>
     <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #DCFD4E"}}>
-      <div style={{background:"#DCFD4E",padding:"12px 16px",fontSize:15,fontWeight:700}}>⚡ Previsões Rápidas</div>
-      <div style={{padding:"14px 16px",background:"#111827"}}>{tips.filter(t=>t.val).map((t,i)=><div key={i} style={{display:"flex",flexWrap:"wrap",gap:"0 6px",fontSize:14,lineHeight:1.8,marginBottom:4}}><strong style={{color:"rgba(255,255,255,0.88)"}}>{t.key}</strong><span style={{color:"rgba(255,255,255,0.7)"}}>{t.val}</span></div>)}</div>
-    </div>
-    <CodeBlock code={html}/>
-  </div>;
-}
-function PlacarRaioX({p,teamA,teamB}){
-  const[rows,setRows]=useState([{label:"Ranking FIFA",a:"",b:""},{label:"Maior número de caps",a:"",b:""},{label:"Mais gols",a:"",b:""},{label:"Total de convocações",a:"",b:""},{label:"Total de gols",a:"",b:""}]);
-  const u=(i,f,v)=>{const n=[...rows];n[i]={...n[i],[f]:v};setRows(n)};const rx=`${p}-prx`;
-  const html=`<style>\n.${rx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #DCFD4E;border-radius:10px;overflow:hidden;box-shadow:0 0 25px rgba(220,253,78,0.15);display:block!important;visibility:visible!important}\n.${rx}-hdr{background:#DCFD4E;padding:12px 16px;font-size:15px;font-weight:700;color:#000;text-align:center}\n.${rx}-tbl{width:100%;border-collapse:collapse;background:#111827}\n.${rx}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}\n.${rx}-tbl tr:last-child td{border-bottom:none}\n.${rx}-tbl td:first-child{text-align:right;font-weight:700;width:35%}\n.${rx}-tbl td:nth-child(2){text-align:center;color:rgba(255,255,255,0.45);font-size:12px}\n.${rx}-tbl td:last-child{text-align:left;font-weight:700;width:35%}\n@media(max-width:480px){.${rx}-tbl td{padding:8px 10px;font-size:12px}}\n</style>\n<div class="${rx}">\n  <div class="${rx}-hdr">${teamA||"[A]"} x ${teamB||"[B]"} — Raio X</div>\n  <table class="${rx}-tbl">\n${rows.filter(r=>r.a||r.b).map(r=>`    <tr><td>${r.a}</td><td>${r.label}</td><td>${r.b}</td></tr>`).join("\n")}\n  </table>\n</div>`;
-  return<div>
-    {rows.map((r,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 140px 1fr auto"}}><input className="inp" value={r.a} onChange={e=>u(i,"a",e.target.value)} placeholder={teamA||"A"}/><input className="inp" value={r.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={r.b} onChange={e=>u(i,"b",e.target.value)} placeholder={teamB||"B"}/>{rows.length>1&&<button className="btn-x" onClick={()=>setRows(rows.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setRows([...rows,{label:"",a:"",b:""}])} style={{marginTop:4,marginBottom:14}}>+ Linha</button>
-    <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #DCFD4E"}}>
-      <div style={{background:"#DCFD4E",padding:"12px 16px",fontSize:15,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} x {teamB||"[B]"} — Raio X</div>
-      <table style={{width:"100%",borderCollapse:"collapse",background:"#111827"}}><tbody>{rows.filter(r=>r.a||r.b).map((r,i)=><tr key={i}><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",textAlign:"right",fontWeight:700,width:"35%",color:"rgba(255,255,255,0.88)"}}>{r.a}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"rgba(255,255,255,0.45)",borderBottom:"1px solid rgba(255,255,255,0.08)"}}>{r.label}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",fontWeight:700,width:"35%",color:"rgba(255,255,255,0.88)"}}>{r.b}</td></tr>)}</tbody></table>
-    </div>
-    <CodeBlock code={html}/>
-  </div>;
-}
-function PlacarInsight({p,emoji,title,id}){const[text,setText]=useState("");const bx=`${p}-pin${id}`;
-  const html=`<style>\n.${bx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #DCFD4E;border-radius:10px;overflow:hidden;box-shadow:0 0 25px rgba(220,253,78,0.15);display:block!important;visibility:visible!important}\n.${bx}-hdr{background:#DCFD4E;padding:10px 16px;font-size:14px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}\n.${bx}-body{padding:14px 16px;font-size:14px;color:rgba(255,255,255,0.88);line-height:1.65;background:#111827}\n@media(max-width:480px){.${bx}-body{font-size:13px;padding:12px 14px}}\n</style>\n<div class="${bx}">\n  <div class="${bx}-hdr">${emoji} ${title}</div>\n  <div class="${bx}-body">${text}</div>\n</div>`;
-  return<div><Field label={`${emoji} ${title}`} value={text} onChange={setText} rows={2} placeholder="Frase curta..."/>
-    <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #DCFD4E"}}>
-      <div style={{background:"#DCFD4E",padding:"10px 16px",fontSize:14,fontWeight:700}}>{emoji} {title}</div>
-      <div style={{padding:"14px 16px",fontSize:14,color:"rgba(255,255,255,0.88)",lineHeight:1.65,background:"#111827"}}>{text||"..."}</div>
-    </div>
-    <CodeBlock code={html}/></div>;
-}
-function PlacarForm({p,teamA,teamB}){
-  const[rows,setRows]=useState([{label:"Forma Geral",a:"",b:""},{label:"Gols Marcados",a:"",b:""},{label:"Gols Sofridos",a:"",b:""},{label:"Copa do Mundo 2026",a:"",b:""},{label:"Principal Peça",a:"",b:""}]);
-  const u=(i,f,v)=>{const n=[...rows];n[i]={...n[i],[f]:v};setRows(n)};const gd=`${p}-pf5`;
-  const html=`<style>\n.${gd}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #DCFD4E;border-radius:10px;overflow:hidden;box-shadow:0 0 25px rgba(220,253,78,0.15);display:block!important;visibility:visible!important}\n.${gd}-hdr{background:#DCFD4E;padding:12px 16px;font-size:15px;font-weight:700;color:#000;text-align:center}\n.${gd}-tbl{width:100%;border-collapse:collapse;background:#111827}\n.${gd}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}\n.${gd}-tbl tr:last-child td{border-bottom:none}\n.${gd}-tbl td:first-child{text-align:right;font-weight:600;width:35%}\n.${gd}-tbl td:nth-child(2){text-align:center;color:rgba(255,255,255,0.45);font-size:12px}\n.${gd}-tbl td:last-child{text-align:left;font-weight:600;width:35%}\n@media(max-width:480px){.${gd}-tbl td{padding:8px 10px;font-size:12px}}\n</style>\n<div class="${gd}">\n  <div class="${gd}-hdr">${teamA||"[A]"} x ${teamB||"[B]"} — Últimos 5 Jogos</div>\n  <table class="${gd}-tbl">\n${rows.filter(r=>r.a||r.b).map(r=>`    <tr><td>${r.a}</td><td>${r.label}</td><td>${r.b}</td></tr>`).join("\n")}\n  </table>\n</div>`;
-  return<div>
-    {rows.map((r,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 140px 1fr auto"}}><input className="inp" value={r.a} onChange={e=>u(i,"a",e.target.value)} placeholder={teamA||"A"}/><input className="inp" value={r.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={r.b} onChange={e=>u(i,"b",e.target.value)} placeholder={teamB||"B"}/>{rows.length>1&&<button className="btn-x" onClick={()=>setRows(rows.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setRows([...rows,{label:"",a:"",b:""}])} style={{marginTop:4,marginBottom:14}}>+ Linha</button>
-    <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #DCFD4E"}}>
-      <div style={{background:"#DCFD4E",padding:"12px 16px",fontSize:15,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} x {teamB||"[B]"} — Últimos 5 Jogos</div>
-      <table style={{width:"100%",borderCollapse:"collapse",background:"#111827"}}><tbody>{rows.filter(r=>r.a||r.b).map((r,i)=><tr key={i}><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",textAlign:"right",fontWeight:600,width:"35%",color:"rgba(255,255,255,0.88)"}}>{r.a}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"rgba(255,255,255,0.45)",borderBottom:"1px solid rgba(255,255,255,0.08)"}}>{r.label}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",fontWeight:600,width:"35%",color:"rgba(255,255,255,0.88)"}}>{r.b}</td></tr>)}</tbody></table>
-    </div>
-    <CodeBlock code={html}/>
-  </div>;
-}
-function PlacarDicas({p}){
-  const[tips,setTips]=useState(["","","",""]);const u=(i,v)=>{const n=[...tips];n[i]=v;setTips(n)};const dk=`${p}-pdk`;
-  const html=`<style>\n.${dk}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #DCFD4E;border-radius:10px;overflow:hidden;box-shadow:0 0 25px rgba(220,253,78,0.15);display:block!important;visibility:visible!important}\n.${dk}-hdr{background:#DCFD4E;padding:10px 16px;font-size:14px;font-weight:700;color:#000}\n.${dk}-body{background:#111827;padding:14px 16px}\n.${dk}-list{list-style:none;padding:0;margin:0}\n.${dk}-list li{font-size:13px;color:rgba(255,255,255,0.88);line-height:1.6;padding:8px 0 8px 20px;border-bottom:1px solid rgba(255,255,255,0.08);position:relative}\n.${dk}-list li:last-child{border-bottom:none}\n.${dk}-list li::before{content:"\\2022";position:absolute;left:4px;color:#DCFD4E;font-size:16px;line-height:1.4}\n.${dk}-list li strong{color:#DCFD4E}\n@media(max-width:480px){.${dk}-list li{font-size:12px;padding:6px 0 6px 18px}}\n</style>\n<div class="${dk}">\n  <div class="${dk}-hdr">📊 Principais dicas de apostas</div>\n  <div class="${dk}-body">\n    <ul class="${dk}-list">\n${tips.filter(b=>b).map(b=>`      <li>${b}</li>`).join("\n")}\n    </ul>\n  </div>\n</div>`;
-  return<div>
-    <p className="panel-desc">Use &lt;strong&gt; para destaque neon.</p>
-    {tips.map((b,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr auto"}}><input className="inp" value={b} onChange={e=>u(i,e.target.value)} placeholder={`Dica ${i+1}`}/>{tips.length>1&&<button className="btn-x" onClick={()=>setTips(tips.filter((_,j)=>j!==i))}>✕</button>}</div>)}
-    <button className="btn btn-ghost" onClick={()=>setTips([...tips,""])} style={{marginTop:4,marginBottom:14}}>+ Dica</button>
-    <label className="lbl preview-lbl">Preview</label>
-    <div className="preview-box" style={{padding:0,overflow:"hidden",borderRadius:10,border:"2px solid #DCFD4E"}}>
-      <div style={{background:"#DCFD4E",padding:"10px 16px",fontSize:14,fontWeight:700}}>📊 Principais dicas de apostas</div>
-      <div style={{background:"#111827",padding:"14px 16px"}}><ul style={{listStyle:"none",padding:0,margin:0}}>{tips.filter(b=>b).map((b,i)=><li key={i} style={{fontSize:13,color:"rgba(255,255,255,0.88)",lineHeight:1.6,padding:"8px 0 8px 20px",borderBottom:i<tips.filter(x=>x).length-1?"1px solid rgba(255,255,255,0.08)":"none",position:"relative"}}><span style={{position:"absolute",left:4,color:"#DCFD4E",fontSize:16,lineHeight:1.4}}>•</span><span dangerouslySetInnerHTML={{__html:b}}/></li>)}</ul></div>
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:`2px solid ${LAK.gold}`}}>
+      <div style={{background:LAK.purple,padding:"12px 16px",fontSize:15,fontWeight:700,color:LAK.gold,textAlign:"center"}}>🏀 {nA||"[A]"} vs {nB||"[B]"}</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr auto 1fr",background:LAK.purple,padding:"6px 16px 10px",fontSize:12,fontWeight:700,color:"rgba(255,255,255,0.6)",textTransform:"uppercase",letterSpacing:.5}}><span style={{textAlign:"right"}}>{nA||"[A]"}</span><span style={{textAlign:"center"}}>Stat</span><span>{nB||"[B]"}</span></div>
+      <table style={{width:"100%",borderCollapse:"collapse",background:"#1a1a2e"}}><tbody>{stats.filter(s=>s.a||s.b).map((s,i)=><tr key={i}><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",textAlign:"right",fontWeight:700,width:"35%",color:"rgba(255,255,255,0.88)"}}>{s.a}</td><td style={{padding:"10px 14px",fontSize:11,textAlign:"center",color:LAK.gold,fontWeight:700,textTransform:"uppercase",borderBottom:"1px solid rgba(255,255,255,0.08)"}}>{s.label}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",fontWeight:700,width:"35%",color:"rgba(255,255,255,0.88)"}}>{s.b}</td></tr>)}</tbody></table>
     </div>
     <CodeBlock code={html}/>
   </div>;
 }
 
-/* ═══ MAIN ═══ */
+function LakersTeams({pfx}){
+  const[nA,setNA]=useState("");const[nB,setNB]=useState("");
+  const[stats,setStats]=useState([{label:"Pontos/Jogo",a:"",b:""},{label:"Rebotes/Jogo",a:"",b:""},{label:"Assistências/Jogo",a:"",b:""},{label:"FG%",a:"",b:""},{label:"3PT%",a:"",b:""},{label:"Recorde",a:"",b:""}]);
+  const u=(i,f,v)=>{const n=[...stats];n[i]={...n[i],[f]:v};setStats(n)};const lt=`${pfx}-ltc`;
+  const html=`<style>
+.${lt}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid ${LAK.gold};border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${lt}-hdr{background:${LAK.purple};padding:12px 16px;font-size:15px;font-weight:700;color:${LAK.gold};text-align:center}
+.${lt}-sub{display:grid;grid-template-columns:1fr auto 1fr;background:${LAK.purple};padding:6px 16px 10px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.5px}
+.${lt}-sub span:first-child{text-align:right}.${lt}-sub span:last-child{text-align:left}
+.${lt}-tbl{width:100%;border-collapse:collapse;background:#1a1a2e}
+.${lt}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}
+.${lt}-tbl tr:last-child td{border-bottom:none}
+.${lt}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
+.${lt}-tbl td:nth-child(2){text-align:center;color:${LAK.gold};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.${lt}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
+@media(max-width:480px){.${lt}-tbl td{padding:8px 10px;font-size:12px}.${lt}-hdr{font-size:14px}}
+</style>
+<div class="${lt}">
+  <div class="${lt}-hdr">🏀 ${nA||"[TIME A]"} vs ${nB||"[TIME B]"}</div>
+  <div class="${lt}-sub"><span>${nA||"[A]"}</span><span>Stat</span><span>${nB||"[B]"}</span></div>
+  <table class="${lt}-tbl">
+${stats.filter(s=>s.a||s.b).map(s=>`    <tr><td>${s.a}</td><td>${s.label}</td><td>${s.b}</td></tr>`).join("\n")}
+  </table>
+</div>`;
+  return<div>
+    <p className="panel-desc">Comparativo entre times NBA com tema Lakers.</p>
+    <div className="row row-2"><Field label="Time A" value={nA} onChange={setNA} placeholder="Lakers"/><Field label="Time B" value={nB} onChange={setNB} placeholder="Celtics"/></div>
+    <label className="lbl">Stats</label>
+    {stats.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 110px 1fr auto"}}><input className="inp" value={s.a} onChange={e=>u(i,"a",e.target.value)} placeholder="Valor A"/><input className="inp" value={s.label} onChange={e=>u(i,"label",e.target.value)}/><input className="inp" value={s.b} onChange={e=>u(i,"b",e.target.value)} placeholder="Valor B"/>{stats.length>1&&<button className="btn-x" onClick={()=>setStats(stats.filter((_,j)=>j!==i))}>✕</button>}</div>)}
+    <button className="btn btn-ghost" onClick={()=>setStats([...stats,{label:"",a:"",b:""}])} style={{marginTop:3,marginBottom:12}}>+ Stat</button>
+    <label className="lbl preview-lbl">Preview</label>
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:`2px solid ${LAK.gold}`}}>
+      <div style={{background:LAK.purple,padding:"12px 16px",fontSize:15,fontWeight:700,color:LAK.gold,textAlign:"center"}}>🏀 {nA||"[A]"} vs {nB||"[B]"}</div>
+      <div style={{display:"grid",gridTemplateColumns:"1fr auto 1fr",background:LAK.purple,padding:"6px 16px 10px",fontSize:12,fontWeight:700,color:"rgba(255,255,255,0.6)",textTransform:"uppercase",letterSpacing:.5}}><span style={{textAlign:"right"}}>{nA||"[A]"}</span><span style={{textAlign:"center"}}>Stat</span><span>{nB||"[B]"}</span></div>
+      <table style={{width:"100%",borderCollapse:"collapse",background:"#1a1a2e"}}><tbody>{stats.filter(s=>s.a||s.b).map((s,i)=><tr key={i}><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",textAlign:"right",fontWeight:700,width:"35%",color:"rgba(255,255,255,0.88)"}}>{s.a}</td><td style={{padding:"10px 14px",fontSize:11,textAlign:"center",color:LAK.gold,fontWeight:700,textTransform:"uppercase",borderBottom:"1px solid rgba(255,255,255,0.08)"}}>{s.label}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid rgba(255,255,255,0.08)",fontWeight:700,width:"35%",color:"rgba(255,255,255,0.88)"}}>{s.b}</td></tr>)}</tbody></table>
+    </div>
+    <CodeBlock code={html}/>
+  </div>;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MAIN APP
+   ═══════════════════════════════════════════════════════ */
 const SITE_CFG={
-  lance:{name:"Lance!",color:"#09C400",widgets:["Palpites Rápidos","Destaque Individual","Palpite Placar"]},
-  trivela:{name:"Trivela",color:"#be0022",widgets:["Retrospecto Recente","Palpite Placar"]},
-  umdois:{name:"UmDois",color:"#FED937",widgets:["Resumo Palpites","Raio-X","Você sabia?","Curiosidade","Guia Desempenho","Dicas + Probabilidades"]},
-  placar:{name:"Placar",color:"#DCFD4E",widgets:["Previsões Rápidas","Raio-X","Curiosidade","Você sabia?","Últimos 5 Jogos","Principais Dicas"]},
+  palpites:{name:"⚽ Palpites",color:"#09C400",widgets:["Card de Palpites"]},
+  lance:{name:"Lance!",color:"#09C400",widgets:["Destaque Individual","Palpite Placar"]},
+  trivela:{name:"Trivela",color:"#be0022",widgets:["Retrospecto","Palpite Placar"]},
+  umdois:{name:"UmDois",color:"#FED937",widgets:["Raio-X","Você sabia?","Curiosidade","Placar Exato"]},
+  lakers:{name:"Lakers Brasil",color:"#552583",widgets:["Comparar Jogadores","Comparar Times"]},
 };
+
 function App(){
-  const[site,setSite]=useState("lance");const[teamA,setTeamA]=useState("");const[teamB,setTeamB]=useState("");const[wIdx,setWIdx]=useState(0);
-  const cfg=SITE_CFG[site];const prefix=makePrefix(teamA,teamB);const handleSite=s=>{setSite(s);setWIdx(0)};
-  const renderWidget=()=>{const w=cfg.widgets[wIdx]||cfg.widgets[0];const p=prefix;
+  const[site,setSite]=useState("palpites");const[teamA,setTeamA]=useState("");const[teamB,setTeamB]=useState("");const[wIdx,setWIdx]=useState(0);
+  const cfg=SITE_CFG[site];const pfx=mkPfx(teamA,teamB);const handleSite=s=>{setSite(s);setWIdx(0)};
+  const isNBA=site==="lakers";
+  const renderWidget=()=>{const w=cfg.widgets[wIdx]||cfg.widgets[0];
     switch(site){
-      case"lance":if(w==="Palpites Rápidos")return<LancePalpites p={p}/>;if(w==="Destaque Individual")return<LancePlayer p={p} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<LancePlacar p={p}/>;break;
-      case"trivela":if(w==="Retrospecto Recente")return<TrivelaForm p={p} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<TrivPlacar p={p} teamA={teamA} teamB={teamB}/>;break;
-      case"umdois":if(w==="Resumo Palpites")return<UDEResumo p={p}/>;if(w==="Raio-X")return<UDERaioX p={p} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={p} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={p} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Guia Desempenho")return<UDEGuia p={p} teamA={teamA} teamB={teamB}/>;if(w==="Dicas + Probabilidades")return<UDEPlacar p={p} teamA={teamA} teamB={teamB}/>;break;
-      case"placar":if(w==="Previsões Rápidas")return<PlacarResumo p={p}/>;if(w==="Raio-X")return<PlacarRaioX p={p} teamA={teamA} teamB={teamB}/>;if(w==="Curiosidade")return<PlacarInsight p={p} emoji="📈" title="Curiosidade" id="c"/>;if(w==="Você sabia?")return<PlacarInsight p={p} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Últimos 5 Jogos")return<PlacarForm p={p} teamA={teamA} teamB={teamB}/>;if(w==="Principais Dicas")return<PlacarDicas p={p}/>;break;
+      case"palpites":return<Palpites teamA={teamA} teamB={teamB} pfx={pfx}/>;
+      case"lance":if(w==="Destaque Individual")return<LancePlayer p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<LancePlacar p={pfx}/>;break;
+      case"trivela":if(w==="Retrospecto")return<TrivelaForm p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<TrivPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
+      case"umdois":if(w==="Raio-X")return<UDERaioX p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={pfx} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={pfx} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Placar Exato")return<UDEPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
+      case"lakers":if(w==="Comparar Jogadores")return<LakersPlayers pfx={pfx}/>;if(w==="Comparar Times")return<LakersTeams pfx={pfx}/>;break;
     }return null;};
   return<div>
     <div className="hdr"><div className="hdr-top"><span className="hdr-brand" style={{color:cfg.color}}>NSN</span><span className="hdr-title">Gerador de Widgets HTML</span></div>
       <div className="site-tabs">{Object.entries(SITE_CFG).map(([k,v])=><button key={k} className={`site-tab${site===k?" on":""}`} style={site===k?{color:v.color,borderBottomColor:v.color}:{}} onClick={()=>handleSite(k)}>{v.name}</button>)}</div>
     </div>
     <div className="main">
-      <TeamBar a={teamA} b={teamB} onA={setTeamA} onB={setTeamB} prefix={prefix}/>
-      <div className="widget-tabs">{cfg.widgets.map((w,i)=><button key={w} className={`w-tab${wIdx===i?" on":""}`} style={wIdx===i?{background:cfg.color,color:isDk(cfg.color)?"#fff":"#000"}:{}} onClick={()=>setWIdx(i)}>{w}</button>)}</div>
+      {!isNBA&&<TeamBar a={teamA} b={teamB} onA={setTeamA} onB={setTeamB} pfx={pfx}/>}
+      {cfg.widgets.length>1&&<div className="widget-tabs">{cfg.widgets.map((w,i)=><button key={w} className={`w-tab${wIdx===i?" on":""}`} style={wIdx===i?{background:cfg.color,color:isDk(cfg.color)?"#fff":"#000"}:{}} onClick={()=>setWIdx(i)}>{w}</button>)}</div>}
       <div className="panel">{renderWidget()}</div>
     </div>
   </div>;

@@ -451,15 +451,14 @@ function UDEGuia({p,teamA,teamB}){
 
 function UDEPlacar({p,teamA,teamB}){
   const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const[p3,setP3]=useState("");const pe=`${p}-pe`;
-  const html=`<style>\n.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}\n.${pe}-body{padding:16px;background:#f3f4f6}\n.${pe}-score{font-size:22px;font-weight:700;color:#2B2B2B;margin-bottom:14px}\n.${pe}-txt{font-size:14px;color:#333;line-height:1.65}\n.${pe}-txt+.${pe}-txt{margin-top:10px}\n@media(max-width:480px){.${pe}-score{font-size:18px}.${pe}-body{padding:12px}}\n</style>\n<div class="${pe}">\n  <div class="${pe}-hdr">Palpite de placar exato: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${pe}-body">\n    <div class="${pe}-score">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n    <p class="${pe}-txt">${p1}</p>\n    <p class="${pe}-txt">${p2}</p>\n    ${p3?`<p class="${pe}-txt">${p3}</p>`:""}\n  </div>\n</div>`;
+  const html=`<style>\n.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}\n.${pe}-body{padding:16px;background:#f3f4f6}\n.${pe}-txt{font-size:14px;color:#333;line-height:1.65}\n.${pe}-txt+.${pe}-txt{margin-top:10px}\n@media(max-width:480px){.${pe}-body{padding:12px}}\n</style>\n<div class="${pe}">\n  <div class="${pe}-hdr">Nossa previsão: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${pe}-body">\n    <p class="${pe}-txt">${p1}</p>\n    <p class="${pe}-txt">${p2}</p>\n    ${p3?`<p class="${pe}-txt">${p3}</p>`:""}\n  </div>\n</div>`;
   return<div>
     <div className="row row-2"><Field label="Gols A" value={sA} onChange={setSA} placeholder="2"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/></div>
     <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2" value={p2} onChange={setP2} rows={2}/><Field label="Parágrafo 3 (opcional)" value={p3} onChange={setP3} rows={2}/>
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
-      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700}}>Palpite de placar exato: {teamA||"[A]"} {sA} x {sB} {teamB||"[B]"}</div>
+      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700}}>Nossa previsão: {teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
       <div style={{padding:16,background:"#f3f4f6"}}>
-        <div style={{fontSize:22,fontWeight:700,marginBottom:14}}>{teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
         <p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>
         {p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}
         {p3&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p3}</p>}

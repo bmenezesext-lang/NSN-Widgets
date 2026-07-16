@@ -376,6 +376,75 @@ function UDEInsight({p,emoji,title,id}){const[text,setText]=useState("");const b
     <CodeBlock code={html}/></div>;
 }
 
+function UDEGuia({p,teamA,teamB}){
+  const[compName,setCompName]=useState("Brasileirão");
+  const mk5=()=>["","","","",""];const mk3=()=>["","",""];
+  const[fA,setFA]=useState(mk5());const[fB,setFB]=useState(mk5());
+  const[cA,setCA]=useState(mk3());const[cB,setCB]=useState(mk3());
+  const[golsMA,setGolsMA]=useState("");const[golsMB,setGolsMB]=useState("");
+  const[golsSA,setGolsSA]=useState("");const[golsSB,setGolsSB]=useState("");
+  const[pecaA,setPecaA]=useState("");const[pecaB,setPecaB]=useState("");
+  const gd=`${p}-gd`;
+  const pC={V:"#2ecc71",E:"#f39c12",D:"#e74c3c"};
+  const pillsStr=(arr)=>arr.filter(x=>x).map(x=>`<span class="${gd}-fp ${gd}-fp-${x.toLowerCase()}">${x}</span>`).join(" – ");
+  const html=`<style>
+.${gd}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${gd}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000;text-align:center}
+.${gd}-tbl{width:100%;border-collapse:collapse;background:#fff}
+.${gd}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid #e0e0e0;color:#333;vertical-align:middle}
+.${gd}-tbl tr:last-child td{border-bottom:none}
+.${gd}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
+.${gd}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px;font-weight:700}
+.${gd}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
+.${gd}-fp{display:inline-block;width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;line-height:24px;text-align:center;color:#fff}
+.${gd}-fp-v{background:#2ecc71}
+.${gd}-fp-e{background:#f39c12}
+.${gd}-fp-d{background:#e74c3c}
+@media(max-width:480px){.${gd}-tbl td{padding:8px 10px;font-size:12px}.${gd}-fp{width:20px;height:20px;line-height:20px;font-size:10px}}
+</style>
+<div class="${gd}">
+  <div class="${gd}-hdr">${teamA||"[A]"} x ${teamB||"[B]"} — Últimos 5 Jogos</div>
+  <table class="${gd}-tbl">
+    <tr><td>${pillsStr(fA)}</td><td>Forma Geral</td><td>${pillsStr(fB)}</td></tr>
+    <tr><td>${golsMA}</td><td>Gols Marcados</td><td>${golsMB}</td></tr>
+    <tr><td>${golsSA}</td><td>Gols Sofridos</td><td>${golsSB}</td></tr>
+    <tr><td>${pillsStr(cA)}</td><td>${compName}</td><td>${pillsStr(cB)}</td></tr>
+    <tr><td>${pecaA}</td><td>Principal Peça</td><td>${pecaB}</td></tr>
+  </table>
+</div>`;
+  const PI=({arr,setArr,label,count})=><div className="field"><label className="lbl">{label}</label><div style={{display:"flex",gap:4}}>{arr.map((v,i)=><select key={i} className="inp" style={{width:52,padding:"5px 2px"}} value={v} onChange={e=>{const n=[...arr];n[i]=e.target.value;setArr(n)}}><option value="">-</option><option value="V">V</option><option value="E">E</option><option value="D">D</option></select>)}</div></div>;
+  const PillPrev=({arr})=><span>{arr.filter(x=>x).map((x,i)=><React.Fragment key={i}>{i>0&&<span style={{color:"#aaa"}}> – </span>}<span style={{display:"inline-block",width:24,height:24,borderRadius:"50%",fontSize:11,fontWeight:700,lineHeight:"24px",textAlign:"center",color:"#fff",background:pC[x]}}>{x}</span></React.Fragment>)}</span>;
+  return<div>
+    <p className="panel-desc">Tabela comparativa com pills coloridas V/E/D na forma e na competição.</p>
+    <Field label="Competição" value={compName} onChange={setCompName} placeholder="Brasileirão"/>
+    <div style={{fontSize:13,fontWeight:700,color:"#FED937",marginBottom:6}}>▸ Forma Geral (últimos 5)</div>
+    <div className="row row-2">
+      <PI arr={fA} setArr={setFA} label={teamA||"Time A"}/>
+      <PI arr={fB} setArr={setFB} label={teamB||"Time B"}/>
+    </div>
+    <div className="row row-2"><Field label={`Gols Marcados ${teamA||"A"}`} value={golsMA} onChange={setGolsMA} placeholder="9"/><Field label={`Gols Marcados ${teamB||"B"}`} value={golsMB} onChange={setGolsMB} placeholder="7"/></div>
+    <div className="row row-2"><Field label={`Gols Sofridos ${teamA||"A"}`} value={golsSA} onChange={setGolsSA} placeholder="4"/><Field label={`Gols Sofridos ${teamB||"B"}`} value={golsSB} onChange={setGolsSB} placeholder="6"/></div>
+    <div style={{fontSize:13,fontWeight:700,color:"#FED937",marginBottom:6,marginTop:8}}>▸ {compName} (últimos 3)</div>
+    <div className="row row-2">
+      <PI arr={cA} setArr={setCA} label={teamA||"Time A"}/>
+      <PI arr={cB} setArr={setCB} label={teamB||"Time B"}/>
+    </div>
+    <div className="row row-2"><Field label={`Principal Peça ${teamA||"A"}`} value={pecaA} onChange={setPecaA} placeholder="Pedro"/><Field label={`Principal Peça ${teamB||"B"}`} value={pecaB} onChange={setPecaB} placeholder="Matheus Pereira"/></div>
+    <label className="lbl preview-lbl">Preview</label>
+    <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
+      <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} x {teamB||"[B]"} — Últimos 5 Jogos</div>
+      <table style={{width:"100%",borderCollapse:"collapse",background:"#fff"}}><tbody>
+        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700,width:"35%"}}><PillPrev arr={fA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Forma Geral</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700,width:"35%"}}><PillPrev arr={fB}/></td></tr>
+        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}>{golsMA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Gols Marcados</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}>{golsMB}</td></tr>
+        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}>{golsSA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Gols Sofridos</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}>{golsSB}</td></tr>
+        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}><PillPrev arr={cA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>{compName}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}><PillPrev arr={cB}/></td></tr>
+        <tr><td style={{padding:"10px 14px",fontSize:13,textAlign:"right",fontWeight:700}}>{pecaA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700}}>Principal Peça</td><td style={{padding:"10px 14px",fontSize:13,fontWeight:700}}>{pecaB}</td></tr>
+      </tbody></table>
+    </div>
+    <CodeBlock code={html}/>
+  </div>;
+}
+
 function UDEPlacar({p,teamA,teamB}){
   const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const[p3,setP3]=useState("");const pe=`${p}-pe`;
   const html=`<style>\n.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}\n.${pe}-body{padding:16px;background:#f3f4f6}\n.${pe}-score{font-size:22px;font-weight:700;color:#2B2B2B;margin-bottom:14px}\n.${pe}-txt{font-size:14px;color:#333;line-height:1.65}\n.${pe}-txt+.${pe}-txt{margin-top:10px}\n@media(max-width:480px){.${pe}-score{font-size:18px}.${pe}-body{padding:12px}}\n</style>\n<div class="${pe}">\n  <div class="${pe}-hdr">Palpite de placar exato: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${pe}-body">\n    <div class="${pe}-score">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n    <p class="${pe}-txt">${p1}</p>\n    <p class="${pe}-txt">${p2}</p>\n    ${p3?`<p class="${pe}-txt">${p3}</p>`:""}\n  </div>\n</div>`;
@@ -444,7 +513,7 @@ const SITE_CFG={
   palpites:{name:"⚽ Palpites",color:"#09C400",widgets:["Card de Palpites"]},
   lance:{name:"Lance!",color:"#09C400",widgets:["Destaque Individual","Palpite Placar"]},
   trivela:{name:"Trivela",color:"#be0022",widgets:["Retrospecto","Palpite Placar"]},
-  umdois:{name:"UmDois",color:"#FED937",widgets:["Raio-X","Você sabia?","Curiosidade","Placar Exato"]},
+  umdois:{name:"UmDois",color:"#FED937",widgets:["Raio-X","Guia Desempenho","Você sabia?","Curiosidade","Placar Exato"]},
   lakers:{name:"Lakers Brasil",color:"#552583",widgets:["Comparar Jogadores","Comparar Times"]},
 };
 function App(){
@@ -456,7 +525,7 @@ function App(){
       case"palpites":return<Palpites teamA={teamA} teamB={teamB} pfx={pfx}/>;
       case"lance":if(w==="Destaque Individual")return<LancePlayer p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<LancePlacar p={pfx}/>;break;
       case"trivela":if(w==="Retrospecto")return<TrivelaForm p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<TrivPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
-      case"umdois":if(w==="Raio-X")return<UDERaioX p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={pfx} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={pfx} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Placar Exato")return<UDEPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
+      case"umdois":if(w==="Raio-X")return<UDERaioX p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Guia Desempenho")return<UDEGuia p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={pfx} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={pfx} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Placar Exato")return<UDEPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
       case"lakers":if(w==="Comparar Jogadores")return<LakersPlayers pfx={pfx}/>;if(w==="Comparar Times")return<LakersTeams pfx={pfx}/>;break;
     }return null;};
   return<div>

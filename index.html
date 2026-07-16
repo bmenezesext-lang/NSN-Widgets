@@ -65,7 +65,7 @@ function TeamBar({a,b,onA,onB,pfx}){return<div className="team-bar"><Field label
 function ColorPick({label,value,onChange}){return<div className="field"><label className="lbl">{label}</label><div className="colors">{TC.map(c=><div key={c.h} className={`color-dot${value===c.h?" on":""}`} style={{background:c.h}} title={c.n} onClick={()=>onChange(c.h)}/>)}<input className="inp" value={value} onChange={e=>onChange(e.target.value)} style={{width:80,marginLeft:4}} placeholder="#hex"/></div></div>}
 
 /* ═══ 1. PALPITES (multi-site) ═══ */
-const PS={lance:{name:"Lance!",color:"#09C400",txtH:"#fff",icon:"⚽"},trivela:{name:"Trivela",color:"#be0022",txtH:"#fff",icon:"⚽"},umdois:{name:"UmDois",color:"#FED937",txtH:"#000",icon:"⚽"}};
+const PS={lance:{name:"Lance!",color:"#09C400",txtH:"#fff",icon:"⚽"},trivela:{name:"Trivela",color:"#be0022",txtH:"#fff",icon:"⚽"},umdois:{name:"UmDois",color:"#FED937",txtH:"#000",icon:"⚽"},lakers:{name:"Lakers Brasil",color:"#552583",txtH:"#FDB927",icon:"🏀"}};
 function Palpites({teamA,teamB,pfx}){
   const[site,setSite]=useState("lance");const[count,setCount]=useState(3);
   const[tips,setTips]=useState([{name:"",odds:""},{name:"",odds:""},{name:"",odds:""}]);
@@ -377,14 +377,15 @@ function UDEInsight({p,emoji,title,id}){const[text,setText]=useState("");const b
 }
 
 function UDEGuia({p,teamA,teamB}){
-  const[compName,setCompName]=useState("Brasileirão");
-  const mk5=()=>["","","","",""];const mk3=()=>["","",""];
+  const[sameComp,setSameComp]=useState(true);
+  const[comp1,setComp1]=useState("Brasileirão");const[comp2,setComp2]=useState("Liga Argentina");
+  const mk5=()=>["","","","",""];
   const[fA,setFA]=useState(mk5());const[fB,setFB]=useState(mk5());
-  const[cA,setCA]=useState(mk3());const[cB,setCB]=useState(mk3());
+  const[cA,setCA]=useState(mk5());const[cB,setCB]=useState(mk5());
   const[golsMA,setGolsMA]=useState("");const[golsMB,setGolsMB]=useState("");
   const[golsSA,setGolsSA]=useState("");const[golsSB,setGolsSB]=useState("");
   const[pecaA,setPecaA]=useState("");const[pecaB,setPecaB]=useState("");
-  const gd=`${p}-gd`;
+  const gd=`${p}-gd`;const compA=comp1;const compB=sameComp?comp1:comp2;
   const pC={V:"#2ecc71",E:"#f39c12",D:"#e74c3c"};
   const pillsStr=(arr)=>arr.filter(x=>x).map(x=>`<span class="${gd}-fp ${gd}-fp-${x.toLowerCase()}">${x}</span>`).join(" – ");
   const html=`<style>
@@ -408,26 +409,29 @@ function UDEGuia({p,teamA,teamB}){
     <tr><td>${pillsStr(fA)}</td><td>Forma Geral</td><td>${pillsStr(fB)}</td></tr>
     <tr><td>${golsMA}</td><td>Gols Marcados</td><td>${golsMB}</td></tr>
     <tr><td>${golsSA}</td><td>Gols Sofridos</td><td>${golsSB}</td></tr>
-    <tr><td>${pillsStr(cA)}</td><td>${compName}</td><td>${pillsStr(cB)}</td></tr>
+    <tr><td>${pillsStr(cA)}</td><td>${compA}</td><td>${pillsStr(cB)}</td></tr>
     <tr><td>${pecaA}</td><td>Principal Peça</td><td>${pecaB}</td></tr>
   </table>
 </div>`;
-  const PI=({arr,setArr,label,count})=><div className="field"><label className="lbl">{label}</label><div style={{display:"flex",gap:4}}>{arr.map((v,i)=><select key={i} className="inp" style={{width:52,padding:"5px 2px"}} value={v} onChange={e=>{const n=[...arr];n[i]=e.target.value;setArr(n)}}><option value="">-</option><option value="V">V</option><option value="E">E</option><option value="D">D</option></select>)}</div></div>;
+  const PI=({arr,setArr,label})=><div className="field"><label className="lbl">{label} (mais antigo → recente)</label><div style={{display:"flex",gap:4}}>{arr.map((v,i)=><select key={i} className="inp" style={{width:52,padding:"5px 2px"}} value={v} onChange={e=>{const n=[...arr];n[i]=e.target.value;setArr(n)}}><option value="">-</option><option value="V">V</option><option value="E">E</option><option value="D">D</option></select>)}</div></div>;
   const PillPrev=({arr})=><span>{arr.filter(x=>x).map((x,i)=><React.Fragment key={i}>{i>0&&<span style={{color:"#aaa"}}> – </span>}<span style={{display:"inline-block",width:24,height:24,borderRadius:"50%",fontSize:11,fontWeight:700,lineHeight:"24px",textAlign:"center",color:"#fff",background:pC[x]}}>{x}</span></React.Fragment>)}</span>;
   return<div>
-    <p className="panel-desc">Tabela comparativa com pills coloridas V/E/D na forma e na competição.</p>
-    <Field label="Competição" value={compName} onChange={setCompName} placeholder="Brasileirão"/>
-    <div style={{fontSize:13,fontWeight:700,color:"#FED937",marginBottom:6}}>▸ Forma Geral (últimos 5)</div>
+    <p className="panel-desc">Tabela comparativa com pills V/E/D. Opção de competições diferentes para torneios Conmebol.</p>
+    <div className="field"><label className="lbl">Competições</label>
+      <div style={{display:"flex",gap:6,marginBottom:8}}><button className={`pill${sameComp?" on":""}`} style={sameComp?{background:"#FED937",color:"#000"}:{}} onClick={()=>setSameComp(true)}>Mesma competição</button><button className={`pill${!sameComp?" on":""}`} style={!sameComp?{background:"#FED937",color:"#000"}:{}} onClick={()=>setSameComp(false)}>Competições diferentes</button></div>
+    </div>
+    {sameComp?<Field label="Competição" value={comp1} onChange={setComp1}/>:<div className="row row-2"><Field label={`Competição ${teamA||"A"}`} value={comp1} onChange={setComp1}/><Field label={`Competição ${teamB||"B"}`} value={comp2} onChange={setComp2}/></div>}
+    <div style={{fontSize:13,fontWeight:700,color:"#b8960c",marginBottom:6,marginTop:8}}>▸ Forma Geral (últimos 5)</div>
     <div className="row row-2">
       <PI arr={fA} setArr={setFA} label={teamA||"Time A"}/>
       <PI arr={fB} setArr={setFB} label={teamB||"Time B"}/>
     </div>
     <div className="row row-2"><Field label={`Gols Marcados ${teamA||"A"}`} value={golsMA} onChange={setGolsMA} placeholder="9"/><Field label={`Gols Marcados ${teamB||"B"}`} value={golsMB} onChange={setGolsMB} placeholder="7"/></div>
     <div className="row row-2"><Field label={`Gols Sofridos ${teamA||"A"}`} value={golsSA} onChange={setGolsSA} placeholder="4"/><Field label={`Gols Sofridos ${teamB||"B"}`} value={golsSB} onChange={setGolsSB} placeholder="6"/></div>
-    <div style={{fontSize:13,fontWeight:700,color:"#FED937",marginBottom:6,marginTop:8}}>▸ {compName} (últimos 3)</div>
+    <div style={{fontSize:13,fontWeight:700,color:"#b8960c",marginBottom:6,marginTop:8}}>▸ {sameComp?comp1:`${comp1} / ${comp2}`} (últimos 5)</div>
     <div className="row row-2">
-      <PI arr={cA} setArr={setCA} label={teamA||"Time A"}/>
-      <PI arr={cB} setArr={setCB} label={teamB||"Time B"}/>
+      <PI arr={cA} setArr={setCA} label={`${teamA||"A"} — ${compA}`}/>
+      <PI arr={cB} setArr={setCB} label={`${teamB||"B"} — ${compB}`}/>
     </div>
     <div className="row row-2"><Field label={`Principal Peça ${teamA||"A"}`} value={pecaA} onChange={setPecaA} placeholder="Pedro"/><Field label={`Principal Peça ${teamB||"B"}`} value={pecaB} onChange={setPecaB} placeholder="Matheus Pereira"/></div>
     <label className="lbl preview-lbl">Preview</label>
@@ -437,7 +441,7 @@ function UDEGuia({p,teamA,teamB}){
         <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700,width:"35%"}}><PillPrev arr={fA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Forma Geral</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700,width:"35%"}}><PillPrev arr={fB}/></td></tr>
         <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}>{golsMA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Gols Marcados</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}>{golsMB}</td></tr>
         <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}>{golsSA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Gols Sofridos</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}>{golsSB}</td></tr>
-        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}><PillPrev arr={cA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>{compName}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}><PillPrev arr={cB}/></td></tr>
+        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}><PillPrev arr={cA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>{compA}{!sameComp?` / ${compB}`:""}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}><PillPrev arr={cB}/></td></tr>
         <tr><td style={{padding:"10px 14px",fontSize:13,textAlign:"right",fontWeight:700}}>{pecaA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700}}>Principal Peça</td><td style={{padding:"10px 14px",fontSize:13,fontWeight:700}}>{pecaB}</td></tr>
       </tbody></table>
     </div>

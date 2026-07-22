@@ -90,11 +90,22 @@ function Palpites({teamA,teamB,pfx}){
 .${tp}-stats{margin:0;padding:0;list-style:none}
 .${tp}-stats li{font-size:11px;color:#666;line-height:1.45;padding:4px 0;border-top:1px solid #f0f0f0}
 .${tp}-stats li:first-child{border-top:none}
+@media(prefers-color-scheme:dark){
+.${tp}-card{background:#1e1e1e;border-right-color:#333}
+.${tp}-grid{border-color:${s.color}}
+.${tp}-name{color:#e0e0e0}
+.${tp}-lbl{color:#888}
+.${tp}-bar{background:#444}
+.${tp}-stats li{color:#bbb;border-top-color:#333}
+}
 @media(max-width:480px){
 .${tp}-grid{grid-template-columns:1fr}
 .${tp}-card{border-right:none;border-bottom:1px solid #f0f0f0}
 .${tp}-card:last-child{border-bottom:none}
 .${tp}-name{min-height:auto;font-size:15px}
+}
+@media(max-width:480px) and (prefers-color-scheme:dark){
+.${tp}-card{border-bottom-color:#333}
 }
 </style>
 <div class="${tp}-wrap">
@@ -156,7 +167,6 @@ function LancePlayer({p,teamA,teamB}){
   const uA=(i,f,val)=>{const n=[...sA];n[i]={...n[i],[f]:val};setSA(n)};
   const uB=(i,f,val)=>{const n=[...sB];n[i]={...n[i],[f]:val};setSB(n)};
   const sp=`${p}-sp`;
-  /* Dynamic color helpers for both cards */
   const hDk=isDk(homeBg);const aDk=isDk(awayBg);
   const hTxt=hDk?"#fff":"#1a1a1a";const aTxt=aDk?"#fff":"#1a1a1a";
   const hEye=hDk?"rgba(255,255,255,0.6)":"rgba(0,0,0,0.45)";const aEye=aDk?"rgba(255,255,255,0.6)":"rgba(0,0,0,0.45)";
@@ -247,7 +257,6 @@ function LancePlacar({p}){
   const[score,setScore]=useState("");const[c1,setC1]=useState("");const[c2,setC2]=useState("");
   const[bullets,setBullets]=useState(["",""]);const uB=(i,v)=>{const n=[...bullets];n[i]=v;setBullets(n)};
   const pw=`${p}-pw`;
-  /* Use <b> instead of <strong> for green highlights — WordPress handles <b> more reliably */
   const html=`<style>
 .${pw}{font-family:${FNT};background:#00ba25!important;border-radius:12px;padding:18px 20px 16px;max-width:680px;margin:0 auto;display:block!important;visibility:visible!important}
 .${pw}-eye{font-size:11px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:rgba(255,255,255,0.75);margin-bottom:7px}
@@ -259,6 +268,11 @@ function LancePlacar({p}){
 .${pw}-list li:last-child{border-bottom:none}
 .${pw}-list li::before{content:"\\2022";position:absolute;left:2px;color:#00ba25;font-size:16px;line-height:1.4}
 .${pw}-list li b{color:#00ba25!important;font-weight:700}
+@media(prefers-color-scheme:dark){
+.${pw}-card{background:#1e1e1e}
+.${pw}-ctx{color:#d0d0d0;border-bottom-color:#333}
+.${pw}-list li{color:#d0d0d0;border-bottom-color:#333}
+}
 @media(max-width:480px){.${pw}{padding:14px 14px 12px}.${pw}-score{font-size:21px}.${pw}-ctx,.${pw}-list li{font-size:12px}}
 </style>
 <div class="${pw}">
@@ -318,6 +332,14 @@ function TrivelaForm({p,teamA,teamB}){
 .${fp}-h2h-r{font-weight:700;min-width:160px;color:#1a1a1a}
 .${fp}-h2h-d{color:#888;min-width:70px}
 .${fp}-h2h-c{color:#333}
+@media(prefers-color-scheme:dark){
+.${fp}-section{color:#999;border-bottom-color:#333}
+.${fp}-label{color:#e0e0e0}
+.${fp}-h2h-row{border-bottom-color:#333}
+.${fp}-h2h-r{color:#e0e0e0}
+.${fp}-h2h-d{color:#999}
+.${fp}-h2h-c{color:#d0d0d0}
+}
 @media(max-width:480px){.${fp}-row{flex-direction:column;gap:3px;align-items:flex-start}.${fp}-label{min-width:0}.${fp}-h2h-row{flex-direction:column;gap:2px}}
 </style>
 <div class="${fp}">
@@ -360,7 +382,25 @@ ${plHTML(gB,teamB||"[TIME B]")}${h2hBlk}
 
 function TrivPlacar({p,teamA,teamB}){
   const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const tp=`${p}-pred`;
-  const html=`<style>\n.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid #c0392b;display:block!important;visibility:visible!important}\n.${tp}-hdr{background:#c0392b;color:#fff;padding:14px 18px;font-size:18px;font-weight:700;text-align:center}\n.${tp}-body{background:#fff;padding:16px}\n.${tp}-txt{font-size:14px;color:#333;line-height:1.65}\n.${tp}-txt+.${tp}-txt{margin-top:10px}\n@media(max-width:480px){.${tp}-hdr{font-size:16px;padding:12px 14px}.${tp}-body{padding:12px}}\n</style>\n<div class="${tp}">\n  <div class="${tp}-hdr">Previsão da Trivela: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${tp}-body">\n    <p class="${tp}-txt">${p1}</p>\n    <p class="${tp}-txt">${p2}</p>\n  </div>\n</div>`;
+  const html=`<style>
+.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid #c0392b;display:block!important;visibility:visible!important}
+.${tp}-hdr{background:#c0392b;color:#fff;padding:14px 18px;font-size:18px;font-weight:700;text-align:center}
+.${tp}-body{background:#fff;padding:16px}
+.${tp}-txt{font-size:14px;color:#333;line-height:1.65}
+.${tp}-txt+.${tp}-txt{margin-top:10px}
+@media(prefers-color-scheme:dark){
+.${tp}-body{background:#1e1e1e}
+.${tp}-txt{color:#d0d0d0}
+}
+@media(max-width:480px){.${tp}-hdr{font-size:16px;padding:12px 14px}.${tp}-body{padding:12px}}
+</style>
+<div class="${tp}">
+  <div class="${tp}-hdr">Previsão da Trivela: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>
+  <div class="${tp}-body">
+    <div class="${tp}-txt">${p1}</div>
+    <div class="${tp}-txt">${p2}</div>
+  </div>
+</div>`;
   return<div>
     <p className="panel-desc">Placar no header vermelho, sem odds. Dois parágrafos.</p>
     <div className="row row-2"><Field label="Gols A" value={sA} onChange={setSA} placeholder="1"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/></div>
@@ -368,7 +408,7 @@ function TrivPlacar({p,teamA,teamB}){
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #c0392b"}}>
       <div style={{background:"#c0392b",color:"#fff",padding:"14px 18px",fontSize:18,fontWeight:700,textAlign:"center"}}>Previsão da Trivela: {teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
-      <div style={{padding:16}}><p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>{p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}</div>
+      <div style={{padding:16}}><div style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</div>{p2&&<div style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</div>}</div>
     </div>
     <CodeBlock code={html}/>
   </div>;
@@ -388,6 +428,12 @@ function UDERaioX({p,teamA,teamB}){
 .${rx}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px}
 .${rx}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
 .${rx}-win{font-weight:700;background:#fffde7;outline:2px solid #FED937;outline-offset:-2px;border-radius:5px}
+@media(prefers-color-scheme:dark){
+.${rx}-tbl{background:#1e1e1e}
+.${rx}-tbl td{color:#d0d0d0;border-bottom-color:#333}
+.${rx}-tbl td:nth-child(2){color:#aaa}
+.${rx}-win{background:#3a3520}
+}
 @media(max-width:480px){.${rx}-tbl td{padding:8px 10px;font-size:12px}}
 </style>
 <div class="${rx}">
@@ -424,7 +470,19 @@ ${rows.filter(r=>r.a||r.b).map(r=>`    <tr><td${r.win==="a"?` class="${rx}-win"`
 }
 
 function UDEInsight({p,emoji,title,id}){const[text,setText]=useState("");const bx=`${p}-in${id}`;
-  const html=`<style>\n.${bx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${bx}-hdr{background:#FED937;padding:10px 16px;font-size:14px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}\n.${bx}-body{padding:14px 16px;font-size:14px;color:#333;line-height:1.65;background:transparent}\n@media(max-width:480px){.${bx}-body{font-size:13px;padding:12px 14px}}\n</style>\n<div class="${bx}">\n  <div class="${bx}-hdr">${emoji} ${title}</div>\n  <div class="${bx}-body">${text}</div>\n</div>`;
+  const html=`<style>
+.${bx}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${bx}-hdr{background:#FED937;padding:10px 16px;font-size:14px;font-weight:700;color:#000;display:flex;align-items:center;gap:8px}
+.${bx}-body{padding:14px 16px;font-size:14px;color:#333;line-height:1.65;background:transparent}
+@media(prefers-color-scheme:dark){
+.${bx}-body{color:#d0d0d0}
+}
+@media(max-width:480px){.${bx}-body{font-size:13px;padding:12px 14px}}
+</style>
+<div class="${bx}">
+  <div class="${bx}-hdr">${emoji} ${title}</div>
+  <div class="${bx}-body">${text}</div>
+</div>`;
   return<div><Field label={`${emoji} ${title}`} value={text} onChange={setText} rows={2} placeholder="Frase curta..."/>
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
@@ -453,12 +511,17 @@ function UDEGuia({p,teamA,teamB}){
 .${gd}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid #e0e0e0;color:#333;vertical-align:middle}
 .${gd}-tbl tr:last-child td{border-bottom:none}
 .${gd}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
-.${gd}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px;font-weight:700}
+.${gd}-tbl td:nth-child(2){text-align:center;color:#888;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
 .${gd}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
 .${gd}-fp{display:inline-block;width:24px;height:24px;border-radius:50%;font-size:11px;font-weight:700;line-height:24px;text-align:center;color:#fff}
 .${gd}-fp-v{background:#2ecc71}
 .${gd}-fp-e{background:#f39c12}
 .${gd}-fp-d{background:#e74c3c}
+@media(prefers-color-scheme:dark){
+.${gd}-tbl{background:#1e1e1e}
+.${gd}-tbl td{color:#d0d0d0;border-bottom-color:#333}
+.${gd}-tbl td:nth-child(2){color:#aaa}
+}
 @media(max-width:480px){.${gd}-tbl td{padding:8px 10px;font-size:12px}.${gd}-fp{width:20px;height:20px;line-height:20px;font-size:10px}}
 </style>
 <div class="${gd}">
@@ -496,7 +559,7 @@ function UDEGuia({p,teamA,teamB}){
     <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
       <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} x {teamB||"[B]"} — Últimos 5 Jogos</div>
       <table style={{width:"100%",borderCollapse:"collapse",background:"#fff"}}><tbody>
-        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700,width:"35%"}}><PillPrev arr={fA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Forma Geral</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700,width:"35%"}}><PillPrev arr={fB}/></td></tr>
+        <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700,width:"35%"}}><PillPrev arr={fA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,textTransform:"uppercase",borderBottom:"1px solid #e0e0e0"}}>Forma Geral</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700,width:"35%"}}><PillPrev arr={fB}/></td></tr>
         <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}>{golsMA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Gols Marcados</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}>{golsMB}</td></tr>
         <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}>{golsSA}</td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>Gols Sofridos</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}>{golsSB}</td></tr>
         <tr><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",textAlign:"right",fontWeight:700}}><PillPrev arr={cA}/></td><td style={{padding:"10px 14px",fontSize:12,textAlign:"center",color:"#888",fontWeight:700,borderBottom:"1px solid #e0e0e0"}}>{compA}{!sameComp?` / ${compB}`:""}</td><td style={{padding:"10px 14px",fontSize:13,borderBottom:"1px solid #e0e0e0",fontWeight:700}}><PillPrev arr={cB}/></td></tr>
@@ -509,7 +572,26 @@ function UDEGuia({p,teamA,teamB}){
 
 function UDEPlacar({p,teamA,teamB}){
   const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const[p3,setP3]=useState("");const pe=`${p}-pe`;
-  const html=`<style>\n.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}\n.${pe}-body{padding:16px;background:#f3f4f6}\n.${pe}-txt{font-size:14px;color:#333;line-height:1.65}\n.${pe}-txt+.${pe}-txt{margin-top:10px}\n@media(max-width:480px){.${pe}-body{padding:12px}}\n</style>\n<div class="${pe}">\n  <div class="${pe}-hdr">Nossa previsão: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${pe}-body">\n    <p class="${pe}-txt">${p1}</p>\n    <p class="${pe}-txt">${p2}</p>\n    ${p3?`<p class="${pe}-txt">${p3}</p>`:""}\n  </div>\n</div>`;
+  const html=`<style>
+.${pe}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid #FED937;border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${pe}-hdr{background:#FED937;padding:12px 16px;font-size:15px;font-weight:700;color:#000}
+.${pe}-body{padding:16px;background:#f3f4f6}
+.${pe}-txt{font-size:14px;color:#333;line-height:1.65}
+.${pe}-txt+.${pe}-txt{margin-top:10px}
+@media(prefers-color-scheme:dark){
+.${pe}-body{background:#1e1e1e}
+.${pe}-txt{color:#d0d0d0}
+}
+@media(max-width:480px){.${pe}-body{padding:12px}}
+</style>
+<div class="${pe}">
+  <div class="${pe}-hdr">Nossa previsão: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>
+  <div class="${pe}-body">
+    <div class="${pe}-txt">${p1}</div>
+    <div class="${pe}-txt">${p2}</div>
+    ${p3?`<div class="${pe}-txt">${p3}</div>`:""}
+  </div>
+</div>`;
   return<div>
     <div className="row row-2"><Field label="Gols A" value={sA} onChange={setSA} placeholder="2"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/></div>
     <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2" value={p2} onChange={setP2} rows={2}/><Field label="Parágrafo 3 (opcional)" value={p3} onChange={setP3} rows={2}/>
@@ -517,9 +599,9 @@ function UDEPlacar({p,teamA,teamB}){
     <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #FED937"}}>
       <div style={{background:"#FED937",padding:"12px 16px",fontSize:15,fontWeight:700}}>Nossa previsão: {teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
       <div style={{padding:16,background:"#f3f4f6"}}>
-        <p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>
-        {p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}
-        {p3&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p3}</p>}
+        <div style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</div>
+        {p2&&<div style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</div>}
+        {p3&&<div style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p3}</div>}
       </div>
     </div>
     <CodeBlock code={html}/>
@@ -532,7 +614,26 @@ function LakersPlayers({pfx}){
   const[nA,setNA]=useState("");const[nB,setNB]=useState("");
   const[stats,setStats]=useState([{label:"Pontos",a:"",b:""},{label:"Rebotes",a:"",b:""},{label:"Assistências",a:"",b:""},{label:"FG%",a:"",b:""},{label:"3PT%",a:"",b:""},{label:"FT%",a:"",b:""}]);
   const u=(i,f,v)=>{const n=[...stats];n[i]={...n[i],[f]:v};setStats(n)};const lp=`${pfx}-lpc`;
-  const html=`<style>\n.${lp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid ${LAK.gold};border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${lp}-hdr{background:${LAK.purple};padding:12px 16px;font-size:15px;font-weight:700;color:${LAK.gold};text-align:center}\n.${lp}-sub{display:grid;grid-template-columns:1fr auto 1fr;background:${LAK.purple};padding:6px 16px 10px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.5px}\n.${lp}-sub span:first-child{text-align:right}.${lp}-sub span:last-child{text-align:left}\n.${lp}-tbl{width:100%;border-collapse:collapse;background:#1a1a2e}\n.${lp}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}\n.${lp}-tbl tr:last-child td{border-bottom:none}\n.${lp}-tbl td:first-child{text-align:right;font-weight:700;width:35%}\n.${lp}-tbl td:nth-child(2){text-align:center;color:${LAK.gold};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}\n.${lp}-tbl td:last-child{text-align:left;font-weight:700;width:35%}\n@media(max-width:480px){.${lp}-tbl td{padding:8px 10px;font-size:12px}.${lp}-hdr{font-size:14px}}\n</style>\n<div class="${lp}">\n  <div class="${lp}-hdr">🏀 ${nA||"[A]"} vs ${nB||"[B]"}</div>\n  <div class="${lp}-sub"><span>${nA||"[A]"}</span><span>Stat</span><span>${nB||"[B]"}</span></div>\n  <table class="${lp}-tbl">\n${stats.filter(s=>s.a||s.b).map(s=>`    <tr><td>${s.a}</td><td>${s.label}</td><td>${s.b}</td></tr>`).join("\n")}\n  </table>\n</div>`;
+  const html=`<style>
+.${lp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid ${LAK.gold};border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${lp}-hdr{background:${LAK.purple};padding:12px 16px;font-size:15px;font-weight:700;color:${LAK.gold};text-align:center}
+.${lp}-sub{display:grid;grid-template-columns:1fr auto 1fr;background:${LAK.purple};padding:6px 16px 10px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.5px}
+.${lp}-sub span:first-child{text-align:right}.${lp}-sub span:last-child{text-align:left}
+.${lp}-tbl{width:100%;border-collapse:collapse;background:#1a1a2e}
+.${lp}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}
+.${lp}-tbl tr:last-child td{border-bottom:none}
+.${lp}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
+.${lp}-tbl td:nth-child(2){text-align:center;color:${LAK.gold};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.${lp}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
+@media(max-width:480px){.${lp}-tbl td{padding:8px 10px;font-size:12px}.${lp}-hdr{font-size:14px}}
+</style>
+<div class="${lp}">
+  <div class="${lp}-hdr">🏀 ${nA||"[A]"} vs ${nB||"[B]"}</div>
+  <div class="${lp}-sub"><span>${nA||"[A]"}</span><span>Stat</span><span>${nB||"[B]"}</span></div>
+  <table class="${lp}-tbl">
+${stats.filter(s=>s.a||s.b).map(s=>`    <tr><td>${s.a}</td><td>${s.label}</td><td>${s.b}</td></tr>`).join("\n")}
+  </table>
+</div>`;
   return<div>
     <p className="panel-desc">Comparativo entre jogadores NBA.</p>
     <div className="row row-2"><Field label="Jogador A" value={nA} onChange={setNA} placeholder="LeBron James"/><Field label="Jogador B" value={nB} onChange={setNB} placeholder="Stephen Curry"/></div>
@@ -552,7 +653,26 @@ function LakersTeams({pfx}){
   const[nA,setNA]=useState("");const[nB,setNB]=useState("");
   const[stats,setStats]=useState([{label:"Pontos/Jogo",a:"",b:""},{label:"Rebotes/Jogo",a:"",b:""},{label:"Assistências/Jogo",a:"",b:""},{label:"FG%",a:"",b:""},{label:"3PT%",a:"",b:""},{label:"Recorde",a:"",b:""}]);
   const u=(i,f,v)=>{const n=[...stats];n[i]={...n[i],[f]:v};setStats(n)};const lt=`${pfx}-ltc`;
-  const html=`<style>\n.${lt}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid ${LAK.gold};border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}\n.${lt}-hdr{background:${LAK.purple};padding:12px 16px;font-size:15px;font-weight:700;color:${LAK.gold};text-align:center}\n.${lt}-sub{display:grid;grid-template-columns:1fr auto 1fr;background:${LAK.purple};padding:6px 16px 10px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.5px}\n.${lt}-sub span:first-child{text-align:right}.${lt}-sub span:last-child{text-align:left}\n.${lt}-tbl{width:100%;border-collapse:collapse;background:#1a1a2e}\n.${lt}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}\n.${lt}-tbl tr:last-child td{border-bottom:none}\n.${lt}-tbl td:first-child{text-align:right;font-weight:700;width:35%}\n.${lt}-tbl td:nth-child(2){text-align:center;color:${LAK.gold};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}\n.${lt}-tbl td:last-child{text-align:left;font-weight:700;width:35%}\n@media(max-width:480px){.${lt}-tbl td{padding:8px 10px;font-size:12px}.${lt}-hdr{font-size:14px}}\n</style>\n<div class="${lt}">\n  <div class="${lt}-hdr">🏀 ${nA||"[A]"} vs ${nB||"[B]"}</div>\n  <div class="${lt}-sub"><span>${nA||"[A]"}</span><span>Stat</span><span>${nB||"[B]"}</span></div>\n  <table class="${lt}-tbl">\n${stats.filter(s=>s.a||s.b).map(s=>`    <tr><td>${s.a}</td><td>${s.label}</td><td>${s.b}</td></tr>`).join("\n")}\n  </table>\n</div>`;
+  const html=`<style>
+.${lt}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border:2px solid ${LAK.gold};border-radius:10px;overflow:hidden;display:block!important;visibility:visible!important}
+.${lt}-hdr{background:${LAK.purple};padding:12px 16px;font-size:15px;font-weight:700;color:${LAK.gold};text-align:center}
+.${lt}-sub{display:grid;grid-template-columns:1fr auto 1fr;background:${LAK.purple};padding:6px 16px 10px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:.5px}
+.${lt}-sub span:first-child{text-align:right}.${lt}-sub span:last-child{text-align:left}
+.${lt}-tbl{width:100%;border-collapse:collapse;background:#1a1a2e}
+.${lt}-tbl td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.88)}
+.${lt}-tbl tr:last-child td{border-bottom:none}
+.${lt}-tbl td:first-child{text-align:right;font-weight:700;width:35%}
+.${lt}-tbl td:nth-child(2){text-align:center;color:${LAK.gold};font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.${lt}-tbl td:last-child{text-align:left;font-weight:700;width:35%}
+@media(max-width:480px){.${lt}-tbl td{padding:8px 10px;font-size:12px}.${lt}-hdr{font-size:14px}}
+</style>
+<div class="${lt}">
+  <div class="${lt}-hdr">🏀 ${nA||"[A]"} vs ${nB||"[B]"}</div>
+  <div class="${lt}-sub"><span>${nA||"[A]"}</span><span>Stat</span><span>${nB||"[B]"}</span></div>
+  <table class="${lt}-tbl">
+${stats.filter(s=>s.a||s.b).map(s=>`    <tr><td>${s.a}</td><td>${s.label}</td><td>${s.b}</td></tr>`).join("\n")}
+  </table>
+</div>`;
   return<div>
     <p className="panel-desc">Comparativo entre times NBA.</p>
     <div className="row row-2"><Field label="Time A" value={nA} onChange={setNA} placeholder="Lakers"/><Field label="Time B" value={nB} onChange={setNB} placeholder="Celtics"/></div>

@@ -68,21 +68,79 @@ function ColorPick({label,value,onChange}){return<div className="field"><label c
 const PS={lance:{name:"Lance!",color:"#09C400",txtH:"#fff",icon:"⚽"},trivela:{name:"Trivela",color:"#be0022",txtH:"#fff",icon:"⚽"},umdois:{name:"UmDois",color:"#FED937",txtH:"#000",icon:"⚽"},lakers:{name:"Lakers Brasil",color:"#552583",txtH:"#FDB927",icon:"🏀"}};
 function Palpites({teamA,teamB,pfx}){
   const[site,setSite]=useState("lance");const[count,setCount]=useState(3);
-  const[tips,setTips]=useState([{name:"",odds:""},{name:"",odds:""},{name:"",odds:""}]);
+  const[tv,setTv]=useState("");
+  const[tips,setTips]=useState([{name:"",odds:"",s1:"",s2:""},{name:"",odds:"",s1:"",s2:""},{name:"",odds:"",s1:"",s2:""}]);
   const uT=(i,f,v)=>{const n=[...tips];n[i]={...n[i],[f]:v};setTips(n)};
-  const adj=c=>{setCount(c);const n=[...tips];while(n.length<c)n.push({name:"",odds:""});setTips(n.slice(0,c))};
-  const s=PS[site];const tp=`${pfx}-tip`;const filled=tips.slice(0,count).filter(t=>t.name&&t.odds);
-  const html=`<style>\n.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid ${s.color};display:block!important;visibility:visible!important}\n.${tp}-hdr{background:${s.color};padding:12px 16px;font-size:14px;font-weight:700;color:${s.txtH};text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;gap:8px}\n.${tp}-sub{display:flex;justify-content:space-between;padding:8px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#888;border-bottom:1px solid #eee}\n.${tp}-row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f0f0f0}\n.${tp}-row:last-child{border-bottom:none}\n.${tp}-name{flex:1;font-size:14px;font-weight:500;color:#333}\n.${tp}-pct{font-size:14px;font-weight:700;color:#333;min-width:40px;text-align:right}\n.${tp}-bar{width:80px;height:8px;background:#e0e0e0;border-radius:4px;overflow:hidden;flex-shrink:0}\n.${tp}-fill{height:100%;background:${s.color};border-radius:4px}\n@media(max-width:480px){.${tp}-row{gap:8px;padding:10px 14px}.${tp}-name{font-size:13px}.${tp}-bar{width:60px}.${tp}-hdr{font-size:12px}}\n</style>\n<div class="${tp}">\n  <div class="${tp}-hdr">${s.icon} Palpites para ${teamA||"Time A"} x ${teamB||"Time B"}</div>\n  <div class="${tp}-sub"><span>Palpite</span><span>Probabilidade estimada</span></div>\n${filled.map(t=>{const pct=oddPct(t.odds);return`  <div class="${tp}-row"><div class="${tp}-name">${t.name}</div><div class="${tp}-pct">${pct}%</div><div class="${tp}-bar"><div class="${tp}-fill" style="width:${pct}%"></div></div></div>`}).join("\n")}\n</div>`;
+  const adj=c=>{setCount(c);const n=[...tips];while(n.length<c)n.push({name:"",odds:"",s1:"",s2:""});setTips(n.slice(0,c))};
+  const s=PS[site];const tp=`${pfx}-tip`;const cols=count===1?"1fr":count===2?"1fr 1fr":"repeat(3,1fr)";
+  const filled=tips.slice(0,count);const anyFilled=filled.some(t=>t.name);
+  const hdrTxt=`${s.icon} ${teamA||"Time A"} x ${teamB||"Time B"}${tv?`  📺 ${tv}`:""}`;
+  const html=`<style>
+.${tp}-wrap{font-family:${FNT};max-width:680px;margin:0 auto 24px;display:block!important;visibility:visible!important}
+.${tp}-hdr{background:${s.color};padding:11px 16px;font-size:13px;font-weight:700;color:${s.txtH};text-transform:uppercase;letter-spacing:.8px;border-radius:10px 10px 0 0}
+.${tp}-grid{display:grid;grid-template-columns:${cols};border:2px solid ${s.color};border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
+.${tp}-card{padding:16px 14px 14px;background:#fff;border-right:1px solid #f0f0f0}
+.${tp}-card:last-child{border-right:none}
+.${tp}-name{font-size:16px;font-weight:700;color:#1a1a1a;line-height:1.3;${count>1?"min-height:42px;":""}margin-bottom:10px}
+.${tp}-meter{display:flex;align-items:baseline;gap:4px;margin-bottom:12px}
+.${tp}-pct{font-size:16px;font-weight:700;color:${s.color}}
+.${tp}-lbl{font-size:11px;color:#999;font-weight:500}
+.${tp}-bar{flex:1;height:6px;background:#e8e8e8;border-radius:3px;overflow:hidden;align-self:center}
+.${tp}-fill{height:100%;background:${s.color};border-radius:3px}
+.${tp}-stats{margin:0;padding:0;list-style:none}
+.${tp}-stats li{font-size:11px;color:#666;line-height:1.45;padding:4px 0;border-top:1px solid #f0f0f0}
+.${tp}-stats li:first-child{border-top:none}
+@media(max-width:480px){
+.${tp}-grid{grid-template-columns:1fr}
+.${tp}-card{border-right:none;border-bottom:1px solid #f0f0f0}
+.${tp}-card:last-child{border-bottom:none}
+.${tp}-name{min-height:auto;font-size:15px}
+}
+</style>
+<div class="${tp}-wrap">
+  <div class="${tp}-hdr">${hdrTxt}</div>
+  <div class="${tp}-grid">
+${filled.filter(t=>t.name).map(t=>{const pct=oddPct(t.odds);const statsHtml=[t.s1,t.s2].filter(x=>x).map(x=>`      <li>${x}</li>`).join("\n");return`    <div class="${tp}-card">
+      <div class="${tp}-name">${t.name}</div>
+      <div class="${tp}-meter">
+        <span class="${tp}-pct">${pct}%</span>
+        <span class="${tp}-lbl">de chance</span>
+        <div class="${tp}-bar"><div class="${tp}-fill" style="width:${pct}%"></div></div>
+      </div>
+${statsHtml?`      <ul class="${tp}-stats">\n${statsHtml}\n      </ul>`:""}\n    </div>`}).join("\n")}
+  </div>
+</div>`;
   return<div>
-    <p className="panel-desc">Card de palpites. Odd média → probabilidade automática.</p>
-    <div className="field"><label className="lbl">Site</label><div style={{display:"flex",gap:4}}>{Object.entries(PS).map(([k,v])=><button key={k} className={`pill${site===k?" on":""}`} style={site===k?{background:v.color,color:v.txtH}:{}} onClick={()=>setSite(k)}>{v.name}</button>)}</div></div>
+    <p className="panel-desc">Card grid de palpites com stats de apoio. Odd → probabilidade automática.</p>
+    <div className="field"><label className="lbl">Site</label><div style={{display:"flex",gap:4,flexWrap:"wrap"}}>{Object.entries(PS).map(([k,v])=><button key={k} className={`pill${site===k?" on":""}`} style={site===k?{background:v.color,color:v.txtH}:{}} onClick={()=>setSite(k)}>{v.name}</button>)}</div></div>
+    <Field label="📺 Transmissão" value={tv} onChange={setTv} placeholder="TV Globo, CazéTV e ge TV"/>
     <div className="field"><label className="lbl">Nº de palpites</label><div style={{display:"flex",gap:4}}>{[1,2,3].map(n=><button key={n} className={`pill${count===n?" on":""}`} style={count===n?{background:s.color,color:s.txtH}:{}} onClick={()=>adj(n)}>{n}</button>)}</div></div>
-    {tips.slice(0,count).map((t,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr 100px"}}><input className="inp" value={t.name} onChange={e=>uT(i,"name",e.target.value)} placeholder={["Vitória do Corinthians","Menos de 2,5 gols","Ambos marcam"][i]||`Palpite ${i+1}`}/><input className="inp" value={t.odds} onChange={e=>uT(i,"odds",e.target.value)} placeholder="Odd média"/></div>)}
+    <hr className="sep"/>
+    {tips.slice(0,count).map((t,i)=><div key={i} style={{marginBottom:14,padding:"12px 14px",background:"#fafbfc",borderRadius:8,border:"1px solid #eee"}}>
+      <div style={{fontSize:12,fontWeight:700,color:s.color,marginBottom:6}}>Palpite {i+1}</div>
+      <div className="grid-row" style={{gridTemplateColumns:"1fr 100px"}}>
+        <input className="inp" value={t.name} onChange={e=>uT(i,"name",e.target.value)} placeholder={["Empate","Ambos marcam: sim","Menos de 2,5 gols"][i]||`Palpite ${i+1}`}/>
+        <input className="inp" value={t.odds} onChange={e=>uT(i,"odds",e.target.value)} placeholder="Odd média"/>
+      </div>
+      <div className="grid-row" style={{gridTemplateColumns:"1fr 1fr"}}>
+        <input className="inp" value={t.s1} onChange={e=>uT(i,"s1",e.target.value)} placeholder="Stat de apoio 1"/>
+        <input className="inp" value={t.s2} onChange={e=>uT(i,"s2",e.target.value)} placeholder="Stat de apoio 2"/>
+      </div>
+    </div>)}
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0}}>
-      <div style={{background:s.color,padding:"12px 16px",fontSize:14,fontWeight:700,color:s.txtH,textTransform:"uppercase",letterSpacing:.8,display:"flex",alignItems:"center",gap:8}}>{s.icon} Palpites para {teamA||"Time A"} x {teamB||"Time B"}</div>
-      <div style={{display:"flex",justifyContent:"space-between",padding:"8px 16px",fontSize:11,fontWeight:700,textTransform:"uppercase",letterSpacing:.6,color:"#888",borderBottom:"1px solid #eee"}}><span>Palpite</span><span>Probabilidade estimada</span></div>
-      {filled.map((t,i)=>{const pct=oddPct(t.odds);return<div key={i} style={{display:"flex",alignItems:"center",gap:12,padding:"12px 16px",borderBottom:i<filled.length-1?"1px solid #f0f0f0":"none"}}><div style={{flex:1,fontSize:14,fontWeight:500,color:"#333"}}>{t.name}</div><div style={{fontSize:14,fontWeight:700,color:"#333",minWidth:40,textAlign:"right"}}>{pct}%</div><div style={{width:80,height:8,background:"#e0e0e0",borderRadius:4,overflow:"hidden",flexShrink:0}}><div style={{height:"100%",width:`${pct}%`,background:s.color,borderRadius:4}}/></div></div>})}
+      <div style={{background:s.color,padding:"11px 16px",fontSize:13,fontWeight:700,color:s.txtH,textTransform:"uppercase",letterSpacing:.8,borderRadius:"10px 10px 0 0"}}>{hdrTxt}</div>
+      <div style={{display:"grid",gridTemplateColumns:cols,border:`2px solid ${s.color}`,borderTop:"none",borderRadius:"0 0 10px 10px",overflow:"hidden"}}>
+        {filled.filter(t=>t.name).map((t,i)=>{const pct=oddPct(t.odds);const statsArr=[t.s1,t.s2].filter(x=>x);return<div key={i} style={{padding:"16px 14px 14px",background:"#fff",borderRight:i<filled.filter(x=>x.name).length-1?"1px solid #f0f0f0":"none"}}>
+          <div style={{fontSize:16,fontWeight:700,color:"#1a1a1a",lineHeight:1.3,minHeight:count>1?42:"auto",marginBottom:10}}>{t.name}</div>
+          <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:12}}>
+            <span style={{fontSize:16,fontWeight:700,color:s.color}}>{pct}%</span>
+            <span style={{fontSize:11,color:"#999",fontWeight:500}}>de chance</span>
+            <div style={{flex:1,height:6,background:"#e8e8e8",borderRadius:3,overflow:"hidden",alignSelf:"center"}}><div style={{height:"100%",width:`${pct}%`,background:s.color,borderRadius:3}}/></div>
+          </div>
+          {statsArr.length>0&&<ul style={{margin:0,padding:0,listStyle:"none"}}>{statsArr.map((st,j)=><li key={j} style={{fontSize:11,color:"#666",lineHeight:1.45,padding:"4px 0",borderTop:j>0?"1px solid #f0f0f0":"none"}}>{st}</li>)}</ul>}
+        </div>})}
+      </div>
     </div>
     <CodeBlock code={html}/>
   </div>;
@@ -109,7 +167,7 @@ function LancePlayer({p,teamA,teamB}){
   const cardPrev=(bg,label,name,info,stats,dk,txt,eye,meta,sbg,lbl)=><div style={{background:bg,borderRadius:10,padding:"20px 18px 16px",maxWidth:680,margin:"0 auto 10px"}}>
       <div style={{fontSize:10,fontWeight:700,letterSpacing:1.6,textTransform:"uppercase",color:eye,marginBottom:6}}>{label}</div>
       <div style={{fontSize:22,fontWeight:700,color:txt,lineHeight:1.15,marginBottom:4}}>{name||"Nome"}</div>
-      <div style={{fontSize:12,color:meta,marginBottom:14}}>{info||"Idade · Posição · Clube"}</div>
+      <div style={{fontSize:12,color:meta,marginBottom:14}}>{info||"Idade · Posição"}</div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:8}}>
         {stats.filter(s=>s.v).map((s,i)=><div key={i} style={{borderRadius:7,padding:"12px 10px 10px",textAlign:"center",background:sbg}}>
           <div style={{fontSize:22,fontWeight:700,color:txt,lineHeight:1.1,marginBottom:4}}>{s.v}</div>
@@ -167,13 +225,13 @@ ${sB.filter(s=>s.v).map(s=>`    <div class="${sp}-stat"><div class="${sp}-val">$
     <hr className="sep"/>
     <div style={{fontSize:13,fontWeight:700,color:hDk?homeBg:"#333",marginBottom:6}}>▸ {teamA||"Time A"}</div>
     <Field label="Nome" value={nA} onChange={setNA} placeholder="Kylian Mbappé"/>
-    <Field label="Idade · Posição · Clube" value={infoA} onChange={setInfoA} placeholder="Atacante/Real Madrid"/>
+    <Field label="Idade · Posição" value={infoA} onChange={setInfoA} placeholder="26 anos · Atacante"/>
     <label className="lbl">Stats</label>
     {sA.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"80px 1fr"}}><input className="inp" value={s.v} onChange={e=>uA(i,"v",e.target.value)} placeholder="Valor"/><input className="inp" value={s.l} onChange={e=>uA(i,"l",e.target.value)} placeholder="Descrição"/></div>)}
     <hr className="sep"/>
     <div style={{fontSize:13,fontWeight:700,color:aDk?awayBg:"#333",marginBottom:6}}>▸ {teamB||"Time B"}</div>
     <Field label="Nome" value={nB} onChange={setNB} placeholder="Achraf Hakimi"/>
-    <Field label="Idade · Posição · Clube" value={infoB} onChange={setInfoB} placeholder="Lateral direito/PSG"/>
+    <Field label="Idade · Posição" value={infoB} onChange={setInfoB} placeholder="26 anos · Lateral direito"/>
     <label className="lbl">Stats</label>
     {sB.map((s,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"80px 1fr"}}><input className="inp" value={s.v} onChange={e=>uB(i,"v",e.target.value)} placeholder="Valor"/><input className="inp" value={s.l} onChange={e=>uB(i,"l",e.target.value)} placeholder="Descrição"/></div>)}
     <label className="lbl preview-lbl">Preview</label>
@@ -187,7 +245,7 @@ ${sB.filter(s=>s.v).map(s=>`    <div class="${sp}-stat"><div class="${sp}-val">$
 
 function LancePlacar({p}){
   const[score,setScore]=useState("");const[c1,setC1]=useState("");const[c2,setC2]=useState("");
-  const[bullets,setBullets]=useState(["","",""]);const uB=(i,v)=>{const n=[...bullets];n[i]=v;setBullets(n)};
+  const[bullets,setBullets]=useState(["",""]);const uB=(i,v)=>{const n=[...bullets];n[i]=v;setBullets(n)};
   const pw=`${p}-pw`;
   /* Use <b> instead of <strong> for green highlights — WordPress handles <b> more reliably */
   const html=`<style>
@@ -302,14 +360,14 @@ ${plHTML(gB,teamB||"[TIME B]")}${h2hBlk}
 
 function TrivPlacar({p,teamA,teamB}){
   const[sA,setSA]=useState("");const[sB,setSB]=useState("");const[p1,setP1]=useState("");const[p2,setP2]=useState("");const tp=`${p}-pred`;
-  const html=`<style>\n.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid #c0392b;display:block!important;visibility:visible!important}\n.${tp}-hdr{background:#c0392b;color:#fff;padding:14px 18px;font-size:18px;font-weight:700;text-align:center}\n.${tp}-body{background:#fff;padding:16px}\n.${tp}-txt{font-size:14px;color:#333;line-height:1.65}\n.${tp}-txt+.${tp}-txt{margin-top:10px}\n@media(max-width:480px){.${tp}-hdr{font-size:16px;padding:12px 14px}.${tp}-body{padding:12px}}\n</style>\n<div class="${tp}">\n  <div class="${tp}-hdr">${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${tp}-body">\n    <p class="${tp}-txt">${p1}</p>\n    <p class="${tp}-txt">${p2}</p>\n  </div>\n</div>`;
+  const html=`<style>\n.${tp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;border-radius:10px;overflow:hidden;border:2px solid #c0392b;display:block!important;visibility:visible!important}\n.${tp}-hdr{background:#c0392b;color:#fff;padding:14px 18px;font-size:18px;font-weight:700;text-align:center}\n.${tp}-body{background:#fff;padding:16px}\n.${tp}-txt{font-size:14px;color:#333;line-height:1.65}\n.${tp}-txt+.${tp}-txt{margin-top:10px}\n@media(max-width:480px){.${tp}-hdr{font-size:16px;padding:12px 14px}.${tp}-body{padding:12px}}\n</style>\n<div class="${tp}">\n  <div class="${tp}-hdr">Previsão da Trivela: ${teamA||"[A]"} ${sA} x ${sB} ${teamB||"[B]"}</div>\n  <div class="${tp}-body">\n    <p class="${tp}-txt">${p1}</p>\n    <p class="${tp}-txt">${p2}</p>\n  </div>\n</div>`;
   return<div>
     <p className="panel-desc">Placar no header vermelho, sem odds. Dois parágrafos.</p>
     <div className="row row-2"><Field label="Gols A" value={sA} onChange={setSA} placeholder="1"/><Field label="Gols B" value={sB} onChange={setSB} placeholder="1"/></div>
     <Field label="Parágrafo 1" value={p1} onChange={setP1} rows={2}/><Field label="Parágrafo 2" value={p2} onChange={setP2} rows={2}/>
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0,borderRadius:10,overflow:"hidden",border:"2px solid #c0392b"}}>
-      <div style={{background:"#c0392b",color:"#fff",padding:"14px 18px",fontSize:18,fontWeight:700,textAlign:"center"}}>{teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
+      <div style={{background:"#c0392b",color:"#fff",padding:"14px 18px",fontSize:18,fontWeight:700,textAlign:"center"}}>Previsão da Trivela: {teamA||"[A]"} {sA||"0"} x {sB||"0"} {teamB||"[B]"}</div>
       <div style={{padding:16}}><p style={{fontSize:14,color:"#333",lineHeight:1.65}}>{p1||"..."}</p>{p2&&<p style={{fontSize:14,color:"#333",lineHeight:1.65,marginTop:10}}>{p2}</p>}</div>
     </div>
     <CodeBlock code={html}/>
@@ -520,8 +578,9 @@ const SITE_CFG={
   lakers:{name:"Lakers Brasil",color:"#552583",widgets:["Comparar Jogadores","Comparar Times"]},
 };
 function App(){
-  const[site,setSite]=useState("palpites");const[teamA,setTeamA]=useState("");const[teamB,setTeamB]=useState("");const[wIdx,setWIdx]=useState(0);
+  const[site,setSite]=useState("palpites");const[teamA,setTeamA]=useState("");const[teamB,setTeamB]=useState("");const[wIdx,setWIdx]=useState(0);const[resetKey,setResetKey]=useState(0);
   const cfg=SITE_CFG[site];const pfx=mkPfx(teamA,teamB);const handleSite=s=>{setSite(s);setWIdx(0)};
+  const clearAll=()=>{setTeamA("");setTeamB("");setWIdx(0);setResetKey(k=>k+1)};
   const isNBA=site==="lakers";
   const renderWidget=()=>{const w=cfg.widgets[wIdx]||cfg.widgets[0];
     switch(site){
@@ -532,13 +591,13 @@ function App(){
       case"lakers":if(w==="Comparar Jogadores")return<LakersPlayers pfx={pfx}/>;if(w==="Comparar Times")return<LakersTeams pfx={pfx}/>;break;
     }return null;};
   return<div>
-    <div className="hdr"><div className="hdr-top"><span className="hdr-brand" style={{color:cfg.color}}>NSN</span><span className="hdr-title">Gerador de Widgets HTML</span></div>
+    <div className="hdr"><div className="hdr-top"><span className="hdr-brand" style={{color:cfg.color}}>NSN</span><span className="hdr-title">Gerador de Widgets HTML</span><button style={{marginLeft:"auto",padding:"6px 14px",borderRadius:6,border:"1px solid #ddd",background:"#fff",color:"#c00",fontSize:11,fontWeight:700,cursor:"pointer",letterSpacing:".3px"}} onClick={()=>{clearAll()}}>🗑 Limpar dados</button></div>
       <div className="site-tabs">{Object.entries(SITE_CFG).map(([k,v])=><button key={k} className={`site-tab${site===k?" on":""}`} style={site===k?{color:v.color,borderBottomColor:v.color}:{}} onClick={()=>handleSite(k)}>{v.name}</button>)}</div>
     </div>
     <div className="main">
       {!isNBA&&<TeamBar a={teamA} b={teamB} onA={setTeamA} onB={setTeamB} pfx={pfx}/>}
       {cfg.widgets.length>1&&<div className="widget-tabs">{cfg.widgets.map((w,i)=><button key={w} className={`w-tab${wIdx===i?" on":""}`} style={wIdx===i?{background:cfg.color,color:isDk(cfg.color)?"#fff":"#000"}:{}} onClick={()=>setWIdx(i)}>{w}</button>)}</div>}
-      <div className="panel">{renderWidget()}</div>
+      <div className="panel" key={resetKey}>{renderWidget()}</div>
     </div>
   </div>;
 }

@@ -285,7 +285,7 @@ ${bullets.filter(b=>b).map(b=>`      <li>${b}</li>`).join("\n")}
 </div>`;
   return<div>
     <p className="panel-desc">Use <code>&lt;b&gt;texto&lt;/b&gt;</code> nos bullets para destaque verde (mais confiável que &lt;strong&gt; no WordPress).</p>
-    <Field label="Placar" value={score} onChange={setScore} placeholder="Corinthians 2 x 1 Palmeiras"/>
+    <Field label="Placar" value={score} onChange={setScore} placeholder="Corinthians 2 x 1 Palmeiras – Odd 7,50 na Br4Bet"/>
     <Field label="Parágrafo 1" value={c1} onChange={setC1} rows={2}/><Field label="Parágrafo 2" value={c2} onChange={setC2} rows={2}/>
     <label className="lbl">Bullets (use &lt;b&gt; para destaque verde)</label>
     {bullets.map((b,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr auto"}}><input className="inp" value={b} onChange={e=>uB(i,e.target.value)} placeholder={`Ex: O time tem <b>100%</b> de aproveitamento`}/>{bullets.length>1&&<button className="btn-x" onClick={()=>setBullets(bullets.filter((_,j)=>j!==i))}>✕</button>}</div>)}
@@ -301,6 +301,54 @@ ${bullets.filter(b=>b).map(b=>`      <li>${b}</li>`).join("\n")}
       </div>
     </div></div>
     <CodeBlock code={html}/>
+  </div>;
+}
+
+/* ═══ 2b. LANCE — FAQ com schema FAQPage (JSON-LD) ═══ */
+function LanceFaq({p,teamA,teamB}){
+  const[faqs,setFaqs]=useState([{q:"",a:""},{q:"",a:""},{q:"",a:""}]);
+  const uF=(i,f,v)=>{const n=[...faqs];n[i]={...n[i],[f]:v};setFaqs(n)};
+  const fq=`${p}-fq`;const filled=faqs.filter(f=>f.q&&f.a);
+  const jsonLd=filled.length?`<script type="application/ld+json">\n${JSON.stringify({"@context":"https://schema.org","@type":"FAQPage","mainEntity":filled.map(f=>({"@type":"Question","name":f.q,"acceptedAnswer":{"@type":"Answer","text":f.a}}))},null,2)}\n<\/script>`:"";
+  const html=`<style>
+.${fq}{font-family:${FNT};max-width:680px;margin:0 auto 24px;display:block!important;visibility:visible!important}
+.${fq}-hdr{background:#00ba25;padding:11px 16px;font-size:13px;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:.8px;border-radius:10px 10px 0 0}
+.${fq}-body{border:2px solid #00ba25;border-top:none;border-radius:0 0 10px 10px;overflow:hidden;background:#fff}
+.${fq}-item{padding:16px;border-bottom:1px solid #f0f0f0}
+.${fq}-item:last-child{border-bottom:none}
+.${fq}-q{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:6px;display:flex;align-items:baseline;gap:8px}
+.${fq}-q::before{content:"Q";font-size:11px;font-weight:700;color:#fff;background:#00ba25;border-radius:4px;padding:2px 6px;flex-shrink:0}
+.${fq}-a{font-size:14px;color:#444;line-height:1.6;padding-left:28px}
+@media(max-width:480px){.${fq}-q{font-size:14px}.${fq}-a{font-size:13px;padding-left:0}}
+</style>
+${jsonLd}
+<div class="${fq}">
+  <div class="${fq}-hdr">Perguntas frequentes para ${teamA||"Time A"} x ${teamB||"Time B"}</div>
+  <div class="${fq}-body">
+${filled.map(f=>`    <div class="${fq}-item">\n      <div class="${fq}-q">${f.q}</div>\n      <div class="${fq}-a">${f.a}</div>\n    </div>`).join("\n")}
+  </div>
+</div>`;
+  return<div>
+    <p className="panel-desc">FAQ com schema <code>FAQPage</code> (JSON-LD) para rich results no Google. Perguntas e respostas curtas e diretas.</p>
+    {faqs.map((f,i)=><div key={i} style={{marginBottom:14,padding:"12px 14px",background:"#fafbfc",borderRadius:8,border:"1px solid #eee"}}>
+      <div style={{fontSize:12,fontWeight:700,color:"#00ba25",marginBottom:6}}>Pergunta {i+1}</div>
+      <Field label="Pergunta" value={f.q} onChange={v=>uF(i,"q",v)} placeholder={["Onde assistir ao jogo?","Qual horário do jogo?","Quem são os desfalques?"][i]||`Pergunta ${i+1}`}/>
+      <Field label="Resposta" value={f.a} onChange={v=>uF(i,"a",v)} rows={2} placeholder="Resposta curta e direta..."/>
+      {faqs.length>1&&<button className="btn-x" onClick={()=>setFaqs(faqs.filter((_,j)=>j!==i))} style={{marginTop:4}}>✕ Remover</button>}
+    </div>)}
+    {faqs.length<8&&<button className="btn btn-ghost" onClick={()=>setFaqs([...faqs,{q:"",a:""}])} style={{marginTop:3,marginBottom:12}}>+ Pergunta</button>}
+    <label className="lbl preview-lbl">Preview</label>
+    <div className="preview-box" style={{padding:0}}>
+      <div style={{background:"#00ba25",padding:"11px 16px",fontSize:13,fontWeight:700,color:"#fff",textTransform:"uppercase",letterSpacing:.8,borderRadius:"10px 10px 0 0"}}>Perguntas frequentes para {teamA||"Time A"} x {teamB||"Time B"}</div>
+      <div style={{border:"2px solid #00ba25",borderTop:"none",borderRadius:"0 0 10px 10px",overflow:"hidden",background:"#fff"}}>
+        {filled.length?filled.map((f,i)=><div key={i} style={{padding:16,borderBottom:i<filled.length-1?"1px solid #f0f0f0":"none"}}>
+          <div style={{fontSize:15,fontWeight:700,color:"#1a1a1a",marginBottom:6,display:"flex",alignItems:"baseline",gap:8}}><span style={{fontSize:11,fontWeight:700,color:"#fff",background:"#00ba25",borderRadius:4,padding:"2px 6px",flexShrink:0}}>Q</span>{f.q}</div>
+          <div style={{fontSize:14,color:"#444",lineHeight:1.6,paddingLeft:28}}>{f.a}</div>
+        </div>):<div style={{padding:16,color:"#999",fontSize:13}}>Preencha pelo menos uma pergunta e resposta...</div>}
+      </div>
+    </div>
+    <CodeBlock code={html}/>
+    {filled.length>0&&<div style={{marginTop:14,padding:"10px 14px",borderRadius:8,border:"1px solid #a3d9a5",background:"#f0fdf4",fontSize:12,lineHeight:1.5,color:"#166534"}}><strong>Schema FAQPage</strong> — O JSON-LD acima será reconhecido pelo Google como FAQ estruturado. No WordPress, se o bloco HTML customizado filtrar o <code>&lt;script&gt;</code>, adicione o JSON-LD via Yoast/Rank Math ou plugin de headers.</div>}
   </div>;
 }
 
@@ -583,7 +631,7 @@ function LakersTeams({pfx}){
 /* ═══ MAIN ═══ */
 const SITE_CFG={
   palpites:{name:"⚽ Palpites",color:"#09C400",widgets:["Card de Palpites"]},
-  lance:{name:"Lance!",color:"#09C400",widgets:["Destaque Individual","Palpite Placar"]},
+  lance:{name:"Lance!",color:"#09C400",widgets:["Destaque Individual","Palpite Placar","FAQ"]},
   trivela:{name:"Trivela",color:"#be0022",widgets:["Retrospecto","Palpite Placar"]},
   umdois:{name:"UmDois",color:"#FED937",widgets:["Raio-X","Guia Desempenho","Você sabia?","Curiosidade","Placar Exato"]},
   lakers:{name:"Lakers Brasil",color:"#552583",widgets:["Comparar Jogadores","Comparar Times"]},
@@ -596,7 +644,7 @@ function App(){
   const renderWidget=()=>{const w=cfg.widgets[wIdx]||cfg.widgets[0];
     switch(site){
       case"palpites":return<Palpites teamA={teamA} teamB={teamB} pfx={pfx}/>;
-      case"lance":if(w==="Destaque Individual")return<LancePlayer p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<LancePlacar p={pfx}/>;break;
+      case"lance":if(w==="Destaque Individual")return<LancePlayer p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<LancePlacar p={pfx}/>;if(w==="FAQ")return<LanceFaq p={pfx} teamA={teamA} teamB={teamB}/>;break;
       case"trivela":if(w==="Retrospecto")return<TrivelaForm p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Palpite Placar")return<TrivPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
       case"umdois":if(w==="Raio-X")return<UDERaioX p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Guia Desempenho")return<UDEGuia p={pfx} teamA={teamA} teamB={teamB}/>;if(w==="Você sabia?")return<UDEInsight p={pfx} emoji="🔍" title="Você sabia?" id="vs"/>;if(w==="Curiosidade")return<UDEInsight p={pfx} emoji="📈" title="Curiosidade estatística" id="ce"/>;if(w==="Placar Exato")return<UDEPlacar p={pfx} teamA={teamA} teamB={teamB}/>;break;
       case"lakers":if(w==="Comparar Jogadores")return<LakersPlayers pfx={pfx}/>;if(w==="Comparar Times")return<LakersTeams pfx={pfx}/>;break;

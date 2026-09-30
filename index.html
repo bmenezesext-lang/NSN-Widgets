@@ -364,20 +364,21 @@ function TrivelaForm({p,teamA,teamB}){
   const plHTML=(arr,label)=>{const f=arr.filter(x=>x);if(!f.length)return"";return`  <div class="${fp}-row">\n    <div class="${fp}-label">${label}</div>\n    <div class="${fp}-pills">${f.map(x=>`<span class="${fp}-pill ${fp}-${x.toLowerCase()}">${x}</span>`).join("")}</div>\n  </div>`};
   const h2hBlk=showH2h?`\n    <div class="${fp}-section">Confrontos diretos</div>\n${h2h.filter(x=>x.r).map(x=>`    <div class="${fp}-h2h-row"><span class="${fp}-h2h-r">${x.r}</span><span class="${fp}-h2h-d">${x.d}</span><span class="${fp}-h2h-c">${x.c}</span></div>`).join("\n")}`:"";
   const html=`<style>
-.${fp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;display:block!important;visibility:visible!important}
+.${fp}{font-family:${FNT};max-width:680px;margin:0 auto 24px;background:#fff;padding:14px 16px;border-radius:10px;display:block!important;visibility:visible!important}
 .${fp}-section{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#888;margin:12px 0 8px;padding-bottom:5px;border-bottom:1px solid #eee}
 .${fp}-section:first-child{margin-top:0}
 .${fp}-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .${fp}-label{font-size:13px;font-weight:600;color:#1a1a1a;min-width:110px}
 .${fp}-pills{display:flex;gap:4px}
 .${fp}-pill{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;font-size:12px;font-weight:700;color:#fff}
-.${fp}-v{background:#27a844}.${fp}-e{background:#f5a623}.${fp}-d{background:#dc3545}
+.${fp}-v{background:#27a844}.${fp}-e{background:#f5a623;color:#5c3d00}.${fp}-d{background:#dc3545}
 .${fp}-h2h-row{display:flex;gap:10px;font-size:13px;padding:5px 0;border-bottom:1px solid #f0f0f0}
 .${fp}-h2h-row:last-child{border-bottom:none}
 .${fp}-h2h-r{font-weight:700;min-width:160px;color:#1a1a1a}
 .${fp}-h2h-d{color:#888;min-width:70px}
 .${fp}-h2h-c{color:#333}
 @media(max-width:480px){.${fp}-row{flex-direction:column;gap:3px;align-items:flex-start}.${fp}-label{min-width:0}.${fp}-h2h-row{flex-direction:column;gap:2px}}
+@media(prefers-color-scheme:dark){.${fp}{background:#fff!important;box-shadow:0 1px 6px rgba(0,0,0,.25)}.${fp}-section{color:#888!important;border-color:#eee!important}.${fp}-label,.${fp}-h2h-r{color:#1a1a1a!important}.${fp}-h2h-d{color:#888!important}.${fp}-h2h-c{color:#333!important}.${fp}-h2h-row{border-color:#f0f0f0!important}}
 </style>
 <div class="${fp}">
   <div class="${fp}-section">${compA}</div>

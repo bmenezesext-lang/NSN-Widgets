@@ -285,7 +285,7 @@ ${bullets.filter(b=>b).map(b=>`      <li>${b}</li>`).join("\n")}
 </div>`;
   return<div>
     <p className="panel-desc">Use <code>&lt;b&gt;texto&lt;/b&gt;</code> nos bullets para destaque verde (mais confiável que &lt;strong&gt; no WordPress).</p>
-    <Field label="Placar" value={score} onChange={setScore} placeholder="Corinthians 2 x 1 Palmeiras – Odd 7,50 na Br4Bet"/>
+    <Field label="Placar" value={score} onChange={setScore} placeholder="Corinthians 2 x 1 Palmeiras"/>
     <Field label="Parágrafo 1" value={c1} onChange={setC1} rows={2}/><Field label="Parágrafo 2" value={c2} onChange={setC2} rows={2}/>
     <label className="lbl">Bullets (use &lt;b&gt; para destaque verde)</label>
     {bullets.map((b,i)=><div key={i} className="grid-row" style={{gridTemplateColumns:"1fr auto"}}><input className="inp" value={b} onChange={e=>uB(i,e.target.value)} placeholder={`Ex: O time tem <b>100%</b> de aproveitamento`}/>{bullets.length>1&&<button className="btn-x" onClick={()=>setBullets(bullets.filter((_,j)=>j!==i))}>✕</button>}</div>)}

@@ -82,7 +82,7 @@ function Palpites({teamA,teamB,pfx}){
   const adj=c=>{setCount(c);const n=[...cards];while(n.length<c)n.push({name:"",tier:"moderada",s1:"",s2:""});setCards(n.slice(0,c))};
   const s=PS[site];const fc=`${pfx}-fc`;const cols=count===1?"1fr":count===2?"1fr 1fr":"repeat(3,1fr)";
   const filled=cards.slice(0,count);
-  const hdrTxt=`${s.icon} ${s.label} — ${teamA||"Time A"} x ${teamB||"Time B"}${tv?`  📺 Onde assistir ao vivo: ${tv}`:""}`;
+  const hdrTxt=`${teamA||"Time A"} x ${teamB||"Time B"}${tv?`  📺 ${tv}`:""}`;
   const html=`<style>
 .${fc}-wrap{font-family:${FNT};max-width:680px;margin:0 auto 24px;display:block!important;visibility:visible!important}
 .${fc}-hdr{background:${s.color};padding:11px 16px;font-size:13px;font-weight:700;color:${s.txtH};text-transform:uppercase;letter-spacing:.8px;border-radius:10px 10px 0 0}
@@ -317,9 +317,10 @@ function LanceFaq({p,teamA,teamB}){
 .${fq}-item{padding:16px;border-bottom:1px solid #f0f0f0}
 .${fq}-item:last-child{border-bottom:none}
 .${fq}-q{font-size:15px;font-weight:700;color:#1a1a1a;margin-bottom:6px;display:flex;align-items:baseline;gap:8px}
-.${fq}-q::before{content:"Q";font-size:11px;font-weight:700;color:#fff;background:#00ba25;border-radius:4px;padding:2px 6px;flex-shrink:0}
-.${fq}-a{font-size:14px;color:#444;line-height:1.6;padding-left:28px}
-@media(max-width:480px){.${fq}-q{font-size:14px}.${fq}-a{font-size:13px;padding-left:0}}
+.${fq}-q::before{content:"P";font-size:11px;font-weight:700;color:#fff;background:#00ba25;border-radius:4px;padding:2px 6px;flex-shrink:0}
+.${fq}-a{font-size:14px;color:#444;line-height:1.6;display:flex;align-items:baseline;gap:8px}
+.${fq}-a::before{content:"R";font-size:11px;font-weight:700;color:#fff;background:#00ba25;border-radius:4px;padding:2px 6px;flex-shrink:0}
+@media(max-width:480px){.${fq}-q{font-size:14px}.${fq}-a{font-size:13px}}
 </style>
 ${jsonLd}
 <div class="${fq}">
@@ -342,8 +343,8 @@ ${filled.map(f=>`    <div class="${fq}-item">\n      <div class="${fq}-q">${f.q}
       <div style={{background:"#00ba25",padding:"11px 16px",fontSize:13,fontWeight:700,color:"#fff",textTransform:"uppercase",letterSpacing:.8,borderRadius:"10px 10px 0 0"}}>Perguntas frequentes para {teamA||"Time A"} x {teamB||"Time B"}</div>
       <div style={{border:"2px solid #00ba25",borderTop:"none",borderRadius:"0 0 10px 10px",overflow:"hidden",background:"#fff"}}>
         {filled.length?filled.map((f,i)=><div key={i} style={{padding:16,borderBottom:i<filled.length-1?"1px solid #f0f0f0":"none"}}>
-          <div style={{fontSize:15,fontWeight:700,color:"#1a1a1a",marginBottom:6,display:"flex",alignItems:"baseline",gap:8}}><span style={{fontSize:11,fontWeight:700,color:"#fff",background:"#00ba25",borderRadius:4,padding:"2px 6px",flexShrink:0}}>Q</span>{f.q}</div>
-          <div style={{fontSize:14,color:"#444",lineHeight:1.6,paddingLeft:28}}>{f.a}</div>
+          <div style={{fontSize:15,fontWeight:700,color:"#1a1a1a",marginBottom:6,display:"flex",alignItems:"baseline",gap:8}}><span style={{fontSize:11,fontWeight:700,color:"#fff",background:"#00ba25",borderRadius:4,padding:"2px 6px",flexShrink:0}}>P</span>{f.q}</div>
+          <div style={{fontSize:14,color:"#444",lineHeight:1.6,display:"flex",alignItems:"baseline",gap:8}}><span style={{fontSize:11,fontWeight:700,color:"#fff",background:"#00ba25",borderRadius:4,padding:"2px 6px",flexShrink:0}}>R</span>{f.a}</div>
         </div>):<div style={{padding:16,color:"#999",fontSize:13}}>Preencha pelo menos uma pergunta e resposta...</div>}
       </div>
     </div>

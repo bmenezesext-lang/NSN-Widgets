@@ -82,11 +82,11 @@ function Palpites({teamA,teamB,pfx}){
   const adj=c=>{setCount(c);const n=[...cards];while(n.length<c)n.push({name:"",tier:"moderada",s1:"",s2:""});setCards(n.slice(0,c))};
   const s=PS[site];const fc=`${pfx}-fc`;const cols=count===1?"1fr":count===2?"1fr 1fr":"repeat(3,1fr)";
   const filled=cards.slice(0,count);
-  const hdrTxt=`${s.icon} ${teamA||"Time A"} x ${teamB||"Time B"}${tv?`  📺 ${tv}`:""}`;
+  const hdrTxt=`${s.icon} ${teamA||"Time A"} x ${teamB||"Time B"}${tv?`  📺 Onde assistir ao vivo: ${tv}`:""}`;
   const html=`<style>
 .${fc}-wrap{font-family:${FNT};max-width:680px;margin:0 auto 24px;display:block!important;visibility:visible!important}
 .${fc}-hdr{background:${s.color};padding:11px 16px;font-size:13px;font-weight:700;color:${s.txtH};text-transform:uppercase;letter-spacing:.8px;border-radius:10px 10px 0 0}
-.${fc}-grid{display:grid;grid-template-columns:${cols};border:2px solid ${s.color};border-top:none;border-bottom:none;overflow:hidden}
+.${fc}-grid{display:grid;grid-template-columns:${cols};border:2px solid ${s.color};border-top:none;border-radius:0 0 10px 10px;overflow:hidden}
 .${fc}-card{padding:16px 14px 14px;background:#fff;border-right:1px solid #f0f0f0}
 .${fc}-card:last-child{border-right:none}
 .${fc}-name{font-size:16px;font-weight:700;color:#1a1a1a;line-height:1.3;${count>1?"min-height:42px;":""}margin-bottom:10px}
@@ -104,7 +104,6 @@ function Palpites({teamA,teamB,pfx}){
 .${fc}-card:last-child{border-bottom:none}
 .${fc}-name{min-height:auto;font-size:15px}
 }
-.${fc}-disc{font-size:10px;color:#c00;line-height:1.4;padding:8px 16px;background:#fff;border:2px solid ${s.color};border-top:1px solid #f0f0f0;border-radius:0 0 10px 10px}
 </style>
 <div class="${fc}-wrap">
   <div class="${fc}-hdr">${hdrTxt}</div>
@@ -117,7 +116,6 @@ ${filled.filter(t=>t.name).map(t=>{const tier=tierById(t.tier);const statsHtml=[
       </div>
 ${statsHtml?`      <ul class="${fc}-stats">\n${statsHtml}\n      </ul>`:""}\n    </div>`}).join("\n")}
   </div>
-  <div class="${fc}-disc">MP 1.394/2026 — Este card não contém odds, percentuais, nomes de operadoras nem terminologia de apostas. Os níveis de confiança em cada evento do jogo são baseados em análise editorial e têm caráter informativo.</div>
 </div>`;
   return<div>
     <p className="panel-desc">Card de palpites com níveis de confiança (MP 1.394/2026). Sem odds, sem percentuais, sem terminologia de apostas.</p>
@@ -144,7 +142,7 @@ ${statsHtml?`      <ul class="${fc}-stats">\n${statsHtml}\n      </ul>`:""}\n   
     <label className="lbl preview-lbl">Preview</label>
     <div className="preview-box" style={{padding:0}}>
       <div style={{background:s.color,padding:"11px 16px",fontSize:13,fontWeight:700,color:s.txtH,textTransform:"uppercase",letterSpacing:.8,borderRadius:"10px 10px 0 0"}}>{hdrTxt}</div>
-      <div style={{display:"grid",gridTemplateColumns:cols,border:`2px solid ${s.color}`,borderTop:"none",borderBottom:"none",overflow:"hidden"}}>
+      <div style={{display:"grid",gridTemplateColumns:cols,border:`2px solid ${s.color}`,borderTop:"none",borderRadius:"0 0 10px 10px",overflow:"hidden"}}>
         {filled.filter(t=>t.name).map((t,i)=>{const tier=tierById(t.tier);const statsArr=[t.s1,t.s2].filter(x=>x);return<div key={i} style={{padding:"16px 14px 14px",background:"#fff",borderRight:i<filled.filter(x=>x.name).length-1?"1px solid #f0f0f0":"none"}}>
           <div style={{fontSize:16,fontWeight:700,color:"#1a1a1a",lineHeight:1.3,minHeight:count>1?42:"auto",marginBottom:10}}>{t.name}</div>
           <div style={{display:"flex",alignItems:"center",gap:6,marginBottom:12}}>
@@ -154,10 +152,8 @@ ${statsHtml?`      <ul class="${fc}-stats">\n${statsHtml}\n      </ul>`:""}\n   
           {statsArr.length>0&&<ul style={{margin:0,padding:0,listStyle:"none"}}>{statsArr.map((st,j)=><li key={j} style={{fontSize:11,color:"#666",lineHeight:1.45,padding:"4px 0",borderTop:j>0?"1px solid #f0f0f0":"none"}}>{st}</li>)}</ul>}
         </div>})}
       </div>
-      <div style={{fontSize:10,color:"#c00",lineHeight:1.4,padding:"8px 16px",background:"#fff",border:`2px solid ${s.color}`,borderTop:"1px solid #f0f0f0",borderRadius:"0 0 10px 10px"}}>MP 1.394/2026 — Este card não contém odds, percentuais, nomes de operadoras nem terminologia de apostas. Os níveis de confiança em cada evento do jogo são baseados em análise editorial e têm caráter informativo.</div>
     </div>
     <CodeBlock code={html}/>
-    <div style={{marginTop:14,padding:"10px 14px",borderRadius:8,border:"1px solid #fca5a5",background:"#fef2f2",fontSize:12,lineHeight:1.5,color:"#991b1b"}}><strong>MP 1.394/2026</strong> — Este card não contém odds, percentuais, nomes de operadoras nem terminologia de apostas. Os níveis de confiança em cada evento do jogo são baseados em análise editorial e têm caráter informativo.</div>
   </div>;
 }
 
